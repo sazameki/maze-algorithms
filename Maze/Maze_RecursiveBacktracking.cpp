@@ -26,7 +26,6 @@ static void CarvePassage(Maze *maze, Point pos)
         Point nextPos = pos.Move(dir);
         if (maze->IsValid(nextPos) && !maze->CheckFlag(nextPos, kBlock_CreateMarker1)) {
             maze->RemoveWall(pos, dir);
-            maze->RemoveWall(nextPos, GetOppositeDirection(dir));
             maze->AddFlag(pos, kBlock_CreateMarker1);
             maze->AddFlag(nextPos, kBlock_CreateMarker1);
             maze->Draw();
