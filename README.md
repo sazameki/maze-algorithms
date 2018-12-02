@@ -1,5 +1,7 @@
 # Maze Algorithms
 
+<p align="center"><img src="https://github.com/sazameki/maze-algorithms/raw/readme/screenshot_prim.png" width=20%><img src="https://github.com/sazameki/maze-algorithms/raw/readme/screenshot_recursive-backtracking.png" width=20%></p>
+
 ## このプロジェクトについて
 
 + 迷路を生成するための各種アルゴリズムを実装したものです。
