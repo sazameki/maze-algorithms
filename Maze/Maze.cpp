@@ -19,17 +19,18 @@ const int   kBlock_BottomBorder = 0x04;
 const int   kBlock_LeftBorder   = 0x08;
 const int   kBlock_AllBorders   = 0x0f;
 
-// 4〜6ビット目は生成用のマーカー
+// 4〜7ビット目は生成用のマーカー
 const int   kBlock_CreateMarker1    = 0x10;
 const int   kBlock_CreateMarker2    = 0x20;
 const int   kBlock_CreateMarker3    = 0x40;
-const int   kBlock_AllCreateMarkers = 0x70;
+const int   kBlock_CreateMarker4    = 0x80;
+const int   kBlock_AllCreateMarkers = 0xf0;
 
-// 7〜9ビット目は迷路を解くためのマーカー
-const int   kBlock_SolveMarker1     = 0x80;
-const int   kBlock_SolveMarker2     = 0x100;
-const int   kBlock_SolveMarker3     = 0x200;
-const int   kBlock_AllSolveMarkers  = 0x380;
+// 8〜10ビット目は迷路を解くためのマーカー
+const int   kBlock_SolveMarker1     = 0x100;
+const int   kBlock_SolveMarker2     = 0x200;
+const int   kBlock_SolveMarker3     = 0x400;
+const int   kBlock_AllSolveMarkers  = 0x800;
 
 
 #pragma mark - Point構造体
@@ -194,6 +195,9 @@ bool Maze::CheckWall(const Wall& wall) const
 
 void Maze::MakeWall(int x, int y, Direction dir)
 {
+    assert(x >= 0 && x <= xSize - 1);
+    assert(y >= 0 && y <= ySize - 1);
+
     if (dir == Up) {
         data[y * xSize + x] |= kBlock_TopBorder;
         int ny = y - 1;

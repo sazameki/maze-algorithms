@@ -26,6 +26,7 @@ extern const int    kBlock_AllBorders;
 extern const int    kBlock_CreateMarker1;
 extern const int    kBlock_CreateMarker2;
 extern const int    kBlock_CreateMarker3;
+extern const int    kBlock_CreateMarker4;
 extern const int    kBlock_AllCreateMarkers;
 
 extern const int    kBlock_SolveMarker1;

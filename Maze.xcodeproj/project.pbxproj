@@ -15,6 +15,7 @@
 		8E37C54321B394B300506F6B /* Maze_BouTaoshi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E37C54121B394B300506F6B /* Maze_BouTaoshi.cpp */; };
 		8E37C54621B398D500506F6B /* Direction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E37C54421B398D500506F6B /* Direction.cpp */; };
 		8E37C55321B39C2B00506F6B /* Maze_RightHand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E37C55121B39C2B00506F6B /* Maze_RightHand.cpp */; };
+		8E37C59621B6B28900506F6B /* Maze_Blobby.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E37C59421B6B28900506F6B /* Maze_Blobby.cpp */; };
 		8E429FE1214D171200DEB679 /* Drawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E429FE0214D171200DEB679 /* Drawing.cpp */; };
 		8E7D383B214D126D000A2D31 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E7D383A214D126D000A2D31 /* AppDelegate.mm */; };
 		8E7D383D214D126D000A2D31 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7D383C214D126D000A2D31 /* main.m */; };
@@ -42,6 +43,8 @@
 		8E37C54521B398D500506F6B /* Direction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Direction.hpp; sourceTree = "<group>"; };
 		8E37C55121B39C2B00506F6B /* Maze_RightHand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_RightHand.cpp; sourceTree = "<group>"; };
 		8E37C55221B39C2B00506F6B /* Maze_RightHand.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_RightHand.hpp; sourceTree = "<group>"; };
+		8E37C59421B6B28900506F6B /* Maze_Blobby.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Blobby.cpp; sourceTree = "<group>"; };
+		8E37C59521B6B28900506F6B /* Maze_Blobby.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_Blobby.hpp; sourceTree = "<group>"; };
 		8E429FE0214D171200DEB679 /* Drawing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Drawing.cpp; sourceTree = "<group>"; };
 		8E7D3834214D126D000A2D31 /* Maze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E7D3838214D126D000A2D31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -80,6 +83,8 @@
 				8E37C53321B38ABE00506F6B /* Maze_RecursiveBacktracking.cpp */,
 				8E37C53721B38BEB00506F6B /* Maze_Prim.hpp */,
 				8E37C53621B38BEB00506F6B /* Maze_Prim.cpp */,
+				8E37C59521B6B28900506F6B /* Maze_Blobby.hpp */,
+				8E37C59421B6B28900506F6B /* Maze_Blobby.cpp */,
 			);
 			name = "Maze Creators";
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				8E7D383D214D126D000A2D31 /* main.m in Sources */,
 				8E37C54621B398D500506F6B /* Direction.cpp in Sources */,
 				8E429FE1214D171200DEB679 /* Drawing.cpp in Sources */,
+				8E37C59621B6B28900506F6B /* Maze_Blobby.cpp in Sources */,
 				8E37C55321B39C2B00506F6B /* Maze_RightHand.cpp in Sources */,
 				8E7D3860214D1534000A2D31 /* DrawMain.cpp in Sources */,
 				8E37C53B21B38DDE00506F6B /* MazeDraw.cpp in Sources */,

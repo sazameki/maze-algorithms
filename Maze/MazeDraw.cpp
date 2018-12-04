@@ -15,6 +15,7 @@ const int kColorWall            = 0x404040;
 const int kColorCreateMarker1   = 0xc0faff;
 const int kColorCreateMarker2   = 0x80e0ff;
 const int kColorCreateMarker3   = 0x60c0ff;
+const int kColorCreateMarker4   = 0x40a0ff;
 
 const int kColorSolveMarker1    = 0xf0f060;
 const int kColorSolveMarker2    = 0xe0e050;
@@ -61,6 +62,8 @@ void DrawMaze(Maze *maze, bool usesBatch)
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker2);
             } else if (maze->CheckFlag(x, y, kBlock_CreateMarker3)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker3);
+            } else if (maze->CheckFlag(x, y, kBlock_CreateMarker4)) {
+                FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker4);
             } else if (maze->CheckFlag(x, y, kBlock_SolveMarker1)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorSolveMarker1);
             } else if (maze->CheckFlag(x, y, kBlock_SolveMarker2)) {

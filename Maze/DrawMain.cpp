@@ -4,6 +4,7 @@
 #include "Maze_AnaHori.hpp"
 #include "Maze_RecursiveBacktracking.hpp"
 #include "Maze_Prim.hpp"
+#include "Maze_Blobby.hpp"
 #include "Maze_RightHand.hpp"
 
 #include <cstdlib>
@@ -22,8 +23,9 @@ void DrawMain()
     //Maze *maze = CreateMaze_BouTaoshi(xSize, ySize);
     //Maze *maze = CreateMaze_AnaHori(xSize, ySize);
     //Maze *maze = CreateMaze_RecurvsiveBacktracking(xSize, ySize);
-    Maze *maze = CreateMaze_Prim(xSize, ySize);
-    SolveMaze_RightHand(maze);
+    //Maze *maze = CreateMaze_Prim(xSize, ySize);
+    Maze *maze = CreateMaze_Blobby(xSize, ySize);
+    //SolveMaze_RightHand(maze);
     delete maze;
 }
 
