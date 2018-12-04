@@ -12,10 +12,10 @@
 const int kColorFloor           = 0xffffff;
 const int kColorWall            = 0x404040;
 
-const int kColorCreateMarker1   = 0xc0faff;
-const int kColorCreateMarker2   = 0x80e0ff;
-const int kColorCreateMarker3   = 0x60c0ff;
-const int kColorCreateMarker4   = 0x40a0ff;
+const int kColorCreateMarker1   = 0xE85A70;
+const int kColorCreateMarker2   = 0x73D0C2;
+const int kColorCreateMarker3   = 0xFFC530;
+const int kColorCreateMarker4   = 0xF6E5D7;
 
 const int kColorSolveMarker1    = 0xf0f060;
 const int kColorSolveMarker2    = 0xe0e050;
