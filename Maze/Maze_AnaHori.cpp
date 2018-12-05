@@ -31,27 +31,27 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
     }
 
     // 最初の点をランダムに選ぶ
-    Point p;
+    CellPoint p;
     p.x = random() % maze->GetXSize();
     p.y = random() % maze->GetYSize();
-    maze->RemoveFlag(p, kBlock_CreateMarker1);
-    maze->AddFlag(p, kBlock_CreateMarker2);
+    maze->RemoveCellFlag(p, kBlock_CreateMarker1);
+    maze->AddCellFlag(p, kBlock_CreateMarker2);
     maze->Draw();
 
     while (true) {
         int digCount = 0;
         while (digCount < kMaxDigCount) {
             // 穴を掘る方向をランダムに選択
-            Direction dir = (Direction)(random() % 4);
+            Direction dir = GetRandomDirection();
             // 四方に掘り進める
             bool hasDug = false;
             for (int i = 0; i < 4; i++) {
-                Point nextPos = p.Move(dir);
-                if (maze->CheckFlag(nextPos, kBlock_CreateMarker1) && maze->CanRemoveWall(p, dir)) {
+                CellPoint nextPos = p.Move(dir);
+                if (maze->CheckCellFlag(nextPos, kBlock_CreateMarker1) && maze->CanRemoveWall(p, dir)) {
                     maze->RemoveWall(p, dir);
                     p = nextPos;
-                    maze->RemoveFlag(p, kBlock_CreateMarker1);
-                    maze->AddFlag(p, kBlock_CreateMarker2);
+                    maze->RemoveCellFlag(p, kBlock_CreateMarker1);
+                    maze->AddCellFlag(p, kBlock_CreateMarker2);
                     maze->Draw();
                     hasDug = true;
                     break;
@@ -60,8 +60,8 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
                 dir = RotateRight(dir);
             }
             if (!hasDug) {
-                maze->RemoveFlag(p, kBlock_AllCreateMarkers);
-                maze->AddFlag(p, kBlock_CreateMarker4);
+                maze->RemoveCellFlag(p, kBlock_AllCreateMarkers);
+                maze->AddCellFlag(p, kBlock_CreateMarker4);
                 maze->Draw();
                 break;
             }
@@ -71,9 +71,9 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
         // 作成が完了した通路のマーカーを3に
         for (int y = 0; y < maze->GetYSize(); y++) {
             for (int x = 0; x < maze->GetXSize(); x++) {
-                if (maze->CheckFlag(x, y, kBlock_CreateMarker2)) {
-                    maze->RemoveFlag(x, y, kBlock_CreateMarker2);
-                    maze->AddFlag(x, y, kBlock_CreateMarker3);
+                if (maze->CheckCellFlag(x, y, kBlock_CreateMarker2)) {
+                    maze->RemoveCellFlag(x, y, kBlock_CreateMarker2);
+                    maze->AddCellFlag(x, y, kBlock_CreateMarker3);
                 }
             }
         }
@@ -83,7 +83,7 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
         bool isFinished = true;
         for (int y = 0; y < maze->GetYSize(); y++) {
             for (int x = 0; x < maze->GetXSize(); x++) {
-                if (maze->CheckFlag(x, y, kBlock_CreateMarker1 | kBlock_CreateMarker2)) {
+                if (maze->CheckCellFlag(x, y, kBlock_CreateMarker1 | kBlock_CreateMarker2)) {
                     isFinished = false;
                     break;
                 }
@@ -94,11 +94,11 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
         }
 
         // すでに掘った座標をランダムに選ぶ
-        vector<Point> nextPoints;
+        vector<CellPoint> nextPoints;
         for (int y = 0; y < maze->GetYSize(); y++) {
             for (int x = 0; x < maze->GetXSize(); x++) {
-                if (maze->CheckFlag(x, y, kBlock_CreateMarker3)) {
-                    nextPoints.push_back(Point(x, y));
+                if (maze->CheckCellFlag(x, y, kBlock_CreateMarker3)) {
+                    nextPoints.push_back(CellPoint(x, y));
                 }
             }
         }
@@ -110,7 +110,7 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
     Sleep(0.8f);
     for (int y = 0; y < maze->GetYSize(); y++) {
         for (int x = 0; x < maze->GetXSize(); x++) {
-            maze->RemoveFlag(x, y, kBlock_AllCreateMarkers);
+            maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
         }
         maze->Draw();
     }

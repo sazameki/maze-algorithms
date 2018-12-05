@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <stdexcept>
 
 
 // 0〜3ビット目は壁
@@ -33,29 +34,65 @@ const int   kBlock_SolveMarker3     = 0x400;
 const int   kBlock_AllSolveMarkers  = 0x800;
 
 
-#pragma mark - Point構造体
+#pragma mark - CellPoint構造体
 
-Point::Point()
+CellPoint::CellPoint()
     : x(0), y(0)
 {
     // Do nothing
 }
 
-Point::Point(int _x, int _y)
+CellPoint::CellPoint(int _x, int _y)
     : x(_x), y(_y)
 {
     // Do nothing
 }
 
-Point::Point(const Point& p)
+CellPoint::CellPoint(const CellPoint& p)
     : x(p.x), y(p.y)
 {
     // Do nothing
 }
 
-Point Point::Move(int dir) const
+CellPoint CellPoint::Move(Direction dir) const
 {
-    Point ret(*this);
+    CellPoint ret(*this);
+    if (dir == Up) {
+        ret.y -= 1;
+    } else if (dir == Right) {
+        ret.x += 1;
+    } else if (dir == Down) {
+        ret.y += 1;
+    } else {
+        ret.x -= 1;
+    }
+    return ret;
+}
+
+
+#pragma mark - CrossPoint構造体
+
+CrossPoint::CrossPoint()
+    : x(0), y(0)
+{
+    // Do nothing
+}
+
+CrossPoint::CrossPoint(int _x, int _y)
+    : x(_x), y(_y)
+{
+    // Do nothing
+}
+
+CrossPoint::CrossPoint(const CrossPoint& pos)
+    : x(pos.x), y(pos.y)
+{
+    // Do nothing
+}
+
+CrossPoint CrossPoint::Move(Direction dir) const
+{
+    CrossPoint ret(*this);
     if (dir == Up) {
         ret.y -= 1;
     } else if (dir == Right) {
@@ -71,7 +108,7 @@ Point Point::Move(int dir) const
 
 #pragma mark - Wall構造体
 
-Wall::Wall(const Point& _pos, Direction _dir)
+Wall::Wall(const CellPoint& _pos, Direction _dir)
     : pos(_pos), dir(_dir)
 {
     // Do nothing
@@ -122,27 +159,27 @@ int Maze::GetYSize() const
     return ySize;
 }
 
-int Maze::GetData(int x, int y) const
+int Maze::GetCellData(int x, int y) const
 {
     return data[y * xSize + x];
 }
 
-int Maze::GetData(const Point& pos) const
+int Maze::GetCellData(const CellPoint& pos) const
 {
     return data[pos.y * xSize + pos.x];
 }
 
-bool Maze::CheckFlag(int x, int y, int flag) const
+bool Maze::CheckCellFlag(int x, int y, int flag) const
 {
     return ((data[y * xSize + x] & flag) > 0);
 }
 
-bool Maze::CheckFlag(const Point& pos, int flag) const
+bool Maze::CheckCellFlag(const CellPoint& pos, int flag) const
 {
     return ((data[pos.y * xSize + pos.x] & flag) > 0);
 }
 
-bool Maze::IsValid(const Point& pos) const
+bool Maze::IsValidCell(const CellPoint& pos) const
 {
     return (pos.x >= 0 && pos.x < xSize && pos.y >= 0 && pos.y < ySize);
 }
@@ -150,22 +187,22 @@ bool Maze::IsValid(const Point& pos) const
 
 #pragma mark - Mazeクラスの迷路生成用の関数
 
-void Maze::AddFlag(int x, int y, int flag)
+void Maze::AddCellFlag(int x, int y, int flag)
 {
     data[y * xSize + x] |= flag;
 }
 
-void Maze::AddFlag(const Point& pos, int flag)
+void Maze::AddCellFlag(const CellPoint& pos, int flag)
 {
     data[pos.y * xSize + pos.x] |= flag;
 }
 
-void Maze::RemoveFlag(int x, int y, int flag)
+void Maze::RemoveCellFlag(int x, int y, int flag)
 {
     data[y * xSize + x] &= ~flag;
 }
 
-void Maze::RemoveFlag(const Point& pos, int flag)
+void Maze::RemoveCellFlag(const CellPoint& pos, int flag)
 {
     data[pos.y * xSize + pos.x] &= ~flag;
 }
@@ -183,7 +220,7 @@ bool Maze::CheckWall(int x, int y, Direction dir) const
     }
 }
 
-bool Maze::CheckWall(const Point& pos, Direction dir) const
+bool Maze::CheckWall(const CellPoint& pos, Direction dir) const
 {
     return CheckWall(pos.x, pos.y, dir);
 }
@@ -225,7 +262,7 @@ void Maze::MakeWall(int x, int y, Direction dir)
     }
 }
 
-void Maze::MakeWall(const Point& pos, Direction dir)
+void Maze::MakeWall(const CellPoint& pos, Direction dir)
 {
     return MakeWall(pos.x, pos.y, dir);
 }
@@ -252,7 +289,7 @@ bool Maze::CanRemoveWall(int x, int y, Direction dir) const
     return CheckWall(x, y, dir);
 }
 
-bool Maze::CanRemoveWall(const Point& pos, Direction dir) const
+bool Maze::CanRemoveWall(const CellPoint& pos, Direction dir) const
 {
     return CanRemoveWall(pos.x, pos.y, dir);
 }
@@ -265,33 +302,33 @@ bool Maze::CanRemoveWall(const Wall& wall) const
 void Maze::RemoveWall(int x, int y, Direction dir)
 {
     if (dir == Up) {
-        RemoveFlag(x, y, kBlock_TopBorder);
+        RemoveCellFlag(x, y, kBlock_TopBorder);
         int ny = y - 1;
         if (ny >= 0) {
-            RemoveFlag(x, ny, kBlock_BottomBorder);
+            RemoveCellFlag(x, ny, kBlock_BottomBorder);
         }
     } else if (dir == Right) {
-        RemoveFlag(x, y, kBlock_RightBorder);
+        RemoveCellFlag(x, y, kBlock_RightBorder);
         int nx = x + 1;
         if (nx < xSize) {
-            RemoveFlag(nx, y, kBlock_LeftBorder);
+            RemoveCellFlag(nx, y, kBlock_LeftBorder);
         }
     } else if (dir == Down) {
-        RemoveFlag(x, y, kBlock_BottomBorder);
+        RemoveCellFlag(x, y, kBlock_BottomBorder);
         int ny = y + 1;
         if (ny < ySize) {
-            RemoveFlag(x, ny, kBlock_TopBorder);
+            RemoveCellFlag(x, ny, kBlock_TopBorder);
         }
     } else {
-        RemoveFlag(x, y, kBlock_LeftBorder);
+        RemoveCellFlag(x, y, kBlock_LeftBorder);
         int nx = x - 1;
         if (nx >= 0) {
-            RemoveFlag(nx, y, kBlock_RightBorder);
+            RemoveCellFlag(nx, y, kBlock_RightBorder);
         }
     }
 }
 
-void Maze::RemoveWall(const Point& pos, Direction dir)
+void Maze::RemoveWall(const CellPoint& pos, Direction dir)
 {
     RemoveWall(pos.x, pos.y, dir);
 }
@@ -302,11 +339,134 @@ void Maze::RemoveWall(const Wall& wall)
 }
 
 
+#pragma mark - Mazeクラスの迷路生成用の関数（交点ベース）
+
+bool Maze::IsValidCrossPoint(const CrossPoint& cp) const
+{
+    return (cp.x >= 0 && cp.x <= xSize && cp.y >= 0 && cp.y <= ySize);
+}
+
+bool Maze::CanMoveFromCrossPoint(const CrossPoint& cp, Direction dir) const
+{
+    CrossPoint cp2 = cp.Move(dir);
+    return IsValidCrossPoint(cp2);
+}
+
+bool Maze::CheckWallFromCrossPoint(const CrossPoint& cp) const
+{
+    CellPoint leftUpCell(cp.x - 1, cp.y - 1);
+    if (IsValidCell(leftUpCell) && (CheckWall(leftUpCell, Down) || CheckWall(leftUpCell, Right))) {
+        return true;
+    }
+
+    CellPoint rightUpCell(cp.x, cp.y - 1);
+    if (IsValidCell(rightUpCell) && (CheckWall(rightUpCell, Left) || CheckWall(rightUpCell, Down))) {
+        return true;
+    }
+
+    CellPoint leftDownCell(cp.x - 1, cp.y);
+    if (IsValidCell(leftDownCell) && (CheckWall(leftDownCell, Up) || CheckWall(leftDownCell, Right))) {
+        return true;
+    }
+
+    CellPoint rightDownCell(cp.x, cp.y);
+    if (IsValidCell(rightDownCell) && (CheckWall(rightDownCell, Left) || CheckWall(rightDownCell, Up))) {
+        return true;
+    }
+
+    return false;
+}
+
+bool Maze::CheckWallFromCrossPoint(const CrossPoint& cp, Direction dir) const
+{
+    CellPoint leftUpCell(cp.x - 1, cp.y - 1);
+    CellPoint rightUpCell(cp.x, cp.y - 1);
+    CellPoint leftDownCell(cp.x - 1, cp.y);
+    CellPoint rightDownCell(cp.x, cp.y);
+
+    if (dir == Up) {
+        if ((IsValidCell(leftUpCell) && CheckWall(leftUpCell, Right)) ||
+            (IsValidCell(rightUpCell) && CheckWall(leftUpCell, Left)))
+        {
+            return true;
+        }
+    } else if (dir == Right) {
+        if ((IsValidCell(rightUpCell) && CheckWall(rightUpCell, Down)) ||
+            (IsValidCell(rightDownCell) && CheckWall(rightDownCell, Up)))
+        {
+            return true;
+        }
+    } else if (dir == Down) {
+        if ((IsValidCell(leftDownCell) && CheckWall(leftDownCell, Right)) ||
+            (IsValidCell(rightDownCell) && CheckWall(rightDownCell, Left)))
+        {
+            return true;
+        }
+    } else {
+        if ((IsValidCell(leftUpCell) && CheckWall(leftUpCell, Down)) ||
+            (IsValidCell(leftDownCell) && CheckWall(leftDownCell, Up)))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Maze::MakeWallFromCrossPoint(const CrossPoint& cp, Direction dir)
+{
+    CellPoint leftUpCell(cp.x - 1, cp.y - 1);
+    CellPoint rightUpCell(cp.x, cp.y - 1);
+    CellPoint leftDownCell(cp.x - 1, cp.y);
+    CellPoint rightDownCell(cp.x, cp.y);
+
+    if (dir == Up) {
+        if (IsValidCell(leftUpCell)) {
+            MakeWall(leftUpCell, Right);
+            return;
+        } else if (IsValidCell(rightUpCell)) {
+            MakeWall(rightUpCell, Left);
+            return;
+        }
+    } else if (dir == Right) {
+        if (IsValidCell(rightUpCell)) {
+            MakeWall(rightUpCell, Down);
+            return;
+        } else if (IsValidCell(rightDownCell)) {
+            MakeWall(rightDownCell, Up);
+            return;
+        }
+    } else if (dir == Down) {
+        if (IsValidCell(leftDownCell)) {
+            MakeWall(leftDownCell, Right);
+            return;
+        } else if (IsValidCell(rightDownCell)) {
+            MakeWall(rightDownCell, Left);
+            return;
+        }
+    } else {
+        if (IsValidCell(leftUpCell)) {
+            MakeWall(leftUpCell, Down);
+            return;
+        } else if (IsValidCell(leftDownCell)) {
+            MakeWall(leftDownCell, Up);
+            return;
+        }
+    }
+
+    throw runtime_error("Invalid wall making from cross point.");
+}
+
+
 #pragma mark - Mazeクラスの迷路の描画
 
 void Maze::Draw(bool usesBatch)
 {
     DrawMaze(this, usesBatch);
+}
+
+void Maze::DrawCrossPoint(const CrossPoint& pos, bool usesBatch)
+{
+    ::DrawCrossPoint(this, pos, usesBatch);
 }
 
 

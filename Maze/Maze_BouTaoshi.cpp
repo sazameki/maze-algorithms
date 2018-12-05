@@ -47,10 +47,10 @@ Maze *CreateMaze_BouTaoshi(int xSize, int ySize)
         } else {
             maze->MakeWall(x, 0, Down);
         }
-        maze->RemoveFlag(x, 0, kBlock_CreateMarker1);
-        maze->RemoveFlag(x+1, 0, kBlock_CreateMarker1);
-        maze->RemoveFlag(x, 1, kBlock_CreateMarker1);
-        maze->RemoveFlag(x+1, 1, kBlock_CreateMarker1);
+        maze->RemoveCellFlag(x, 0, kBlock_CreateMarker1);
+        maze->RemoveCellFlag(x+1, 0, kBlock_CreateMarker1);
+        maze->RemoveCellFlag(x, 1, kBlock_CreateMarker1);
+        maze->RemoveCellFlag(x+1, 1, kBlock_CreateMarker1);
         maze->Draw();
     }
 
@@ -71,10 +71,10 @@ Maze *CreateMaze_BouTaoshi(int xSize, int ySize)
             } else {
                 maze->MakeWall(x, y, Down);
             }
-            maze->RemoveFlag(x, y, kBlock_CreateMarker1);
-            maze->RemoveFlag(x+1, y, kBlock_CreateMarker1);
-            maze->RemoveFlag(x, y+1, kBlock_CreateMarker1);
-            maze->RemoveFlag(x+1, y+1, kBlock_CreateMarker1);
+            maze->RemoveCellFlag(x, y, kBlock_CreateMarker1);
+            maze->RemoveCellFlag(x+1, y, kBlock_CreateMarker1);
+            maze->RemoveCellFlag(x, y+1, kBlock_CreateMarker1);
+            maze->RemoveCellFlag(x+1, y+1, kBlock_CreateMarker1);
             maze->Draw();
         }
     }

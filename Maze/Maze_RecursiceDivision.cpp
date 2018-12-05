@@ -62,7 +62,7 @@ void DivideRegion(Maze *maze, const RDRegion& region)
     // 領域のマーキング
     for (int y = region.y; y < region.y+region.height; y++) {
         for (int x = region.x; x < region.x+region.width; x++) {
-            maze->AddFlag(x, y, kBlock_CreateMarker1);
+            maze->AddCellFlag(x, y, kBlock_CreateMarker1);
         }
     }
     maze->Draw();
@@ -71,7 +71,7 @@ void DivideRegion(Maze *maze, const RDRegion& region)
     Direction makingDir = ChooseDirection(region);
 
     // 壁の座標を計算する
-    Point wallPos(region.x, region.y);
+    CellPoint wallPos(region.x, region.y);
     if (makingDir == Right) {
         if (region.height > 2) {
             wallPos.y += random() % (region.height - 2);
@@ -86,30 +86,30 @@ void DivideRegion(Maze *maze, const RDRegion& region)
     if (makingDir == Right) {
         for (int y = region.y; y <= wallPos.y; y++) {
             for (int x = region.x; x < region.x+region.width; x++) {
-                maze->RemoveFlag(x, y, kBlock_AllCreateMarkers);
-                maze->AddFlag(x, y, kBlock_CreateMarker2);
+                maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
+                maze->AddCellFlag(x, y, kBlock_CreateMarker2);
             }
             maze->Draw();
         }
         for (int y = wallPos.y+1; y < region.y+region.height; y++) {
             for (int x = region.x; x < region.x+region.width; x++) {
-                maze->RemoveFlag(x, y, kBlock_AllCreateMarkers);
-                maze->AddFlag(x, y, kBlock_CreateMarker3);
+                maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
+                maze->AddCellFlag(x, y, kBlock_CreateMarker3);
             }
             maze->Draw();
         }
     } else {
         for (int x = region.x; x <= wallPos.x; x++) {
             for (int y = region.y; y < region.y+region.height; y++) {
-                maze->RemoveFlag(x, y, kBlock_AllCreateMarkers);
-                maze->AddFlag(x, y, kBlock_CreateMarker2);
+                maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
+                maze->AddCellFlag(x, y, kBlock_CreateMarker2);
             }
             maze->Draw();
         }
         for (int x = wallPos.x+1; x < region.x+region.width; x++) {
             for (int y = region.y; y < region.y+region.height; y++) {
-                maze->RemoveFlag(x, y, kBlock_AllCreateMarkers);
-                maze->AddFlag(x, y, kBlock_CreateMarker3);
+                maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
+                maze->AddCellFlag(x, y, kBlock_CreateMarker3);
             }
             maze->Draw();
         }
@@ -121,7 +121,7 @@ void DivideRegion(Maze *maze, const RDRegion& region)
     
     // 壁を延ばす処理
     vector<Wall> walls;
-    Point pos(wallPos);
+    CellPoint pos(wallPos);
     for (; length > 0; length--) {
         walls.push_back(Wall(pos, wallDir));
         pos = pos.Move(makingDir);
@@ -140,8 +140,8 @@ void DivideRegion(Maze *maze, const RDRegion& region)
     // 領域のマーキング
     for (int y = region.y; y < region.y+region.height; y++) {
         for (int x = region.x; x < region.x+region.width; x++) {
-            maze->RemoveFlag(x, y, kBlock_AllCreateMarkers);
-            maze->AddFlag(x, y, kBlock_CreateMarker4);
+            maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
+            maze->AddCellFlag(x, y, kBlock_CreateMarker4);
         }
         maze->Draw();
     }
@@ -161,7 +161,7 @@ void DivideRegion(Maze *maze, const RDRegion& region)
         } else {
             for (int y = subregions[i].y; y < subregions[i].y+subregions[i].height; y++) {
                 for (int x = subregions[i].x; x < subregions[i].x+subregions[i].width; x++) {
-                    maze->RemoveFlag(x, y, kBlock_AllCreateMarkers);
+                    maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
                 }
                 maze->Draw();
             }

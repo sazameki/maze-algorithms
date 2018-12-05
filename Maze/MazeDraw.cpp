@@ -31,16 +31,28 @@ const float kWaitMaze   = 0.01f;
 const float kWaitMan    = 0.02f;
 
 
-static int GetBlockX(int x, int xSize)
+static int GetCellX(int x, int xSize)
 {
     int bodyX = (kBlockSize + kBorderSize) * xSize + kBorderSize;
     return x * (kBlockSize + kBorderSize) - bodyX / 2;
 }
 
-static int GetBlockY(int y, int ySize)
+static int GetCellY(int y, int ySize)
 {
     int bodyY = (kBlockSize + kBorderSize) * ySize + kBorderSize;
     return (ySize - y - 1) * (kBlockSize + kBorderSize) - bodyY / 2;
+}
+
+static int GetCrossPointX(int x, int xSize)
+{
+    int cellX = GetCellX(x, xSize);
+    return cellX;
+}
+
+static int GetCrossPointY(int y, int ySize)
+{
+    int cellY = GetCellY(y-1, ySize);
+    return cellY;
 }
 
 void DrawMaze(Maze *maze, bool usesBatch)
@@ -53,22 +65,22 @@ void DrawMaze(Maze *maze, bool usesBatch)
     // 床の描画
     for (int y = 0; y < maze->GetYSize(); y++) {
         for (int x = 0; x < maze->GetXSize(); x++) {
-            int bx = GetBlockX(x, maze->GetXSize());
-            int by = GetBlockY(y, maze->GetYSize());
+            int bx = GetCellX(x, maze->GetXSize());
+            int by = GetCellY(y, maze->GetYSize());
 
-            if (maze->CheckFlag(x, y, kBlock_CreateMarker1)) {
+            if (maze->CheckCellFlag(x, y, kBlock_CreateMarker1)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker1);
-            } else if (maze->CheckFlag(x, y, kBlock_CreateMarker2)) {
+            } else if (maze->CheckCellFlag(x, y, kBlock_CreateMarker2)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker2);
-            } else if (maze->CheckFlag(x, y, kBlock_CreateMarker3)) {
+            } else if (maze->CheckCellFlag(x, y, kBlock_CreateMarker3)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker3);
-            } else if (maze->CheckFlag(x, y, kBlock_CreateMarker4)) {
+            } else if (maze->CheckCellFlag(x, y, kBlock_CreateMarker4)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker4);
-            } else if (maze->CheckFlag(x, y, kBlock_SolveMarker1)) {
+            } else if (maze->CheckCellFlag(x, y, kBlock_SolveMarker1)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorSolveMarker1);
-            } else if (maze->CheckFlag(x, y, kBlock_SolveMarker2)) {
+            } else if (maze->CheckCellFlag(x, y, kBlock_SolveMarker2)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorSolveMarker2);
-            } else if (maze->CheckFlag(x, y, kBlock_SolveMarker3)) {
+            } else if (maze->CheckCellFlag(x, y, kBlock_SolveMarker3)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorSolveMarker3);
             } else {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorFloor);
@@ -79,28 +91,28 @@ void DrawMaze(Maze *maze, bool usesBatch)
     // 壁の描画
     for (int y = 0; y < maze->GetYSize(); y++) {
         for (int x = 0; x < maze->GetXSize(); x++) {
-            int bx = GetBlockX(x, maze->GetXSize());
-            int by = GetBlockY(y, maze->GetYSize());
-            if (maze->CheckFlag(x, y, kBlock_TopBorder)) {
+            int bx = GetCellX(x, maze->GetXSize());
+            int by = GetCellY(y, maze->GetYSize());
+            if (maze->CheckCellFlag(x, y, kBlock_TopBorder)) {
                 FillRect(bx, by+kBlockSize+kBorderSize, kBlockSize+kBorderSize*2-1, kBorderSize-1, kColorWall);
             }
-            if (maze->CheckFlag(x, y, kBlock_BottomBorder)) {
+            if (maze->CheckCellFlag(x, y, kBlock_BottomBorder)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBorderSize-1, kColorWall);
             }
-            if (maze->CheckFlag(x, y, kBlock_RightBorder)) {
+            if (maze->CheckCellFlag(x, y, kBlock_RightBorder)) {
                 FillRect(bx+kBlockSize+kBorderSize, by, kBorderSize-1, kBlockSize+kBorderSize*2-1, kColorWall);
             }
-            if (maze->CheckFlag(x, y, kBlock_LeftBorder)) {
+            if (maze->CheckCellFlag(x, y, kBlock_LeftBorder)) {
                 FillRect(bx, by, kBorderSize-1, kBlockSize+kBorderSize*2-1, kColorWall);
             }
         }
     }
 
     // スタートとゴールの描画
-    int sx = GetBlockX(0, maze->GetXSize()) + kBlockSize/2 + kBorderSize;
-    int sy = GetBlockY(0, maze->GetYSize()) + kBlockSize/2 + kBorderSize;
-    int gx = GetBlockX(maze->GetXSize()-1, maze->GetXSize()) + kBlockSize/2 + kBorderSize;
-    int gy = GetBlockY(maze->GetYSize()-1, maze->GetYSize()) + kBlockSize/2 + kBorderSize;
+    int sx = GetCellX(0, maze->GetXSize()) + kBlockSize/2 + kBorderSize;
+    int sy = GetCellY(0, maze->GetYSize()) + kBlockSize/2 + kBorderSize;
+    int gx = GetCellX(maze->GetXSize()-1, maze->GetXSize()) + kBlockSize/2 + kBorderSize;
+    int gy = GetCellY(maze->GetYSize()-1, maze->GetYSize()) + kBlockSize/2 + kBorderSize;
     FillCircle(sx, sy, kBlockSize/2-2, kColorStart);
     DrawCircle(sx, sy, kBlockSize/2-2, kColorWhite);
     DrawCircle(sx, sy, kBlockSize/2-2-1, kColorWhite);
@@ -114,10 +126,25 @@ void DrawMaze(Maze *maze, bool usesBatch)
     }
 }
 
-void DrawMan(Maze *maze, const Point& pos, Direction dir)
+void DrawCrossPoint(Maze *maze, const CrossPoint& pos, bool usesBatch)
 {
-    int x = GetBlockX(pos.x, maze->GetXSize()) + kBlockSize / 2 + kBorderSize;
-    int y = GetBlockY(pos.y, maze->GetYSize()) + kBlockSize / 2 + kBorderSize;
+    if (usesBatch) {
+        StartBatch();
+    }
+
+    int x = GetCrossPointX(pos.x, maze->GetXSize());
+    int y = GetCrossPointY(pos.y, maze->GetYSize());
+    FillCircle(x, y, kBorderSize+1, kColorWall);
+
+    if (usesBatch) {
+        EndBatch();
+    }
+}
+
+void DrawMan(Maze *maze, const CellPoint& pos, Direction dir)
+{
+    int x = GetCellX(pos.x, maze->GetXSize()) + kBlockSize / 2 + kBorderSize;
+    int y = GetCellY(pos.y, maze->GetYSize()) + kBlockSize / 2 + kBorderSize;
     DrawCircle(x, y, kBlockSize/2-4, kColorBlack);
     int x2 = x;
     int y2 = y;

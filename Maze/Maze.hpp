@@ -36,25 +36,39 @@ extern const int    kBlock_AllSolveMarkers;
 
 
 /// 迷路上の各マスの座標を表す構造体
-struct Point
+struct CellPoint
 {
     int x;
     int y;
 
-    Point();
-    Point(int x, int y);
-    Point(const Point& pos);
+    CellPoint();
+    CellPoint(int x, int y);
+    CellPoint(const CellPoint& pos);
 
-    Point   Move(int direction) const;
+    CellPoint   Move(Direction direction) const;
+};
+
+
+/// 迷路の線の各交点を表す構造体
+struct CrossPoint
+{
+    int x;
+    int y;
+
+    CrossPoint();
+    CrossPoint(int x, int y);
+    CrossPoint(const CrossPoint& pos);
+
+    CrossPoint  Move(Direction direction) const;
 };
 
 /// 壁を表す構造体
 struct Wall
 {
-    Point       pos;
+    CellPoint       pos;
     Direction   dir;
 
-    Wall(const Point& pos, Direction dir);
+    Wall(const CellPoint& pos, Direction dir);
 };
 
 /// 迷路を表すクラス。
@@ -77,32 +91,41 @@ public:
     // Getter系の関数
     int     GetXSize() const;
     int     GetYSize() const;
-    int     GetData(int x, int y) const;
-    int     GetData(const Point& pos) const;
-    bool    CheckFlag(int x, int y, int flag) const;
-    bool    CheckFlag(const Point& pos, int flag) const;
-    bool    IsValid(const Point& pos) const;
 
-    // 迷路生成用の関数
-    void    AddFlag(int x, int y, int flag);
-    void    AddFlag(const Point& pos, int flag);
-    void    RemoveFlag(int x, int y, int flag);
-    void    RemoveFlag(const Point& pos, int flag);
+    int     GetCellData(int x, int y) const;
+    int     GetCellData(const CellPoint& pos) const;
+    bool    CheckCellFlag(int x, int y, int flag) const;
+    bool    CheckCellFlag(const CellPoint& pos, int flag) const;
+    bool    IsValidCell(const CellPoint& pos) const;
+
+    // 迷路生成用の関数（セルベース）
+    void    AddCellFlag(int x, int y, int flag);
+    void    AddCellFlag(const CellPoint& pos, int flag);
+    void    RemoveCellFlag(int x, int y, int flag);
+    void    RemoveCellFlag(const CellPoint& pos, int flag);
     bool    CheckWall(int x, int y, Direction dir) const;
-    bool    CheckWall(const Point& pos, Direction dir) const;
+    bool    CheckWall(const CellPoint& pos, Direction dir) const;
     bool    CheckWall(const Wall& wall) const;
     bool    CanRemoveWall(int x, int y, Direction dir) const;
-    bool    CanRemoveWall(const Point& pos, Direction dir) const;
+    bool    CanRemoveWall(const CellPoint& pos, Direction dir) const;
     bool    CanRemoveWall(const Wall& wall) const;
     void    MakeWall(int x, int y, Direction dir);
-    void    MakeWall(const Point& pos, Direction dir);
+    void    MakeWall(const CellPoint& pos, Direction dir);
     void    MakeWall(const Wall& wall);
     void    RemoveWall(int x, int y, Direction dir);
-    void    RemoveWall(const Point& pos, Direction dir);
+    void    RemoveWall(const CellPoint& pos, Direction dir);
     void    RemoveWall(const Wall& wall);
+
+    // 迷路生成用の関数（交点ベース）
+    bool    IsValidCrossPoint(const CrossPoint& cp) const;
+    bool    CanMoveFromCrossPoint(const CrossPoint& cp, Direction dir) const;
+    bool    CheckWallFromCrossPoint(const CrossPoint& cp) const;
+    bool    CheckWallFromCrossPoint(const CrossPoint& cp, Direction dir) const;
+    void    MakeWallFromCrossPoint(const CrossPoint& cp, Direction dir);
 
     // 迷路の描画
     void    Draw(bool usesBatch = true);
+    void    DrawCrossPoint(const CrossPoint& pos, bool usesBatch = true);
 
 };
 

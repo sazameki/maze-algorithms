@@ -15,18 +15,18 @@ using namespace std;
 /*!
     Recurvsive Backtrackingの再帰関数
  */
-static void CarvePassage(Maze *maze, Point pos)
+static void CarvePassage(Maze *maze, const CellPoint& pos)
 {
     // 方向をランダムに格納した配列を用意する
     vector<Direction> dirList = MakeAllDirectionsList_shuffled();
 
     // それぞれの方向に掘り進める
     for (auto dir : dirList) {
-        Point nextPos = pos.Move(dir);
-        if (maze->IsValid(nextPos) && maze->CheckFlag(nextPos, kBlock_CreateMarker1)) {
+        CellPoint nextPos = pos.Move(dir);
+        if (maze->IsValidCell(nextPos) && maze->CheckCellFlag(nextPos, kBlock_CreateMarker1)) {
             maze->RemoveWall(pos, dir);
-            maze->RemoveFlag(pos, kBlock_CreateMarker1);
-            maze->RemoveFlag(nextPos, kBlock_CreateMarker1);
+            maze->RemoveCellFlag(pos, kBlock_CreateMarker1);
+            maze->RemoveCellFlag(nextPos, kBlock_CreateMarker1);
             maze->Draw();
             CarvePassage(maze, nextPos);
         }
@@ -45,7 +45,7 @@ Maze *CreateMaze_RecurvsiveBacktracking(int xSize, int ySize)
     }
 
     // ランダムな座標から掘っていく
-    Point p;
+    CellPoint p;
     p.x = random() % maze->GetXSize();
     p.y = random() % maze->GetYSize();
     CarvePassage(maze, p);

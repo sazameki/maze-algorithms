@@ -20,20 +20,20 @@ Maze *CreateMaze_Prim(int xSize, int ySize)
     }
 
     // ランダムに1点選択する
-    Point p;
+    CellPoint p;
     p.x = random() % maze->GetXSize();
     p.y = random() % maze->GetYSize();
-    maze->AddFlag(p, kBlock_CreateMarker1);
+    maze->AddCellFlag(p, kBlock_CreateMarker1);
     maze->Draw();
 
     // 上下左右のマスを壁リストに登録する
     vector<Wall> walls;
     Direction dir = Up;
     for (int i = 0; i < 4; i++) {
-        Point p2 = p.Move(dir);
-        if (maze->IsValid(p2)) {
+        CellPoint p2 = p.Move(dir);
+        if (maze->IsValidCell(p2)) {
             // 壁であることを示すマーカーを追加
-            maze->AddFlag(p2, kBlock_CreateMarker2);
+            maze->AddCellFlag(p2, kBlock_CreateMarker2);
             walls.push_back(Wall(p, dir));
             maze->Draw();
         }
@@ -46,22 +46,22 @@ Maze *CreateMaze_Prim(int xSize, int ySize)
         int index = (int)(random() % walls.size());
         Wall wall = walls[index];
         walls.erase(walls.begin() + index);
-        Point p2 = wall.pos.Move(wall.dir);
+        CellPoint p2 = wall.pos.Move(wall.dir);
 
         // すでに処理済みのマスでないことをチェック
-        if (!maze->CheckFlag(p2, kBlock_CreateMarker1)) {
+        if (!maze->CheckCellFlag(p2, kBlock_CreateMarker1)) {
             // 壁であることを示すマーカーを取り除く
-            maze->RemoveFlag(p2, kBlock_CreateMarker2);
+            maze->RemoveCellFlag(p2, kBlock_CreateMarker2);
             // 処理済みであることを示すマーカー
-            maze->AddFlag(p2, kBlock_CreateMarker1);
+            maze->AddCellFlag(p2, kBlock_CreateMarker1);
             maze->Draw();
 
             // 四方の壁に対して同様の処理を繰り返す
             Direction dir = Up;
             for (int i = 0; i < 4; i++) {
-                Point p3 = p2.Move(dir);
-                if (maze->IsValid(p3)) {
-                    maze->AddFlag(p3, kBlock_CreateMarker2);
+                CellPoint p3 = p2.Move(dir);
+                if (maze->IsValidCell(p3)) {
+                    maze->AddCellFlag(p3, kBlock_CreateMarker2);
                     walls.push_back(Wall(p2, dir));
                     maze->Draw();
                 }
@@ -77,7 +77,7 @@ Maze *CreateMaze_Prim(int xSize, int ySize)
     // 生成用のフラグをクリアする
     for (int y = 0; y < maze->GetYSize(); y++) {
         for (int x = 0; x < maze->GetXSize(); x++) {
-            maze->RemoveFlag(x, y, kBlock_AllCreateMarkers);
+            maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
             maze->Draw();
         }
     }

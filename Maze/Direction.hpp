@@ -27,6 +27,7 @@ enum Direction
 
 
 Direction   GetOppositeDirection(Direction dir);
+Direction   GetRandomDirection();
 Direction   RotateRight(Direction dir);
 Direction   RotateLeft(Direction dir);
 

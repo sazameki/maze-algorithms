@@ -6,6 +6,7 @@
 //
 
 #include "Direction.hpp"
+#include <cstdlib>
 
 
 Direction GetOppositeDirection(Direction dir)
@@ -19,6 +20,11 @@ Direction GetOppositeDirection(Direction dir)
     } else {
         return Right;
     }
+}
+
+Direction GetRandomDirection()
+{
+    return (Direction)(random() % 4);
 }
 
 Direction RotateRight(Direction dir)

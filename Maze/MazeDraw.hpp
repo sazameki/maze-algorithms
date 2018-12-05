@@ -12,7 +12,8 @@
 
 
 void    DrawMaze(Maze *maze, bool usesBatch = true);
-void    DrawMan(Maze *maze, const Point& pos, Direction dir);
+void    DrawCrossPoint(Maze *maze, const CrossPoint& pos, bool usesBatch = true);
+void    DrawMan(Maze *maze, const CellPoint& pos, Direction dir);
 
 
 #endif /* MazeDraw_hpp */
