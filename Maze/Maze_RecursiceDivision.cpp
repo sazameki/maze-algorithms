@@ -8,12 +8,6 @@
 #include "Maze_RecursiceDivision.hpp"
 
 
-enum Orientation
-{
-    Horizontal,
-    Vertical,
-};
-
 struct RDRegion
 {
     int x;
@@ -46,6 +40,7 @@ struct RDRegion
     }
 };
 
+/// 次に分割する方向を決定する
 Direction ChooseDirection(const RDRegion& region)
 {
     if (region.width == region.height) {
