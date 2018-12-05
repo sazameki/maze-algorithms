@@ -1,11 +1,11 @@
 //
-//  Maze_Blobby.cpp
+//  Maze_BlobbyRecursiveDivision.cpp
 //
 //  Created by Satoshi Numata on 2018/12/04.
 //  License: Public domain.
 //
 
-#include "Maze_Blobby.hpp"
+#include "Maze_BlobbyRecursiveDivision.hpp"
 #include <vector>
 
 using namespace std;
@@ -169,8 +169,8 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
     }
 }
 
-// Blobbyのアルゴリズムの実装
-Maze *CreateMaze_Blobby(int xSize, int ySize)
+// "Blobby" RecursiveDivisionアルゴリズムの実装
+Maze *CreateMaze_BlobbyRecursiveDivision(int xSize, int ySize)
 {
     // 迷路の生成
     Maze *maze = new Maze(xSize, ySize);
@@ -189,7 +189,7 @@ Maze *CreateMaze_Blobby(int xSize, int ySize)
         DrawText("SPACE KEY TO CREATE!!", -12*10.5, -240, kColorRed);
     }
 
-    // 最初のリージョンの用意（すべてのマスを追加する）
+    // 最初の領域の用意（すべてのマスを追加する）
     BlobbyRegion region;
     for (int y = 0; y < maze->GetYSize(); y++) {
         for (int x = 0; x < maze->GetXSize(); x++) {
