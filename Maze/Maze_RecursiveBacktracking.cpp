@@ -1,8 +1,8 @@
 //
 //  Maze_RecursiveBacktracking.cpp
 //
-//  Created by numata on 2018/12/02.
-//  Copyright © 2018 Satoshi Numata. All rights reserved.
+//  Created by Satoshi Numata on 2018/12/02.
+//  License: Public domain.
 //
 
 #include "Maze_RecursiveBacktracking.hpp"

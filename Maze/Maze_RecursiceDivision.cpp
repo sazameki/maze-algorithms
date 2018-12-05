@@ -1,8 +1,8 @@
 //
 //  Maze_RecursiceDivision.cpp
 //
-//  Created by numata on 2018/12/05.
-//  Copyright © 2018 Satoshi Numata. All rights reserved.
+//  Created by Satoshi Numata on 2018/12/05.
+//  License: Public domain.
 //
 
 #include "Maze_RecursiceDivision.hpp"

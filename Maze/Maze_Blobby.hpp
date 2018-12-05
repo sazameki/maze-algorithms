@@ -1,8 +1,8 @@
 //
 //  Maze_Blobby.hpp
 //
-//  Created by numata on 2018/12/04.
-//  Copyright © 2018 Satoshi Numata. All rights reserved.
+//  Created by Satoshi Numata on 2018/12/04.
+//  License: Public domain.
 //
 
 #ifndef Maze_Blobby_hpp

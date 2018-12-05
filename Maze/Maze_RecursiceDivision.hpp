@@ -1,8 +1,8 @@
 //
 //  Maze_RecursiceDivision.hpp
 //
-//  Created by numata on 2018/12/05.
-//  Copyright © 2018 Satoshi Numata. All rights reserved.
+//  Created by Satoshi Numata on 2018/12/05.
+//  License: Public domain.
 //
 
 #ifndef Maze_RecursiceDivision_hpp
