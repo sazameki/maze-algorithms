@@ -24,6 +24,7 @@
 		8E7D3859214D1352000A2D31 /* MyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7D3858214D1352000A2D31 /* MyImageView.m */; };
 		8E7D385D214D148A000A2D31 /* MyViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E7D385C214D148A000A2D31 /* MyViewController.mm */; };
 		8E7D3860214D1534000A2D31 /* DrawMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E7D385F214D1534000A2D31 /* DrawMain.cpp */; };
+		8E856CF421B7A97D0045D00F /* Maze_RecursiceDivision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E856CF221B7A97D0045D00F /* Maze_RecursiceDivision.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,8 @@
 		8E7D385C214D148A000A2D31 /* MyViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyViewController.mm; sourceTree = "<group>"; };
 		8E7D385E214D1519000A2D31 /* Drawing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Drawing.hpp; sourceTree = "<group>"; };
 		8E7D385F214D1534000A2D31 /* DrawMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawMain.cpp; sourceTree = "<group>"; };
+		8E856CF221B7A97D0045D00F /* Maze_RecursiceDivision.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_RecursiceDivision.cpp; sourceTree = "<group>"; };
+		8E856CF321B7A97D0045D00F /* Maze_RecursiceDivision.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_RecursiceDivision.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				8E37C53621B38BEB00506F6B /* Maze_Prim.cpp */,
 				8E37C59521B6B28900506F6B /* Maze_Blobby.hpp */,
 				8E37C59421B6B28900506F6B /* Maze_Blobby.cpp */,
+				8E856CF321B7A97D0045D00F /* Maze_RecursiceDivision.hpp */,
+				8E856CF221B7A97D0045D00F /* Maze_RecursiceDivision.cpp */,
 			);
 			name = "Maze Creators";
 			sourceTree = "<group>";
@@ -236,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E7D385D214D148A000A2D31 /* MyViewController.mm in Sources */,
+				8E856CF421B7A97D0045D00F /* Maze_RecursiceDivision.cpp in Sources */,
 				8E7D383D214D126D000A2D31 /* main.m in Sources */,
 				8E37C54621B398D500506F6B /* Direction.cpp in Sources */,
 				8E429FE1214D171200DEB679 /* Drawing.cpp in Sources */,
