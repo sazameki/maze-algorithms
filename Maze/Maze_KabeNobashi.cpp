@@ -9,7 +9,7 @@
 
 
 /// 壁を延ばす最大の長さ。長く延ばしていると単調になるので、このパラメータで調整します。
-static const int kMaxExtendCount    = 1;
+static const int kMaxExtendCount    = 30;
 
 
 /*!
