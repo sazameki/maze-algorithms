@@ -8,6 +8,7 @@
 #include "Maze_RecursiceDivision.hpp"
 #include "Maze_BlobbyRecursiveDivision.hpp"
 #include "Maze_RightHand.hpp"
+#include "DungeonDraw.hpp"
 
 #include <cstdlib>
 #include <ctime>
@@ -30,6 +31,9 @@ void DrawMain()
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
     //Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
     //SolveMaze_RightHand(maze);
+
+    DungeonDraw(maze);
+
     delete maze;
 }
 
