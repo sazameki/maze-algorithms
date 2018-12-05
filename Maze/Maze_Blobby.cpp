@@ -13,6 +13,9 @@
 using namespace std;
 
 
+static const int    kGrowSpeed  = 5;
+
+
 struct BlobbyRegion
 {
     vector<Point>   cells;
@@ -42,11 +45,6 @@ struct BlobbyRegion
         return (int)cells.size();
     }
 };
-
-
-static const int    kThreshold  = 4;
-static const int    kGrowSpeed  = 5;
-static const int    kWallSpeed  = 2;
 
 
 void DivideRegion(Maze *maze, const BlobbyRegion& region)
