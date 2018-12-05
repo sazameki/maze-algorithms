@@ -9,7 +9,6 @@
 
 #include <vector>
 
-
 using namespace std;
 
 
@@ -24,10 +23,10 @@ static void CarvePassage(Maze *maze, Point pos)
     // それぞれの方向に掘り進める
     for (auto dir : dirList) {
         Point nextPos = pos.Move(dir);
-        if (maze->IsValid(nextPos) && !maze->CheckFlag(nextPos, kBlock_CreateMarker1)) {
+        if (maze->IsValid(nextPos) && maze->CheckFlag(nextPos, kBlock_CreateMarker1)) {
             maze->RemoveWall(pos, dir);
-            maze->AddFlag(pos, kBlock_CreateMarker1);
-            maze->AddFlag(nextPos, kBlock_CreateMarker1);
+            maze->RemoveFlag(pos, kBlock_CreateMarker1);
+            maze->RemoveFlag(nextPos, kBlock_CreateMarker1);
             maze->Draw();
             CarvePassage(maze, nextPos);
         }
@@ -37,7 +36,7 @@ static void CarvePassage(Maze *maze, Point pos)
 Maze *CreateMaze_RecurvsiveBacktracking(int xSize, int ySize)
 {
     // 迷路の生成
-    Maze *maze = new Maze(xSize, ySize, kBlock_AllBorders);
+    Maze *maze = new Maze(xSize, ySize, kBlock_AllBorders | kBlock_CreateMarker1);
     maze->Draw();
 
     // 開始のためのキー入力待ち
@@ -45,19 +44,11 @@ Maze *CreateMaze_RecurvsiveBacktracking(int xSize, int ySize)
         DrawText("SPACE KEY TO CREATE!!", -12*10.5, -240, kColorRed);
     }
 
-    // ランダムな座標から彫っていく
+    // ランダムな座標から掘っていく
     Point p;
     p.x = random() % maze->GetXSize();
     p.y = random() % maze->GetYSize();
     CarvePassage(maze, p);
-
-    // 生成用のフラグをクリアする
-    for (int y = 0; y < maze->GetYSize(); y++) {
-        for (int x = 0; x < maze->GetXSize(); x++) {
-            maze->RemoveFlag(x, y, kBlock_AllCreateMarkers);
-            maze->Draw();
-        }
-    }
 
     return maze;
 }

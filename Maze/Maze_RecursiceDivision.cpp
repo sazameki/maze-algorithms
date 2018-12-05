@@ -64,9 +64,9 @@ void DivideRegion(Maze *maze, const RDRegion& region)
         for (int x = region.x; x < region.x+region.width; x++) {
             maze->AddFlag(x, y, kBlock_CreateMarker1);
         }
-        maze->Draw();
     }
-    
+    maze->Draw();
+
     // 壁を作る方向を確認する
     Direction makingDir = ChooseDirection(region);
 

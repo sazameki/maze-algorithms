@@ -54,8 +54,8 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
     for (Point cell : region.cells) {
         maze->RemoveFlag(cell, kBlock_AllCreateMarkers);
         maze->AddFlag(cell, kBlock_CreateMarker1);
-        maze->Draw();
     }
+    maze->Draw();
 
     // マスを2つランダムに選ぶ
     int aIndex, bIndex;
