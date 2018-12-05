@@ -6,16 +6,16 @@
 //
 
 #include "Maze_Blobby.hpp"
-#include <cstdio>
-#include <stack>
 #include <vector>
 
 using namespace std;
 
 
+/// 分割を切り上げるまでの回数
 static const int    kGrowSpeed  = 5;
 
 
+/// 分割対象の領域を表す構造体
 struct BlobbyRegion
 {
     vector<Point>   cells;
@@ -47,6 +47,7 @@ struct BlobbyRegion
 };
 
 
+/// 与えられた領域を2分割する
 void DivideRegion(Maze *maze, const BlobbyRegion& region)
 {
     // 対象の領域をマーキング
@@ -112,11 +113,11 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
                 // サブ領域に近隣のマスを追加する
                 subregions[(cellFlag & kBlock_CreateMarker2)? 0: 1].AddCell(neighbor);
 
-                // サブ領域もチェック対象の領域として追加する
+                // 近隣のマスもチェック対象の領域として追加する
                 frontiers.push_back(neighbor);
                 growCount++;
             } else {
-                // 近隣の未チェックのマスがないマスは取り除く
+                // 近隣をすべてチェック済みのマスは取り除く
                 frontiers.erase(frontiers.begin() + index);
             }
         }
@@ -168,6 +169,7 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
     }
 }
 
+// Blobbyのアルゴリズムの実装
 Maze *CreateMaze_Blobby(int xSize, int ySize)
 {
     // 迷路の生成

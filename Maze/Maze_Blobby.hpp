@@ -13,6 +13,7 @@
 
 
 /// "Blobby" Recursive Subdivisionのアルゴリズムによる迷路生成
+/// cf: https://www.jamisbuck.org/mazes/
 Maze    *CreateMaze_Blobby(int xSize, int ySize);
 
 
