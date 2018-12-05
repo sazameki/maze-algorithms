@@ -24,7 +24,7 @@ const int kColorSolveMarker3    = 0xd0d040;
 const int kColorStart       = 0x40d040;
 const int kColorGoal        = 0xe04040;
 
-const int kBlockSize    = 21;   // 奇数を推奨
+const int kBlockSize    = 15;   // 奇数を推奨
 const int kBorderSize   = 2;
 
 const float kWaitMaze   = 0.01f;

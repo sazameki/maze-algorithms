@@ -16,8 +16,8 @@ using namespace std;
 
 void DrawMain()
 {
-    int xSize = 10;
-    int ySize = 10;
+    int xSize = 30;
+    int ySize = 20;
 
     srandom((unsigned int)time(NULL));
 
