@@ -14,9 +14,11 @@
 // マーカー4: 彫り終わった通路で、周囲に空きがない
 
 
+/// 穴を掘る最大の長さ。長く穴を掘っていると単調になるので、このパラメータで調整します。
 static const int kMaxDigCount   = 20;
 
 
+// 穴掘り法の実装
 Maze *CreateMaze_AnaHori(int xSize, int ySize)
 {
     // 迷路の生成
