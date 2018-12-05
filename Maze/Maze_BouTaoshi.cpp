@@ -12,7 +12,7 @@
 Maze *CreateMaze_BouTaoshi(int xSize, int ySize)
 {
     // 迷路の生成
-    Maze *maze = new Maze(xSize, ySize, kBlock_CreateMarker1);
+    Maze *maze = new Maze(xSize, ySize);
     for (int x = 0; x < maze->GetXSize(); x++) {
         maze->MakeWall(x, 0, Up);
         maze->MakeWall(x, maze->GetYSize() - 1, Down);
@@ -29,56 +29,51 @@ Maze *CreateMaze_BouTaoshi(int xSize, int ySize)
     }
 
     // 最初の行
-    for (int x = 0; x < maze->GetXSize()-1; x++) {
-        // (x,0),(x+1,0),(x+1,1),(x,1)のマスの中間にある枠線（上下左右）を書く
-        int r;
-        do {
-            r = random() % 4;
-        } while ((r == 0 && maze->CheckWall(x, 0, Right)) ||
-                 (r == 1 && maze->CheckWall(x, 1, Right)) ||
-                 (r == 2 && maze->CheckWall(x+1, 0, Down)) ||
-                 (r == 3 && maze->CheckWall(x, 0, Down)));
-        if (r == 0) {
-            maze->MakeWall(x, 0, Right);
-        } else if (r == 1) {
-            maze->MakeWall(x, 1, Right);
-        } else if (r == 2) {
-            maze->MakeWall(x + 1, 0, Down);
-        } else {
-            maze->MakeWall(x, 0, Down);
+    for (int cx = 1; cx <= maze->GetXSize()-1; cx++) {
+        // 各交点から上下左右いずれかの方向に壁を作る
+        CrossPoint cp(cx, 1);
+        vector<Direction> dirs = MakeAllDirectionsList_shuffled();
+        for (int i = 0; i < 4; i++) {
+            if (!maze->CheckWallFromCrossPoint(cp, dirs[i])) {
+                maze->DrawCrossPoint(cp);
+                Sleep(0.02f);
+                maze->MakeWallFromCrossPoint(cp, dirs[i]);
+                maze->Draw();
+                maze->DrawCrossPoint(cp.Move(dirs[i]));
+                Sleep(0.02f);
+                break;
+            }
         }
-        maze->RemoveCellFlag(x, 0, kBlock_CreateMarker1);
-        maze->RemoveCellFlag(x+1, 0, kBlock_CreateMarker1);
-        maze->RemoveCellFlag(x, 1, kBlock_CreateMarker1);
-        maze->RemoveCellFlag(x+1, 1, kBlock_CreateMarker1);
-        maze->Draw();
     }
+    maze->Draw();
 
     // 2行目以降
-    for (int y = 1; y < maze->GetYSize()-1; y++) {
-        for (int x = 0; x < maze->GetXSize()-1; x++) {
-            // (x,0),(x+1,0),(x+1,1),(x,1)のマスの中間にある枠線（上を除く）を書く
-            int r;
-            do {
-                r = random() % 3;
-            } while ((r == 0 && maze->CheckWall(x, y+1, Right)) ||
-                     (r == 1 && maze->CheckWall(x+1, y, Down)) ||
-                     (r == 2 && maze->CheckWall(x, y, Down)));
-            if (r == 0) {
-                maze->MakeWall(x, y + 1, Right);
-            } else if (r == 1) {
-                maze->MakeWall(x + 1, y, Down);
-            } else {
-                maze->MakeWall(x, y, Down);
+    for (int cy = 2; cy <= maze->GetYSize()-1; cy++) {
+        for (int cx = 1; cx <= maze->GetXSize()-1; cx++) {
+            // 各交点から下左右いずれかの方向に壁を作る
+            CrossPoint cp(cx, cy);
+            vector<Direction> dirs = MakeAllDirectionsList_shuffled();
+            for (int i = 0; i < 4; i++) {
+                if (dirs[i] == Up) {
+                    continue;
+                }
+                if (!maze->CheckWallFromCrossPoint(cp, dirs[i])) {
+                    maze->DrawCrossPoint(cp);
+                    Sleep(0.02f);
+                    maze->MakeWallFromCrossPoint(cp, dirs[i]);
+                    maze->Draw();
+                    maze->DrawCrossPoint(cp.Move(dirs[i]));
+                    Sleep(0.02f);
+                    break;
+                }
             }
-            maze->RemoveCellFlag(x, y, kBlock_CreateMarker1);
-            maze->RemoveCellFlag(x+1, y, kBlock_CreateMarker1);
-            maze->RemoveCellFlag(x, y+1, kBlock_CreateMarker1);
-            maze->RemoveCellFlag(x+1, y+1, kBlock_CreateMarker1);
-            maze->Draw();
         }
     }
 
+    // 交点の表示を消すために再描画
+    maze->Draw();
+
+    // 終了
     return maze;
 }
 
