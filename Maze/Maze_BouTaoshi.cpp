@@ -12,7 +12,7 @@
 Maze *CreateMaze_BouTaoshi(int xSize, int ySize)
 {
     // 迷路の生成
-    Maze *maze = new Maze(xSize, ySize, kBlock_CreateMarker1);
+    Maze *maze = new Maze(xSize, ySize);
     for (int x = 0; x < maze->GetXSize(); x++) {
         maze->MakeWall(x, 0, Up);
         maze->MakeWall(x, maze->GetYSize() - 1, Down);
@@ -47,11 +47,11 @@ Maze *CreateMaze_BouTaoshi(int xSize, int ySize)
         } else {
             maze->MakeWall(x, 0, Down);
         }
-        maze->RemoveCellFlag(x, 0, kBlock_CreateMarker1);
+        /*maze->RemoveCellFlag(x, 0, kBlock_CreateMarker1);
         maze->RemoveCellFlag(x+1, 0, kBlock_CreateMarker1);
         maze->RemoveCellFlag(x, 1, kBlock_CreateMarker1);
         maze->RemoveCellFlag(x+1, 1, kBlock_CreateMarker1);
-        maze->Draw();
+        maze->Draw();*/
     }
 
     // 2行目以降
@@ -71,13 +71,14 @@ Maze *CreateMaze_BouTaoshi(int xSize, int ySize)
             } else {
                 maze->MakeWall(x, y, Down);
             }
-            maze->RemoveCellFlag(x, y, kBlock_CreateMarker1);
+            /*maze->RemoveCellFlag(x, y, kBlock_CreateMarker1);
             maze->RemoveCellFlag(x+1, y, kBlock_CreateMarker1);
             maze->RemoveCellFlag(x, y+1, kBlock_CreateMarker1);
             maze->RemoveCellFlag(x+1, y+1, kBlock_CreateMarker1);
-            maze->Draw();
+            maze->Draw();*/
         }
     }
+    maze->Draw();
 
     return maze;
 }

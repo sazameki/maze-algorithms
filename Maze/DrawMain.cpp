@@ -23,15 +23,18 @@ void DrawMain()
 
     srandom((unsigned int)time(NULL));
 
-    //Maze *maze = CreateMaze_BouTaoshi(xSize, ySize);
+    Maze *maze = CreateMaze_BouTaoshi(xSize, ySize);
     //Maze *maze = CreateMaze_AnaHori(xSize, ySize);
-    Maze *maze = CreateMaze_KabeNobashi(xSize, ySize);
+    //Maze *maze = CreateMaze_KabeNobashi(xSize, ySize);
     //Maze *maze = CreateMaze_RecurvsiveBacktracking(xSize, ySize);
     //Maze *maze = CreateMaze_Prim(xSize, ySize);
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
     //Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
     //SolveMaze_RightHand(maze);
 
+    Sleep(2.0f);
+    
+    // ダンジョン風の描画
     DungeonDraw(maze);
 
     delete maze;

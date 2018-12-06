@@ -169,6 +169,15 @@ int Maze::GetCellData(const CellPoint& pos) const
     return data[pos.y * xSize + pos.x];
 }
 
+void Maze::SetCellData(int x, int y, int value)
+{
+    data[y * xSize + x] = value;
+}
+void Maze::SetCellData(const CellPoint& pos, int value)
+{
+    data[pos.y * xSize + pos.x] = value;
+}
+
 bool Maze::CheckCellFlag(int x, int y, int flag) const
 {
     return ((data[y * xSize + x] & flag) > 0);

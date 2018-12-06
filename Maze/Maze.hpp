@@ -94,6 +94,8 @@ public:
 
     int     GetCellData(int x, int y) const;
     int     GetCellData(const CellPoint& pos) const;
+    void    SetCellData(int x, int y, int value);
+    void    SetCellData(const CellPoint& pos, int value);
     bool    CheckCellFlag(int x, int y, int flag) const;
     bool    CheckCellFlag(const CellPoint& pos, int flag) const;
     bool    IsValidCell(const CellPoint& pos) const;
