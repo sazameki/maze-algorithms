@@ -17,10 +17,15 @@ static int kWallSideColor   = 0x808080;
 static int kBorderColor     = 0x202020;
 
 static int kPaddingX    = -300;
-static int kPaddingY    = -310;
+static int kPaddingY    = -180;
 static int kBlockSizeX  = 25;
 static int kBlockSizeY  = 26;
 static int kBorderSize  = 2;
+
+static int kMapSizeX = 10;
+static int kMapSizeY = 10;
+static int kMapPaddingX = 130;
+static int kMapPaddingY = -200;
 
 
 struct Vector2Int
@@ -51,7 +56,7 @@ static Vector2Int ConvertPoint(Maze *maze, const Vector2Int& p)
 {
     Vector2Int ret;
     ret.x = p.x * kBlockSizeX + kPaddingX;
-    ret.y = (maze->GetYSize() - p.y) * kBlockSizeY + kPaddingY;
+    ret.y = (16 - p.y - 1) * kBlockSizeY + kPaddingY;
     return ret;
 }
 
@@ -211,22 +216,91 @@ void DrawMap(Maze *maze, bool map[], const CellPoint& currentPos)
             if (map[y * maze->GetXSize() + x]) {
                 color = kColorYellow;
             }
-            FillRect(x * 5 + 130, (maze->GetYSize()-y-1) * 5 - 200, 5, 5, color);
+            FillRect(x * kMapSizeX + kMapPaddingX, (maze->GetYSize()-y-1) * kMapSizeY + kMapPaddingY, kMapSizeX, kMapSizeY, color);
         }
     }
-    FillRect(currentPos.x * 5 + 130, (maze->GetYSize()-currentPos.y-1) * 5 - 200, 5, 5, kColorRed);
+    FillRect(currentPos.x * kMapSizeX + kMapPaddingX, (maze->GetYSize()-currentPos.y-1) * kMapSizeY + kMapPaddingY, kMapSizeX, kMapSizeY, kColorRed);
 }
 
+/// 人間の入力による迷路探索
+static void Move_HumanInput(Maze *maze, bool map[], CellPoint& pos, Direction& dir)
+{
+    static bool oldLeftKey = false;
+    static bool oldRightKey = false;
+    static bool oldUpKey = false;
+    static bool oldDownKey = false;
+
+    bool leftKey = CheckKey(kKeyLeftArrow);
+    bool rightKey = CheckKey(kKeyRightArrow);
+    bool upKey = CheckKey(kKeyUpArrow);
+    bool downKey = CheckKey(kKeyDownArrow);
+    if (leftKey && !oldLeftKey) {
+        dir = RotateLeft(dir);
+    }
+    if (rightKey && !oldRightKey) {
+        dir = RotateRight(dir);
+    }
+    if (upKey && !oldUpKey) {
+        CellPoint nextPos = pos.Move(dir);
+        if (maze->IsValidCell(nextPos) && !maze->CheckWall(pos, dir)) {
+            pos = nextPos;
+            map[pos.y * maze->GetXSize() + pos.x] = true;
+        }
+    }
+    if (downKey && !oldDownKey) {
+        Direction oppDir = GetOppositeDirection(dir);
+        CellPoint nextPos = pos.Move(oppDir);
+        if (maze->IsValidCell(nextPos) && !maze->CheckWall(pos, oppDir)) {
+            pos = nextPos;
+            map[pos.y * maze->GetXSize() + pos.x] = true;
+        }
+    }
+    oldLeftKey = leftKey;
+    oldRightKey = rightKey;
+    oldUpKey = upKey;
+}
+
+/// 右手法による迷路探索
+static void Move_RightHand(Maze *maze, bool map[], CellPoint& pos, Direction& dir)
+{
+    static bool isFinished = false;
+    static bool hasMovedForward = false;
+    if (isFinished) {
+        return;
+    }
+
+    // 右側の壁が空いていれば右回転
+    if (hasMovedForward) {
+        hasMovedForward = false;
+        Direction rightDir = RotateRight(dir);
+        if (!maze->CheckWall(pos, rightDir)) {
+            dir = rightDir;
+            Sleep(0.2f);
+            return;
+        }
+    }
+
+    // 正面に壁があったら左回転
+    if (maze->CheckWall(pos, dir)) {
+        dir = RotateLeft(dir);
+    }
+    // 正面に壁がなければ前進
+    else {
+        pos = pos.Move(dir);
+        map[pos.y * maze->GetXSize() + pos.x] = true;
+        hasMovedForward = true;
+    }
+    Sleep(0.2f);
+}
+
+/// ダンジョン風の迷路表示と探索
 void DungeonDraw(Maze *maze)
 {
     Maze *mini = new Maze(3, 3);
     CellPoint pos(0, 0);
     Direction dir = Down;
-    bool oldLeftKey = false;
-    bool oldRightKey = false;
-    bool oldUpKey = false;
-    bool oldDownKey = false;
     
+    // ミニマップの作成
     bool map[maze->GetXSize() * maze->GetYSize()];
     for (int y = 0; y < maze->GetYSize(); y++) {
         for (int x = 0; x < maze->GetXSize(); x++) {
@@ -235,35 +309,10 @@ void DungeonDraw(Maze *maze)
     }
     map[pos.y * maze->GetXSize() + pos.x] = true;
 
-    while (true) {
-        bool leftKey = CheckKey(kKeyLeftArrow);
-        bool rightKey = CheckKey(kKeyRightArrow);
-        bool upKey = CheckKey(kKeyUpArrow);
-        bool downKey = CheckKey(kKeyDownArrow);
-        if (leftKey && !oldLeftKey) {
-            dir = RotateLeft(dir);
-        }
-        if (rightKey && !oldRightKey) {
-            dir = RotateRight(dir);
-        }
-        if (upKey && !oldUpKey) {
-            CellPoint nextPos = pos.Move(dir);
-            if (maze->IsValidCell(nextPos) && !maze->CheckWall(pos, dir)) {
-                pos = nextPos;
-                map[pos.y * maze->GetXSize() + pos.x] = true;
-            }
-        }
-        if (downKey && !oldDownKey) {
-            Direction oppDir = GetOppositeDirection(dir);
-            CellPoint nextPos = pos.Move(oppDir);
-            if (maze->IsValidCell(nextPos) && !maze->CheckWall(pos, oppDir)) {
-                pos = nextPos;
-                map[pos.y * maze->GetXSize() + pos.x] = true;
-            }
-        }
-        oldLeftKey = leftKey;
-        oldRightKey = rightKey;
-        oldUpKey = upKey;
+    // 迷路を解くループ
+    while (pos.x != maze->GetXSize() - 1 || pos.y != maze->GetYSize() - 1) {
+        //Move_HumanInput(maze, map, pos, dir);
+        Move_RightHand(maze, map, pos, dir);
 
         CopyMazeToMiniMaze(maze, mini, pos, dir);
 
@@ -317,7 +366,9 @@ void DungeonDraw(Maze *maze)
         DrawMap(maze, map, pos);
         EndBatch();
     }
-        
+
+    DrawText("SOLVED!! CMD-R TO RESTART.", -12*13, -240, kColorBlue);
+
     delete mini;
 }
 
