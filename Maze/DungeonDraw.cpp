@@ -14,17 +14,15 @@ static int kCeilingColor    = 0x505050;
 static int kFloorColor      = 0xa0a0a0;
 static int kWallFaceColor   = 0xc0c0c0;
 static int kWallSideColor   = 0x808080;
-static int kBorderColor     = 0x202020;
 
-static int kPaddingX    = -300;
+static int kPaddingX    = -250;
 static int kPaddingY    = -180;
 static int kBlockSizeX  = 25;
 static int kBlockSizeY  = 26;
-static int kBorderSize  = 2;
 
 static int kMapSizeX = 10;
 static int kMapSizeY = 10;
-static int kMapPaddingX = 130;
+static int kMapPaddingX = 180;
 static int kMapPaddingY = -200;
 
 
@@ -91,41 +89,6 @@ static void FillQuad(Maze *maze, const Vector2Int& p1, const Vector2Int& p2, con
 
     FillTriangle(d1.x, d1.y, d2.x, d2.y, d3.x, d3.y, color);
     FillTriangle(d1.x, d1.y, d3.x, d3.y, d4.x, d4.y, color);
-}
-
-static void DrawQuad(Maze *maze, const Vector2Int& p1, const Vector2Int& p2, const Vector2Int& p3, const Vector2Int& p4, int color)
-{
-    Vector2Int d1 = ConvertPoint(maze, p1);
-    Vector2Int d2 = ConvertPoint(maze, p2);
-    Vector2Int d3 = ConvertPoint(maze, p3);
-    Vector2Int d4 = ConvertPoint(maze, p4);
-    
-    DrawLine(d1.x, d1.y, d2.x, d2.y, color);
-    DrawLine(d2.x, d2.y, d3.x, d3.y, color);
-    DrawLine(d3.x, d3.y, d4.x, d4.y, color);
-    DrawLine(d4.x, d4.y, d1.x, d1.y, color);
-}
-
-static void DrawRect(Maze *maze, const Vector2Int& startPos, const Vector2Int& size, int color)
-{
-    Vector2Int sp(startPos);
-    if (sp.x < 0) {
-        sp.x = 0;
-    }
-    Vector2Int p1 = ConvertPoint(maze, sp);
-    Vector2Int p2(startPos);
-    p2.x += size.x;
-    p2.y += size.y;
-    if (p2.x < 0) {
-        p2.x = 0;
-    } else if (p2.x > 16) {
-        p2.x = 16;
-    }
-    if (p2.y < 0) {
-        p2.y = 0;
-    }
-    p2 = ConvertPoint(maze, p2);
-    DrawRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y, color);
 }
 
 static void DrawBackground(Maze *maze)
@@ -208,22 +171,38 @@ void CopyMazeToMiniMaze(Maze *srcMaze, Maze *destMini, const CellPoint& pos, Dir
     }
 }
 
-void DrawMap(Maze *maze, bool map[], const CellPoint& currentPos)
+void DrawMap(Maze *maze, int map[], const CellPoint& currentPos)
 {
     for (int y = 0; y < maze->GetYSize(); y++) {
         for (int x = 0; x < maze->GetXSize(); x++) {
             int color = kColorBlue;
-            if (map[y * maze->GetXSize() + x]) {
+            if (map[y * maze->GetXSize() + x] & kBlock_SolveMarker1) {
                 color = kColorYellow;
             }
             FillRect(x * kMapSizeX + kMapPaddingX, (maze->GetYSize()-y-1) * kMapSizeY + kMapPaddingY, kMapSizeX, kMapSizeY, color);
         }
     }
     FillRect(currentPos.x * kMapSizeX + kMapPaddingX, (maze->GetYSize()-currentPos.y-1) * kMapSizeY + kMapPaddingY, kMapSizeX, kMapSizeY, kColorRed);
+    for (int y = 0; y < maze->GetYSize(); y++) {
+        for (int x = 0; x < maze->GetXSize(); x++) {
+            if (map[y * maze->GetXSize() + x] & kBlock_TopBorder) {
+                FillRect(x * kMapSizeX + kMapPaddingX, (maze->GetYSize()-y) * kMapSizeY + kMapPaddingY - 1, kMapSizeX, 1, kColorBlack);
+            }
+            if (map[y * maze->GetXSize() + x] & kBlock_LeftBorder) {
+                FillRect(x * kMapSizeX + kMapPaddingX, (maze->GetYSize()-y-1) * kMapSizeY + kMapPaddingY, 1, kMapSizeY, kColorBlack);
+            }
+            if (map[y * maze->GetXSize() + x] & kBlock_BottomBorder) {
+                FillRect(x * kMapSizeX + kMapPaddingX, (maze->GetYSize()-y-1) * kMapSizeY + kMapPaddingY, kMapSizeX, 1, kColorBlack);
+            }
+            if (map[y * maze->GetXSize() + x] & kBlock_RightBorder) {
+                FillRect((x + 1) * kMapSizeX + kMapPaddingX - 1, (maze->GetYSize()-y-1) * kMapSizeY + kMapPaddingY, 1, kMapSizeY, kColorBlack);
+            }
+        }
+    }
 }
 
 /// 人間の入力による迷路探索
-static void Move_HumanInput(Maze *maze, bool map[], CellPoint& pos, Direction& dir)
+static void Move_HumanInput(Maze *maze, int map[], CellPoint& pos, Direction& dir)
 {
     static bool oldLeftKey = false;
     static bool oldRightKey = false;
@@ -244,7 +223,7 @@ static void Move_HumanInput(Maze *maze, bool map[], CellPoint& pos, Direction& d
         CellPoint nextPos = pos.Move(dir);
         if (maze->IsValidCell(nextPos) && !maze->CheckWall(pos, dir)) {
             pos = nextPos;
-            map[pos.y * maze->GetXSize() + pos.x] = true;
+            map[pos.y * maze->GetXSize() + pos.x] = maze->GetCellData(pos);
         }
     }
     if (downKey && !oldDownKey) {
@@ -252,7 +231,7 @@ static void Move_HumanInput(Maze *maze, bool map[], CellPoint& pos, Direction& d
         CellPoint nextPos = pos.Move(oppDir);
         if (maze->IsValidCell(nextPos) && !maze->CheckWall(pos, oppDir)) {
             pos = nextPos;
-            map[pos.y * maze->GetXSize() + pos.x] = true;
+            map[pos.y * maze->GetXSize() + pos.x] = maze->GetCellData(pos);
         }
     }
     oldLeftKey = leftKey;
@@ -261,7 +240,7 @@ static void Move_HumanInput(Maze *maze, bool map[], CellPoint& pos, Direction& d
 }
 
 /// 右手法による迷路探索
-static void Move_RightHand(Maze *maze, bool map[], CellPoint& pos, Direction& dir)
+static void Move_RightHand(Maze *maze, int map[], CellPoint& pos, Direction& dir)
 {
     static bool isFinished = false;
     static bool hasMovedForward = false;
@@ -287,7 +266,7 @@ static void Move_RightHand(Maze *maze, bool map[], CellPoint& pos, Direction& di
     // 正面に壁がなければ前進
     else {
         pos = pos.Move(dir);
-        map[pos.y * maze->GetXSize() + pos.x] = true;
+        map[pos.y * maze->GetXSize() + pos.x] = maze->GetCellData(pos) | kBlock_SolveMarker1;
         hasMovedForward = true;
     }
     Sleep(0.2f);
@@ -301,13 +280,13 @@ void DungeonDraw(Maze *maze)
     Direction dir = Down;
     
     // ミニマップの作成
-    bool map[maze->GetXSize() * maze->GetYSize()];
+    int map[maze->GetXSize() * maze->GetYSize()];
     for (int y = 0; y < maze->GetYSize(); y++) {
         for (int x = 0; x < maze->GetXSize(); x++) {
-            map[y * maze->GetXSize() + x] = false;
+            map[y * maze->GetXSize() + x] = 0;
         }
     }
-    map[pos.y * maze->GetXSize() + pos.x] = true;
+    map[pos.y * maze->GetXSize() + pos.x] = maze->GetCellData(pos) | kBlock_SolveMarker1;
 
     // 迷路を解くループ
     while (pos.x != maze->GetXSize() - 1 || pos.y != maze->GetYSize() - 1) {
