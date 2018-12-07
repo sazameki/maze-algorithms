@@ -10,11 +10,6 @@
 
 void SolveMaze_RightHand(Maze *maze)
 {
-    // 開始のためのキー入力待ち
-    while (!CheckKey(kKeySpace)) {
-        DrawText("SPACE KEY TO SOLVE!!", -12*10, -240, kColorOrange);
-    }
-
     // (0, 0)の地点をスタートとして繰り返し
     CellPoint pos(0, 0);
     Direction dir = Right;
