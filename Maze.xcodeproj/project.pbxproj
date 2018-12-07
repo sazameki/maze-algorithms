@@ -78,15 +78,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8E37C53F21B3947B00506F6B /* Maze Creators */ = {
+		8E37C53F21B3947B00506F6B /* Maze Creators (Cell Base) */ = {
 			isa = PBXGroup;
 			children = (
-				8E37C54221B394B300506F6B /* Maze_BouTaoshi.hpp */,
-				8E37C54121B394B300506F6B /* Maze_BouTaoshi.cpp */,
 				8E37C53D21B38F4E00506F6B /* Maze_AnaHori.hpp */,
 				8E37C53C21B38F4E00506F6B /* Maze_AnaHori.cpp */,
-				8E37C59821B8305600506F6B /* Maze_KabeNobashi.hpp */,
-				8E37C59721B8305600506F6B /* Maze_KabeNobashi.cpp */,
 				8E37C53421B38ABE00506F6B /* Maze_RecursiveBacktracking.hpp */,
 				8E37C53321B38ABE00506F6B /* Maze_RecursiveBacktracking.cpp */,
 				8E37C53721B38BEB00506F6B /* Maze_Prim.hpp */,
@@ -96,7 +92,7 @@
 				8E37C59521B6B28900506F6B /* Maze_BlobbyRecursiveDivision.hpp */,
 				8E37C59421B6B28900506F6B /* Maze_BlobbyRecursiveDivision.cpp */,
 			);
-			name = "Maze Creators";
+			name = "Maze Creators (Cell Base)";
 			sourceTree = "<group>";
 		};
 		8E37C54021B3948D00506F6B /* Maze Basics */ = {
@@ -157,7 +153,8 @@
 			children = (
 				8E7D385F214D1534000A2D31 /* DrawMain.cpp */,
 				8E37C54021B3948D00506F6B /* Maze Basics */,
-				8E37C53F21B3947B00506F6B /* Maze Creators */,
+				8EFAEFFE21BAC78C0003A043 /* Maze Creators (CrossPoint Base) */,
+				8E37C53F21B3947B00506F6B /* Maze Creators (Cell Base) */,
 				8E37C54A21B39B8D00506F6B /* Maze Solvers */,
 				8E7D3837214D126D000A2D31 /* Supporting Files */,
 			);
@@ -174,6 +171,17 @@
 				8E429FE3214D644C00DEB679 /* Other Files */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8EFAEFFE21BAC78C0003A043 /* Maze Creators (CrossPoint Base) */ = {
+			isa = PBXGroup;
+			children = (
+				8E37C54221B394B300506F6B /* Maze_BouTaoshi.hpp */,
+				8E37C54121B394B300506F6B /* Maze_BouTaoshi.cpp */,
+				8E37C59821B8305600506F6B /* Maze_KabeNobashi.hpp */,
+				8E37C59721B8305600506F6B /* Maze_KabeNobashi.cpp */,
+			);
+			name = "Maze Creators (CrossPoint Base)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
