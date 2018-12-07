@@ -19,8 +19,8 @@ using namespace std;
 void DrawMain()
 {
     // 迷路のサイズ
-    int xSize = 30;
-    int ySize = 20;
+    int xSize = 20;
+    int ySize = 12;
 
     // 乱数の初期化
     srandom((unsigned int)time(NULL));
