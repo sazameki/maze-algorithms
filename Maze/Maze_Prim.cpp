@@ -7,11 +7,17 @@
 
 #include "Maze_Prim.hpp"
 
+
+// タグ1: 処理済み
+// タグ2: チェック中の壁
+
+
 /// Primのアルゴリズムによる迷路生成
 Maze *CreateMaze_Prim(int xSize, int ySize)
 {
     // 迷路の生成
-    Maze *maze = new Maze(xSize, ySize, kBlock_AllBorders);
+    Maze *maze = new Maze(xSize, ySize, kCell_AllBorders);
+    maze->SetTagForAllCells(1);
     maze->Draw();
 
     // 開始のためのキー入力待ち
@@ -23,7 +29,7 @@ Maze *CreateMaze_Prim(int xSize, int ySize)
     CellPoint p;
     p.x = random() % maze->GetXSize();
     p.y = random() % maze->GetYSize();
-    maze->AddCellFlag(p, kBlock_CreateMarker1);
+    maze->SetCellTag(p, 0);
     maze->Draw();
 
     // 上下左右のマスを壁リストに登録する
@@ -32,14 +38,13 @@ Maze *CreateMaze_Prim(int xSize, int ySize)
     for (int i = 0; i < 4; i++) {
         CellPoint p2 = p.Move(dir);
         if (maze->IsValidCell(p2)) {
-            // 壁であることを示すマーカーを追加
-            maze->AddCellFlag(p2, kBlock_CreateMarker2);
+            // 壁であることを示すタグを追加
             walls.push_back(Wall(p, dir));
+            maze->SetCellTag(p2, 2);
             maze->Draw();
         }
         dir = RotateRight(dir);
     }
-    maze->Draw();
 
     // 壁リストに登録された壁を取り除いていく
     while (walls.size() > 0) {
@@ -47,41 +52,30 @@ Maze *CreateMaze_Prim(int xSize, int ySize)
         Wall wall = walls[index];
         walls.erase(walls.begin() + index);
         CellPoint p2 = wall.pos.Move(wall.dir);
+        maze->SetCellTag(wall.pos, 0);
+        maze->Draw();
 
         // すでに処理済みのマスでないことをチェック
-        if (!maze->CheckCellFlag(p2, kBlock_CreateMarker1)) {
-            // 壁であることを示すマーカーを取り除く
-            maze->RemoveCellFlag(p2, kBlock_CreateMarker2);
-            // 処理済みであることを示すマーカー
-            maze->AddCellFlag(p2, kBlock_CreateMarker1);
-            maze->Draw();
-
+        if (maze->GetCellTag(p2) != 0) {
             // 四方の壁に対して同様の処理を繰り返す
             Direction dir = Up;
             for (int i = 0; i < 4; i++) {
                 CellPoint p3 = p2.Move(dir);
-                if (maze->IsValidCell(p3)) {
-                    maze->AddCellFlag(p3, kBlock_CreateMarker2);
+                if (maze->IsValidCell(p3) && maze->GetCellTag(p3) == 1) {
                     walls.push_back(Wall(p2, dir));
+                    maze->SetCellTag(p3, 2);
                     maze->Draw();
                 }
                 dir = RotateRight(dir);
             }
-
-            // 壁を取り除く処理
+            // 壁を取り除いて、処理済みにする
             maze->RemoveWall(wall);
+            maze->SetCellTag(p2, 0);
             maze->Draw();
         }
     }
 
-    // 生成用のフラグをクリアする
-    for (int y = 0; y < maze->GetYSize(); y++) {
-        for (int x = 0; x < maze->GetXSize(); x++) {
-            maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
-            maze->Draw();
-        }
-    }
-
+    // 終了
     return maze;
 }
 

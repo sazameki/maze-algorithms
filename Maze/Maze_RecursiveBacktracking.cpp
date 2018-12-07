@@ -23,10 +23,9 @@ static void CarvePassage(Maze *maze, const CellPoint& pos)
     // それぞれの方向に掘り進める
     for (auto dir : dirList) {
         CellPoint nextPos = pos.Move(dir);
-        if (maze->IsValidCell(nextPos) && maze->CheckCellFlag(nextPos, kBlock_CreateMarker1)) {
+        if (maze->IsValidCell(nextPos) && maze->GetCellTag(nextPos) == 1) {
             maze->RemoveWall(pos, dir);
-            maze->RemoveCellFlag(pos, kBlock_CreateMarker1);
-            maze->RemoveCellFlag(nextPos, kBlock_CreateMarker1);
+            maze->SetCellTag(nextPos, 0);
             maze->Draw();
             CarvePassage(maze, nextPos);
         }
@@ -36,7 +35,8 @@ static void CarvePassage(Maze *maze, const CellPoint& pos)
 Maze *CreateMaze_RecurvsiveBacktracking(int xSize, int ySize)
 {
     // 迷路の生成
-    Maze *maze = new Maze(xSize, ySize, kBlock_AllBorders | kBlock_CreateMarker1);
+    Maze *maze = new Maze(xSize, ySize, kCell_AllBorders);
+    maze->SetTagForAllCells(1);
     maze->Draw();
 
     // 開始のためのキー入力待ち

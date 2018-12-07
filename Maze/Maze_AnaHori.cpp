@@ -8,10 +8,10 @@
 #include "Maze_AnaHori.hpp"
 
 
-// マーカー1: まだ通路を掘っていない（←これだけが掘り進められる）
-// マーカー2: 掘っている最中の通路
-// マーカー3: 掘り終わった通路（←これだけが起点に選択可能）
-// マーカー4: 彫り終わった通路で、周囲に空きがない
+// タグ1: まだ通路を掘っていない（←これだけが掘り進められる）
+// タグ2: 掘っている最中の通路
+// タグ3: 掘り終わった通路（←これだけが起点に選択可能）
+// タグ4: 彫り終わった通路で、周囲に空きがない
 
 
 /// 穴を掘る最大の長さ。長く穴を掘っていると単調になるので、このパラメータで調整します。
@@ -22,7 +22,8 @@ static const int kMaxDigCount   = 20;
 Maze *CreateMaze_AnaHori(int xSize, int ySize)
 {
     // 迷路の生成
-    Maze *maze = new Maze(xSize, ySize, kBlock_AllBorders | kBlock_CreateMarker1);
+    Maze *maze = new Maze(xSize, ySize, kCell_AllBorders);
+    maze->SetTagForAllCells(1);
     maze->Draw();
 
     // 開始のためのキー入力待ち
@@ -34,8 +35,7 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
     CellPoint p;
     p.x = random() % maze->GetXSize();
     p.y = random() % maze->GetYSize();
-    maze->RemoveCellFlag(p, kBlock_CreateMarker1);
-    maze->AddCellFlag(p, kBlock_CreateMarker2);
+    maze->SetCellTag(p, 2);
     maze->Draw();
 
     while (true) {
@@ -47,11 +47,10 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
             bool hasDug = false;
             for (int i = 0; i < 4; i++) {
                 CellPoint nextPos = p.Move(dir);
-                if (maze->CheckCellFlag(nextPos, kBlock_CreateMarker1) && maze->CanRemoveWall(p, dir)) {
+                if (maze->GetCellTag(nextPos) == 1 && maze->CanRemoveWall(p, dir)) {
                     maze->RemoveWall(p, dir);
                     p = nextPos;
-                    maze->RemoveCellFlag(p, kBlock_CreateMarker1);
-                    maze->AddCellFlag(p, kBlock_CreateMarker2);
+                    maze->SetCellTag(p, 2);
                     maze->Draw();
                     hasDug = true;
                     break;
@@ -60,8 +59,7 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
                 dir = RotateRight(dir);
             }
             if (!hasDug) {
-                maze->RemoveCellFlag(p, kBlock_AllCreateMarkers);
-                maze->AddCellFlag(p, kBlock_CreateMarker4);
+                maze->SetCellTag(p, 4);
                 maze->Draw();
                 break;
             }
@@ -71,9 +69,8 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
         // 作成が完了した通路のマーカーを3に
         for (int y = 0; y < maze->GetYSize(); y++) {
             for (int x = 0; x < maze->GetXSize(); x++) {
-                if (maze->CheckCellFlag(x, y, kBlock_CreateMarker2)) {
-                    maze->RemoveCellFlag(x, y, kBlock_CreateMarker2);
-                    maze->AddCellFlag(x, y, kBlock_CreateMarker3);
+                if (maze->GetCellTag(x, y) == 2) {
+                    maze->SetCellTag(x, y, 3);
                 }
             }
         }
@@ -83,7 +80,8 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
         bool isFinished = true;
         for (int y = 0; y < maze->GetYSize(); y++) {
             for (int x = 0; x < maze->GetXSize(); x++) {
-                if (maze->CheckCellFlag(x, y, kBlock_CreateMarker1 | kBlock_CreateMarker2)) {
+                int tag = maze->GetCellTag(x, y);
+                if (tag == 1 || tag == 2) {
                     isFinished = false;
                     break;
                 }
@@ -97,7 +95,7 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
         vector<CellPoint> nextPoints;
         for (int y = 0; y < maze->GetYSize(); y++) {
             for (int x = 0; x < maze->GetXSize(); x++) {
-                if (maze->CheckCellFlag(x, y, kBlock_CreateMarker3)) {
+                if (maze->GetCellTag(x, y) == 3) {
                     nextPoints.push_back(CellPoint(x, y));
                 }
             }
@@ -107,13 +105,9 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
     }
 
     // 生成用のフラグをクリアする
-    Sleep(0.8f);
-    for (int y = 0; y < maze->GetYSize(); y++) {
-        for (int x = 0; x < maze->GetXSize(); x++) {
-            maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
-        }
-        maze->Draw();
-    }
+    Sleep(0.7f);
+    maze->SetTagForAllCells(0);
+    maze->Draw();
 
     // 終了
     return maze;

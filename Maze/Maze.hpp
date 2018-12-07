@@ -15,24 +15,12 @@
 using namespace std;
 
 
-///// ビットフラグで表すブロックのデータ
-
-extern const int    kBlock_TopBorder;
-extern const int    kBlock_RightBorder;
-extern const int    kBlock_BottomBorder;
-extern const int    kBlock_LeftBorder;
-extern const int    kBlock_AllBorders;
-
-extern const int    kBlock_CreateMarker1;
-extern const int    kBlock_CreateMarker2;
-extern const int    kBlock_CreateMarker3;
-extern const int    kBlock_CreateMarker4;
-extern const int    kBlock_AllCreateMarkers;
-
-extern const int    kBlock_SolveMarker1;
-extern const int    kBlock_SolveMarker2;
-extern const int    kBlock_SolveMarker3;
-extern const int    kBlock_AllSolveMarkers;
+///// ビットフラグで表すセルのデータ
+extern const int    kCell_TopBorder;
+extern const int    kCell_RightBorder;
+extern const int    kCell_BottomBorder;
+extern const int    kCell_LeftBorder;
+extern const int    kCell_AllBorders;
 
 
 /// 迷路上の各マスの座標を表す構造体
@@ -65,7 +53,7 @@ struct CrossPoint
 /// 壁を表す構造体
 struct Wall
 {
-    CellPoint       pos;
+    CellPoint   pos;
     Direction   dir;
 
     Wall(const CellPoint& pos, Direction dir);
@@ -76,9 +64,9 @@ struct Wall
 class Maze
 {
     // 内部データ
-    int     xSize;
-    int     ySize;
-    int     *data;
+    int         xSize;
+    int         ySize;
+    unsigned    *data;
 
 public:
     // コンストラクタ・デストラクタ
@@ -92,17 +80,16 @@ public:
     int     GetXSize() const;
     int     GetYSize() const;
 
-    int     GetCellData(int x, int y) const;
-    int     GetCellData(const CellPoint& pos) const;
-    bool    CheckCellFlag(int x, int y, int flag) const;
-    bool    CheckCellFlag(const CellPoint& pos, int flag) const;
-    bool    IsValidCell(const CellPoint& pos) const;
+    unsigned    GetCellData(int x, int y) const;
+    unsigned    GetCellData(const CellPoint& pos) const;
+    int         GetCellTag(int x, int y) const;
+    int         GetCellTag(const CellPoint& pos) const;
+    void        SetCellTag(int x, int y, int tag);
+    void        SetCellTag(const CellPoint& pos, int tag);
+    void        SetTagForAllCells(int tag);
+    bool        IsValidCell(const CellPoint& pos) const;
 
     // 迷路生成用の関数（セルベース）
-    void    AddCellFlag(int x, int y, int flag);
-    void    AddCellFlag(const CellPoint& pos, int flag);
-    void    RemoveCellFlag(int x, int y, int flag);
-    void    RemoveCellFlag(const CellPoint& pos, int flag);
     bool    CheckWall(int x, int y, Direction dir) const;
     bool    CheckWall(const CellPoint& pos, Direction dir) const;
     bool    CheckWall(const Wall& wall) const;
@@ -126,6 +113,12 @@ public:
     // 迷路の描画
     void    Draw(bool usesBatch = true);
     void    DrawCrossPoint(const CrossPoint& pos, bool usesBatch = true);
+
+private:
+    void    AddCellFlag(int x, int y, int flag);
+    void    AddCellFlag(const CellPoint& pos, int flag);
+    void    RemoveCellFlag(int x, int y, int flag);
+    void    RemoveCellFlag(const CellPoint& pos, int flag);
 
 };
 

@@ -14,24 +14,11 @@
 
 
 // 0〜3ビット目は壁
-const int   kBlock_TopBorder    = 0x01;
-const int   kBlock_RightBorder  = 0x02;
-const int   kBlock_BottomBorder = 0x04;
-const int   kBlock_LeftBorder   = 0x08;
-const int   kBlock_AllBorders   = 0x0f;
-
-// 4〜7ビット目は生成用のマーカー
-const int   kBlock_CreateMarker1    = 0x10;
-const int   kBlock_CreateMarker2    = 0x20;
-const int   kBlock_CreateMarker3    = 0x40;
-const int   kBlock_CreateMarker4    = 0x80;
-const int   kBlock_AllCreateMarkers = 0xf0;
-
-// 8〜10ビット目は迷路を解くためのマーカー
-const int   kBlock_SolveMarker1     = 0x100;
-const int   kBlock_SolveMarker2     = 0x200;
-const int   kBlock_SolveMarker3     = 0x400;
-const int   kBlock_AllSolveMarkers  = 0x800;
+const int   kCell_TopBorder    = 0x01;
+const int   kCell_RightBorder  = 0x02;
+const int   kCell_BottomBorder = 0x04;
+const int   kCell_LeftBorder   = 0x08;
+const int   kCell_AllBorders   = 0x0f;
 
 
 #pragma mark - CellPoint構造体
@@ -139,7 +126,7 @@ void Maze::Create(int _xSize, int _ySize, int _data)
 
     xSize = _xSize;
     ySize = _ySize;
-    data = new int[xSize * ySize];
+    data = new unsigned[xSize * ySize];
 
     for (int i = 0; i < xSize * ySize; i++) {
         data[i] = _data;
@@ -159,24 +146,45 @@ int Maze::GetYSize() const
     return ySize;
 }
 
-int Maze::GetCellData(int x, int y) const
+unsigned Maze::GetCellData(int x, int y) const
 {
     return data[y * xSize + x];
 }
 
-int Maze::GetCellData(const CellPoint& pos) const
+unsigned Maze::GetCellData(const CellPoint& pos) const
 {
     return data[pos.y * xSize + pos.x];
 }
 
-bool Maze::CheckCellFlag(int x, int y, int flag) const
+int Maze::GetCellTag(int x, int y) const
 {
-    return ((data[y * xSize + x] & flag) > 0);
+    return (data[y * xSize + x] >> 4);
 }
 
-bool Maze::CheckCellFlag(const CellPoint& pos, int flag) const
+int Maze::GetCellTag(const CellPoint& pos) const
 {
-    return ((data[pos.y * xSize + pos.x] & flag) > 0);
+    return (data[pos.y * xSize + pos.x] >> 4);
+}
+
+void Maze::SetCellTag(int x, int y, int tag)
+{
+    data[y * xSize + x] &= kCell_AllBorders;
+    data[y * xSize + x] |= (tag << 4);
+}
+
+void Maze::SetCellTag(const CellPoint& pos, int tag)
+{
+    data[pos.y * xSize + pos.x] &= kCell_AllBorders;
+    data[pos.y * xSize + pos.x] |= (tag << 4);
+}
+
+void Maze::SetTagForAllCells(int tag)
+{
+    for (int y = 0; y < ySize; y++) {
+        for (int x = 0; x < xSize; x++) {
+            SetCellTag(x, y, tag);
+        }
+    }
 }
 
 bool Maze::IsValidCell(const CellPoint& pos) const
@@ -210,13 +218,13 @@ void Maze::RemoveCellFlag(const CellPoint& pos, int flag)
 bool Maze::CheckWall(int x, int y, Direction dir) const
 {
     if (dir == Up) {
-        return ((data[y * xSize + x] & kBlock_TopBorder) > 0);
+        return ((data[y * xSize + x] & kCell_TopBorder) > 0);
     } else if (dir == Right) {
-        return ((data[y * xSize + x] & kBlock_RightBorder) > 0);
+        return ((data[y * xSize + x] & kCell_RightBorder) > 0);
     } else if (dir == Down) {
-        return ((data[y * xSize + x] & kBlock_BottomBorder) > 0);
+        return ((data[y * xSize + x] & kCell_BottomBorder) > 0);
     } else {
-        return ((data[y * xSize + x] & kBlock_LeftBorder) > 0);
+        return ((data[y * xSize + x] & kCell_LeftBorder) > 0);
     }
 }
 
@@ -236,28 +244,28 @@ void Maze::MakeWall(int x, int y, Direction dir)
     assert(y >= 0 && y <= ySize - 1);
 
     if (dir == Up) {
-        data[y * xSize + x] |= kBlock_TopBorder;
+        data[y * xSize + x] |= kCell_TopBorder;
         int ny = y - 1;
         if (ny >= 0) {
-            data[ny * xSize + x] |= kBlock_BottomBorder;
+            data[ny * xSize + x] |= kCell_BottomBorder;
         }
     } else if (dir == Right) {
-        data[y * xSize + x] |= kBlock_RightBorder;
+        data[y * xSize + x] |= kCell_RightBorder;
         int nx = x + 1;
         if (nx < xSize) {
-            data[y * xSize + nx] |= kBlock_LeftBorder;
+            data[y * xSize + nx] |= kCell_LeftBorder;
         }
     } else if (dir == Down) {
-        data[y * xSize + x] |= kBlock_BottomBorder;
+        data[y * xSize + x] |= kCell_BottomBorder;
         int ny = y + 1;
         if (ny < ySize) {
-            data[ny * xSize + x] |= kBlock_TopBorder;
+            data[ny * xSize + x] |= kCell_TopBorder;
         }
     } else {
-        data[y * xSize + x] |= kBlock_LeftBorder;
+        data[y * xSize + x] |= kCell_LeftBorder;
         int nx = x - 1;
         if (nx >= 0) {
-            data[y * xSize + nx] |= kBlock_RightBorder;
+            data[y * xSize + nx] |= kCell_RightBorder;
         }
     }
 }
@@ -302,28 +310,28 @@ bool Maze::CanRemoveWall(const Wall& wall) const
 void Maze::RemoveWall(int x, int y, Direction dir)
 {
     if (dir == Up) {
-        RemoveCellFlag(x, y, kBlock_TopBorder);
+        RemoveCellFlag(x, y, kCell_TopBorder);
         int ny = y - 1;
         if (ny >= 0) {
-            RemoveCellFlag(x, ny, kBlock_BottomBorder);
+            RemoveCellFlag(x, ny, kCell_BottomBorder);
         }
     } else if (dir == Right) {
-        RemoveCellFlag(x, y, kBlock_RightBorder);
+        RemoveCellFlag(x, y, kCell_RightBorder);
         int nx = x + 1;
         if (nx < xSize) {
-            RemoveCellFlag(nx, y, kBlock_LeftBorder);
+            RemoveCellFlag(nx, y, kCell_LeftBorder);
         }
     } else if (dir == Down) {
-        RemoveCellFlag(x, y, kBlock_BottomBorder);
+        RemoveCellFlag(x, y, kCell_BottomBorder);
         int ny = y + 1;
         if (ny < ySize) {
-            RemoveCellFlag(x, ny, kBlock_TopBorder);
+            RemoveCellFlag(x, ny, kCell_TopBorder);
         }
     } else {
-        RemoveCellFlag(x, y, kBlock_LeftBorder);
+        RemoveCellFlag(x, y, kCell_LeftBorder);
         int nx = x - 1;
         if (nx >= 0) {
-            RemoveCellFlag(nx, y, kBlock_RightBorder);
+            RemoveCellFlag(nx, y, kCell_RightBorder);
         }
     }
 }

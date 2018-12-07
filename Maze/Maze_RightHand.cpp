@@ -18,7 +18,7 @@ void SolveMaze_RightHand(Maze *maze)
     // (0, 0)の地点をスタートとして繰り返し
     CellPoint pos(0, 0);
     Direction dir = Right;
-    maze->AddCellFlag(pos, kBlock_SolveMarker1);
+    maze->SetCellTag(pos, 1);
     StartBatch();
     {
         maze->Draw();
@@ -39,7 +39,7 @@ void SolveMaze_RightHand(Maze *maze)
         while (!maze->CheckWall(pos, dir)) {
             // 前進の処理
             pos = pos.Move(dir);
-            maze->AddCellFlag(pos, kBlock_SolveMarker1);
+            maze->SetCellTag(pos, 1);
             StartBatch();
             {
                 maze->Draw(false);

@@ -24,12 +24,17 @@ void DrawMain()
 
     //Maze *maze = CreateMaze_BouTaoshi(xSize, ySize);
     //Maze *maze = CreateMaze_AnaHori(xSize, ySize);
-    Maze *maze = CreateMaze_KabeNobashi(xSize, ySize);
+    //Maze *maze = CreateMaze_KabeNobashi(xSize, ySize);
     //Maze *maze = CreateMaze_RecurvsiveBacktracking(xSize, ySize);
     //Maze *maze = CreateMaze_Prim(xSize, ySize);
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
     //Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
     //SolveMaze_RightHand(maze);
+    Maze *maze = new Maze(xSize, ySize);
+    for (int i = 0; i < 30; i++) {
+        maze->SetCellTag(i, 0, i);
+    }
+    maze->Draw();
     delete maze;
 }
 

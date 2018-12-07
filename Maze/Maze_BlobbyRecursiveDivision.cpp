@@ -52,8 +52,7 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
 {
     // 対象の領域をマーキング
     for (CellPoint cell : region.cells) {
-        maze->RemoveCellFlag(cell, kBlock_AllCreateMarkers);
-        maze->AddCellFlag(cell, kBlock_CreateMarker1);
+        maze->SetCellTag(cell, 1);
     }
     maze->Draw();
 
@@ -67,10 +66,8 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
     CellPoint cellB = region.cells[bIndex];
 
     // 選んだ2つのマスをマーキング
-    maze->RemoveCellFlag(cellA, kBlock_AllCreateMarkers);
-    maze->RemoveCellFlag(cellB, kBlock_AllCreateMarkers);
-    maze->AddCellFlag(cellA, kBlock_CreateMarker2);
-    maze->AddCellFlag(cellB, kBlock_CreateMarker3);
+    maze->SetCellTag(cellA, 2);
+    maze->SetCellTag(cellB, 3);
     maze->Draw();
 
     // 選んだ2つのマスをサブ領域に追加して、領域分割の開始点とする。
@@ -94,24 +91,26 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
             vector<Direction> dirs = MakeAllDirectionsList_shuffled();
             for (Direction dir : dirs) {
                 CellPoint neighbor = cell.Move(dir);
-                if (region.Contains(neighbor) && !maze->CheckCellFlag(neighbor, kBlock_CreateMarker2 | kBlock_CreateMarker3)) {
-                    neighbors.push_back(neighbor);
+                if (region.Contains(neighbor)) {
+                    int tag = maze->GetCellTag(neighbor);
+                    if (tag != 2 && tag != 3) {
+                        neighbors.push_back(neighbor);
+                    }
                 }
             }
 
             // 近隣のマスに対して、さらに領域分割する。
             if (neighbors.size() > 0) {
                 // 起点のマスがA,Bどちらの領域なのかを取得する
-                int cellFlag = maze->GetCellData(cell) & kBlock_AllCreateMarkers;
+                int tag = maze->GetCellTag(cell);
 
                 // 近隣のマスにA,Bの領域フラグをコピーする
                 CellPoint neighbor = neighbors[0];
-                maze->RemoveCellFlag(neighbor, kBlock_AllCreateMarkers);
-                maze->AddCellFlag(neighbor, cellFlag);
+                maze->SetCellTag(neighbor, tag);
                 maze->Draw();
 
                 // サブ領域に近隣のマスを追加する
-                subregions[(cellFlag & kBlock_CreateMarker2)? 0: 1].AddCell(neighbor);
+                subregions[tag - 2].AddCell(neighbor);
 
                 // 近隣のマスもチェック対象の領域として追加する
                 frontiers.push_back(neighbor);
@@ -131,8 +130,7 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
         for (Direction dir : dirs) {
             CellPoint neighbor = cell.Move(dir);
             if (maze->IsValidCell(neighbor)) {
-                int neighborData = maze->GetCellData(neighbor);
-                if (neighborData & kBlock_CreateMarker3) {
+                if (maze->GetCellTag(neighbor) == 3) {
                     walls.push_back(Wall(cell, dir));
                 }
             }
@@ -151,8 +149,7 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
 
     // 領域内のマスをチェック済み状態にする
     for (CellPoint cell : region.cells) {
-        maze->RemoveCellFlag(cell, kBlock_AllCreateMarkers);
-        maze->AddCellFlag(cell, kBlock_CreateMarker4);
+        maze->SetCellTag(cell, 4);
     }
     maze->Draw();
 
@@ -162,7 +159,7 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
             DivideRegion(maze, subregions[i]);
         } else {
             for (CellPoint cell : subregions[i].cells) {
-                maze->RemoveCellFlag(cell, kBlock_AllCreateMarkers);
+                maze->SetCellTag(cell, 0);
                 maze->Draw();
             }
         }

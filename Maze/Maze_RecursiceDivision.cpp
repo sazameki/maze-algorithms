@@ -62,7 +62,7 @@ void DivideRegion(Maze *maze, const RDRegion& region)
     // 領域のマーキング
     for (int y = region.y; y < region.y+region.height; y++) {
         for (int x = region.x; x < region.x+region.width; x++) {
-            maze->AddCellFlag(x, y, kBlock_CreateMarker1);
+            maze->SetCellTag(x, y, 1);
         }
     }
     maze->Draw();
@@ -86,30 +86,26 @@ void DivideRegion(Maze *maze, const RDRegion& region)
     if (makingDir == Right) {
         for (int y = region.y; y <= wallPos.y; y++) {
             for (int x = region.x; x < region.x+region.width; x++) {
-                maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
-                maze->AddCellFlag(x, y, kBlock_CreateMarker2);
+                maze->SetCellTag(x, y, 2);
             }
             maze->Draw();
         }
         for (int y = wallPos.y+1; y < region.y+region.height; y++) {
             for (int x = region.x; x < region.x+region.width; x++) {
-                maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
-                maze->AddCellFlag(x, y, kBlock_CreateMarker3);
+                maze->SetCellTag(x, y, 3);
             }
             maze->Draw();
         }
     } else {
         for (int x = region.x; x <= wallPos.x; x++) {
             for (int y = region.y; y < region.y+region.height; y++) {
-                maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
-                maze->AddCellFlag(x, y, kBlock_CreateMarker2);
+                maze->SetCellTag(x, y, 2);
             }
             maze->Draw();
         }
         for (int x = wallPos.x+1; x < region.x+region.width; x++) {
             for (int y = region.y; y < region.y+region.height; y++) {
-                maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
-                maze->AddCellFlag(x, y, kBlock_CreateMarker3);
+                maze->SetCellTag(x, y, 3);
             }
             maze->Draw();
         }
@@ -140,8 +136,7 @@ void DivideRegion(Maze *maze, const RDRegion& region)
     // 領域のマーキング
     for (int y = region.y; y < region.y+region.height; y++) {
         for (int x = region.x; x < region.x+region.width; x++) {
-            maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
-            maze->AddCellFlag(x, y, kBlock_CreateMarker4);
+            maze->SetCellTag(x, y, 4);
         }
         maze->Draw();
     }
@@ -161,7 +156,7 @@ void DivideRegion(Maze *maze, const RDRegion& region)
         } else {
             for (int y = subregions[i].y; y < subregions[i].y+subregions[i].height; y++) {
                 for (int x = subregions[i].x; x < subregions[i].x+subregions[i].width; x++) {
-                    maze->RemoveCellFlag(x, y, kBlock_AllCreateMarkers);
+                    maze->SetCellTag(x, y, 0);
                 }
                 maze->Draw();
             }

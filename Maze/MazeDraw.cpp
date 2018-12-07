@@ -12,14 +12,12 @@
 const int kColorFloor           = 0xffffff;
 const int kColorWall            = 0x404040;
 
-const int kColorCreateMarker1   = 0xE85A70;
-const int kColorCreateMarker2   = 0x73D0C2;
-const int kColorCreateMarker3   = 0xFFC530;
-const int kColorCreateMarker4   = 0xF6E5D7;
-
-const int kColorSolveMarker1    = 0xf0f060;
-const int kColorSolveMarker2    = 0xe0e050;
-const int kColorSolveMarker3    = 0xd0d040;
+const int kTagColorCount = 10;
+const int kTagColors[] = {
+    0xE85A70, 0x73D0C2, 0xFFC530, 0xF6E5D7,
+    0x9020A0, 0xFF008B, 0xFEE4A6, 0x5893D4,
+    0xA7D129, 0x616F39,
+};
 
 const int kColorStart       = 0x40d040;
 const int kColorGoal        = 0xe04040;
@@ -68,23 +66,13 @@ void DrawMaze(Maze *maze, bool usesBatch)
             int bx = GetCellX(x, maze->GetXSize());
             int by = GetCellY(y, maze->GetYSize());
 
-            if (maze->CheckCellFlag(x, y, kBlock_CreateMarker1)) {
-                FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker1);
-            } else if (maze->CheckCellFlag(x, y, kBlock_CreateMarker2)) {
-                FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker2);
-            } else if (maze->CheckCellFlag(x, y, kBlock_CreateMarker3)) {
-                FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker3);
-            } else if (maze->CheckCellFlag(x, y, kBlock_CreateMarker4)) {
-                FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorCreateMarker4);
-            } else if (maze->CheckCellFlag(x, y, kBlock_SolveMarker1)) {
-                FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorSolveMarker1);
-            } else if (maze->CheckCellFlag(x, y, kBlock_SolveMarker2)) {
-                FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorSolveMarker2);
-            } else if (maze->CheckCellFlag(x, y, kBlock_SolveMarker3)) {
-                FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorSolveMarker3);
-            } else {
-                FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, kColorFloor);
+            int color = kColorFloor;
+            int tag = maze->GetCellTag(x, y);
+            if (tag > 0) {
+                color = kTagColors[(tag - 1) % kTagColorCount];
             }
+
+            FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBlockSize+kBorderSize*2-1, color);
         }
     }
 
@@ -93,16 +81,16 @@ void DrawMaze(Maze *maze, bool usesBatch)
         for (int x = 0; x < maze->GetXSize(); x++) {
             int bx = GetCellX(x, maze->GetXSize());
             int by = GetCellY(y, maze->GetYSize());
-            if (maze->CheckCellFlag(x, y, kBlock_TopBorder)) {
+            if (maze->CheckWall(x, y, Up)) {
                 FillRect(bx, by+kBlockSize+kBorderSize, kBlockSize+kBorderSize*2-1, kBorderSize-1, kColorWall);
             }
-            if (maze->CheckCellFlag(x, y, kBlock_BottomBorder)) {
+            if (maze->CheckWall(x, y, Down)) {
                 FillRect(bx, by, kBlockSize+kBorderSize*2-1, kBorderSize-1, kColorWall);
             }
-            if (maze->CheckCellFlag(x, y, kBlock_RightBorder)) {
+            if (maze->CheckWall(x, y, Right)) {
                 FillRect(bx+kBlockSize+kBorderSize, by, kBorderSize-1, kBlockSize+kBorderSize*2-1, kColorWall);
             }
-            if (maze->CheckCellFlag(x, y, kBlock_LeftBorder)) {
+            if (maze->CheckWall(x, y, Left)) {
                 FillRect(bx, by, kBorderSize-1, kBlockSize+kBorderSize*2-1, kColorWall);
             }
         }
