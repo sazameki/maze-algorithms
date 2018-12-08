@@ -87,8 +87,10 @@ void DrawMaze(Maze *maze, bool usesBatch)
 
             int color = kColorFloor;
             int tag = maze->GetCellTag(x, y);
-            if (tag > 0) {
-                color = kTagColors[(tag - 1) % kTagColorCount];
+            if (tag == 1) {
+                color = kTagColors[0];
+            } else if (tag > 1) {
+                color = kTagColors[(tag - 2) % (kTagColorCount - 1) + 1];
             }
 
             FillRect(bx, by, gCellSize+kBorderSize*2-1, gCellSize+kBorderSize*2-1, color);
