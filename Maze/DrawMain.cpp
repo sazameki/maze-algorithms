@@ -32,9 +32,9 @@ void DrawMain()
     //Maze *maze = CreateMaze_KabeNobashi(xSize, ySize);
     //Maze *maze = CreateMaze_RecurvsiveBacktracking(xSize, ySize);
     //Maze *maze = CreateMaze_Prim(xSize, ySize);
-    Maze *maze = CreateMaze_Eller(xSize, ySize);
+    //Maze *maze = CreateMaze_Eller(xSize, ySize);
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
-    //Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
+    Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
 
     // 念のために出来上がった迷路を再度描画
     maze->Draw();
