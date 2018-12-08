@@ -153,6 +153,12 @@ Maze *CreateMaze_Eller(int xSize, int ySize)
         }
     }
 
+    // 後片付け
+    for (auto& keyValue : ellerSetMap) {
+        EllerSet *set = keyValue.second;
+        delete set;
+    }
+
     // タグをクリア
     Sleep(0.7f);
     maze->SetTagForAllCells(0);
