@@ -8,6 +8,7 @@
 #include "Maze_Eller.hpp"
 #include "Maze_RecursiceDivision.hpp"
 #include "Maze_BlobbyRecursiveDivision.hpp"
+#include "Maze_Sidewinder.hpp"
 #include "Maze_RightHand.hpp"
 
 #include <cstdlib>
@@ -35,6 +36,7 @@ void DrawMain()
     //Maze *maze = CreateMaze_Eller(xSize, ySize);
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
     Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
+    //Maze *maze = CreateMaze_Sidewinder(xSize, ySize);
 
     // 念のために出来上がった迷路を再度描画
     maze->Draw();

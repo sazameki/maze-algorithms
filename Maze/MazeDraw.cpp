@@ -22,8 +22,8 @@ static const int    kTagColors[] = {
 static const int kColorStart       = 0x40d040;
 static const int kColorGoal        = 0xe04040;
 
-static const int kPaddingSizeX = 10;
-static const int kPaddingSizeY = 0;
+static const int kPaddingSizeX = 20;
+static const int kPaddingSizeY = 25;
 static const int kBorderSize   = 2;
 static int gCellSize    = -1;
 
