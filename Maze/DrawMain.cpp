@@ -22,8 +22,8 @@ using namespace std;
 void DrawMain()
 {
     // 迷路のサイズ
-    int xSize = 10;
-    int ySize = 10;
+    int xSize = 30;
+    int ySize = 20;
 
     // 乱数の初期化
     srandom((unsigned int)time(NULL));
@@ -36,8 +36,8 @@ void DrawMain()
     //Maze *maze = CreateMaze_Prim(xSize, ySize);
     //Maze *maze = CreateMaze_Eller(xSize, ySize);
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
-    //Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
-    Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
+    Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
+    //Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
     //Maze *maze = CreateMaze_Sidewinder(xSize, ySize);
 
     // 念のために出来上がった迷路を再度描画
