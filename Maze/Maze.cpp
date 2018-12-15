@@ -192,6 +192,31 @@ bool Maze::IsValidCell(const CellPoint& pos) const
     return (pos.x >= 0 && pos.x < xSize && pos.y >= 0 && pos.y < ySize);
 }
 
+bool Maze::CanMove(const CellPoint& pos, Direction dir) const
+{
+    CellPoint nextPos = pos.Move(dir);
+    return IsValidCell(nextPos);
+}
+
+vector<Direction> Maze::MakeValidMoveDirectionList(const CellPoint& pos) const
+{
+    vector<Direction> dirs = MakeAllDirectionsList();
+    vector<Direction> ret;
+    for (int i = 0; i < 4; i++) {
+        if (CanMove(pos, dirs[i])) {
+            ret.push_back(dirs[i]);
+        }
+    }
+    return ret;
+}
+
+vector<Direction> Maze::MakeValidMoveDirectionList_shuffled(const CellPoint& pos) const
+{
+    vector<Direction> dirs = MakeValidMoveDirectionList(pos);
+    random_shuffle(dirs.begin(), dirs.end());
+    return dirs;
+}
+
 
 #pragma mark - Mazeクラスの迷路生成用の関数
 

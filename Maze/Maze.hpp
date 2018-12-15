@@ -88,6 +88,9 @@ public:
     void        SetCellTag(const CellPoint& pos, int tag);
     void        SetTagForAllCells(int tag);
     bool        IsValidCell(const CellPoint& pos) const;
+    bool        CanMove(const CellPoint& pos, Direction dir) const;
+    vector<Direction>   MakeValidMoveDirectionList(const CellPoint& pos) const;
+    vector<Direction>   MakeValidMoveDirectionList_shuffled(const CellPoint& pos) const;
 
     // 迷路生成用の関数（セルベース）
     bool    CheckWall(int x, int y, Direction dir) const;
