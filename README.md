@@ -11,23 +11,29 @@
 
 ## 実装済みの迷路生成アルゴリズム
 
-### 交点ベースのアルゴリズム
-
-+ 棒倒し法
-+ 壁のばし法
-
-### セルベースのアルゴリズム
+### ランダムウォーク系
 
 + 穴掘り法
++ Hunt and Kill
 + Recursive Backtracking
++ Growing Tree / Growing Binary Tree
 + Primの迷路生成アルゴリズム
-+ Ellerの迷路生成アルゴリズム
+
+### 分割統治法
+
 + Recursive Division
 + Blobby Recursive Division
-+ Hunt and Kill
-+ Growing Tree / Growing Binary Tree
-+ Binary Tree
++ Ellerの迷路生成アルゴリズム
+
+### 各セルごとの処理によるアドホックな生成アルゴリズム
+
++ 棒倒し法
 + Sidewinder
++ Binary Tree
+
+### 壁のばし法
+
++ 壁のばし法
 
 ## プログラム実行について
 
