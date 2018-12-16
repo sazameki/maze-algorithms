@@ -21,7 +21,7 @@ Maze *CreateMaze_GrowingTree(int xSize, int ySize)
         DrawText("SPACE KEY TO CREATE!!", -12*10.5, -240, kColorRed);
     }
 
-    // メインの処理
+    // 最初のセルをランダムに選択してヒストリに加える
     vector<CellPoint> history;
     CellPoint cell;
     cell.x = random() % maze->GetXSize();
