@@ -19,6 +19,8 @@
 + Growing Tree / Growing Binary Tree
 + Primの迷路生成アルゴリズム
 
++ 壁のばし法
+
 ### 分割統治法
 
 + Recursive Division
@@ -30,10 +32,6 @@
 + 棒倒し法
 + Sidewinder
 + Binary Tree
-
-### 壁のばし法
-
-+ 壁のばし法
 
 ## プログラム実行について
 
