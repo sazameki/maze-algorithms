@@ -148,32 +148,44 @@ int Maze::GetYSize() const
 
 unsigned Maze::GetCellData(int x, int y) const
 {
+    assert(x >= 0 && x < xSize);
+    assert(y >= 0 && y < ySize);
     return data[y * xSize + x];
 }
 
 unsigned Maze::GetCellData(const CellPoint& pos) const
 {
+    assert(pos.x >= 0 && pos.x < xSize);
+    assert(pos.y >= 0 && pos.y < ySize);
     return data[pos.y * xSize + pos.x];
 }
 
 int Maze::GetCellTag(int x, int y) const
 {
+    assert(x >= 0 && x < xSize);
+    assert(y >= 0 && y < ySize);
     return (data[y * xSize + x] >> 4);
 }
 
 int Maze::GetCellTag(const CellPoint& pos) const
 {
+    assert(pos.x >= 0 && pos.x < xSize);
+    assert(pos.y >= 0 && pos.y < ySize);
     return (data[pos.y * xSize + pos.x] >> 4);
 }
 
 void Maze::SetCellTag(int x, int y, int tag)
 {
+    assert(x >= 0 && x < xSize);
+    assert(y >= 0 && y < ySize);
     data[y * xSize + x] &= kCell_AllBorders;
     data[y * xSize + x] |= (tag << 4);
 }
 
 void Maze::SetCellTag(const CellPoint& pos, int tag)
 {
+    assert(pos.x >= 0 && pos.x < xSize);
+    assert(pos.y >= 0 && pos.y < ySize);
     data[pos.y * xSize + pos.x] &= kCell_AllBorders;
     data[pos.y * xSize + pos.x] |= (tag << 4);
 }

@@ -8,6 +8,7 @@
 #include "Maze_Eller.hpp"
 #include "Maze_RecursiceDivision.hpp"
 #include "Maze_BlobbyRecursiveDivision.hpp"
+#include "Maze_GrowingTree.hpp"
 #include "Maze_BinaryTree.hpp"
 #include "Maze_Sidewinder.hpp"
 #include "Maze_RightHand.hpp"
@@ -37,6 +38,7 @@ void DrawMain()
     //Maze *maze = CreateMaze_Eller(xSize, ySize);
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
     Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
+    Maze *maze = CreateMaze_GrowingTree(xSize, ySize);
     //Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
     //Maze *maze = CreateMaze_Sidewinder(xSize, ySize);
 
@@ -44,11 +46,13 @@ void DrawMain()
     maze->Draw();
 
     // 開始のためのキー入力待ち
+    Sleep(0.7f);
     while (!CheckKey(kKeySpace)) {
         DrawText("SPACE KEY TO SOLVE!!", -12*10, -240, kColorOrange);
     }
 
     // 右手法で迷路を解く
+    maze->SetTagForAllCells(0);
     SolveMaze_RightHand(maze);
 
     delete maze;
