@@ -24,6 +24,7 @@
 + Ellerの迷路生成アルゴリズム
 + Recursive Division
 + Blobby Recursive Division
++ Hunt and Kill
 + Growing Tree / Growing Binary Tree
 + Binary Tree
 + Sidewinder
