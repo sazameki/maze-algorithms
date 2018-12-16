@@ -30,10 +30,20 @@ Maze *CreateMaze_GrowingTree(int xSize, int ySize)
 
     // ヒストリが取り出せる間、迷路生成を行う
     while (history.size() > 0) {
+        // セル選択の方法
+        CellPoint cell;
+        int cellSelectionMethod = 0;
+        // セル選択の方法1と方法2をミックスしない場合、次の1行をコメントアウトする。
+        if (random() % 2 == 0) { cellSelectionMethod = 1; }
         // ヒストリのセルを取り出す
-        //auto targetIt = history.begin() + random() % history.size();
-        auto targetIt = history.end() - 1;
-        CellPoint cell = *targetIt;
+        vector<CellPoint>::iterator targetIt;
+        if (cellSelectionMethod == 0) {
+            // 方法1：常にヒストリのラストを参照する。
+            cell = *(history.end() - 1);
+        } else if (cellSelectionMethod == 1) {
+            // 方法2：ランダムにヒストリからセルを取り出す。
+            cell = *(history.begin() + random() % history.size());
+        }
         maze->SetCellTag(cell, 2);
         maze->Draw();
 
@@ -56,7 +66,12 @@ Maze *CreateMaze_GrowingTree(int xSize, int ySize)
         if (!hasMoved) {
             maze->SetCellTag(cell, 0);
             maze->Draw();
-            history.erase(targetIt);
+            for (int i = 0; i < history.size(); i++) {
+                if (history[i].x == cell.x && history[i].y == cell.y) {
+                    history.erase(history.begin() + i);
+                    break;
+                }
+            }
         }
     }
 
