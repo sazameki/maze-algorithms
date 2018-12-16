@@ -38,7 +38,7 @@ void DrawMain()
     //Maze *maze = CreateMaze_Eller(xSize, ySize);
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
     Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
-    Maze *maze = CreateMaze_GrowingTree(xSize, ySize);
+    //Maze *maze = CreateMaze_GrowingTree(xSize, ySize);
     //Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
     //Maze *maze = CreateMaze_Sidewinder(xSize, ySize);
 
