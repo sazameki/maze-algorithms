@@ -18,7 +18,6 @@
 + Recursive Backtracking
 + Growing Tree / Growing Binary Tree
 + Primの迷路生成アルゴリズム
-
 + 壁のばし法
 
 ### 分割統治法
