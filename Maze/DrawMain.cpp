@@ -8,6 +8,7 @@
 #include "Maze_Eller.hpp"
 #include "Maze_RecursiceDivision.hpp"
 #include "Maze_BlobbyRecursiveDivision.hpp"
+#include "Maze_HuntAndKill.hpp"
 #include "Maze_GrowingTree.hpp"
 #include "Maze_BinaryTree.hpp"
 #include "Maze_Sidewinder.hpp"
@@ -38,6 +39,7 @@ void DrawMain()
     //Maze *maze = CreateMaze_Eller(xSize, ySize);
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
     Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
+    //Maze *maze = CreateMaze_HuntAndKill(xSize, ySize);
     //Maze *maze = CreateMaze_GrowingTree(xSize, ySize);
     //Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
     //Maze *maze = CreateMaze_Sidewinder(xSize, ySize);

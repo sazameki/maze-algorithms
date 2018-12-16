@@ -29,6 +29,7 @@
 		8E9A999221BBC12E002E55FA /* Maze_Sidewinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A999021BBC12E002E55FA /* Maze_Sidewinder.cpp */; };
 		8E9A999521C48326002E55FA /* Maze_BinaryTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A999321C48326002E55FA /* Maze_BinaryTree.cpp */; };
 		8E9A999B21C5FD5F002E55FA /* Maze_GrowingTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A999921C5FD5F002E55FA /* Maze_GrowingTree.cpp */; };
+		8E9A999E21C65507002E55FA /* Maze_HuntAndKill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A999C21C65507002E55FA /* Maze_HuntAndKill.cpp */; };
 		8EFAF00121BAC86B0003A043 /* Maze_Eller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EFAEFFF21BAC86B0003A043 /* Maze_Eller.cpp */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,8 @@
 		8E9A999421C48326002E55FA /* Maze_BinaryTree.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_BinaryTree.hpp; sourceTree = "<group>"; };
 		8E9A999921C5FD5F002E55FA /* Maze_GrowingTree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_GrowingTree.cpp; sourceTree = "<group>"; };
 		8E9A999A21C5FD5F002E55FA /* Maze_GrowingTree.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_GrowingTree.hpp; sourceTree = "<group>"; };
+		8E9A999C21C65507002E55FA /* Maze_HuntAndKill.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_HuntAndKill.cpp; sourceTree = "<group>"; };
+		8E9A999D21C65507002E55FA /* Maze_HuntAndKill.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_HuntAndKill.hpp; sourceTree = "<group>"; };
 		8EFAEFFF21BAC86B0003A043 /* Maze_Eller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Eller.cpp; sourceTree = "<group>"; };
 		8EFAF00021BAC86B0003A043 /* Maze_Eller.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_Eller.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,6 +108,8 @@
 				8E856CF221B7A97D0045D00F /* Maze_RecursiceDivision.cpp */,
 				8E37C59521B6B28900506F6B /* Maze_BlobbyRecursiveDivision.hpp */,
 				8E37C59421B6B28900506F6B /* Maze_BlobbyRecursiveDivision.cpp */,
+				8E9A999D21C65507002E55FA /* Maze_HuntAndKill.hpp */,
+				8E9A999C21C65507002E55FA /* Maze_HuntAndKill.cpp */,
 				8E9A999A21C5FD5F002E55FA /* Maze_GrowingTree.hpp */,
 				8E9A999921C5FD5F002E55FA /* Maze_GrowingTree.cpp */,
 				8E9A999421C48326002E55FA /* Maze_BinaryTree.hpp */,
@@ -294,6 +299,7 @@
 				8E37C54321B394B300506F6B /* Maze_BouTaoshi.cpp in Sources */,
 				8E7D383B214D126D000A2D31 /* AppDelegate.mm in Sources */,
 				8E37C53521B38ABE00506F6B /* Maze_RecursiveBacktracking.cpp in Sources */,
+				8E9A999E21C65507002E55FA /* Maze_HuntAndKill.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
