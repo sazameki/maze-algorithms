@@ -30,8 +30,10 @@ Maze *CreateMaze_GrowingTree(int xSize, int ySize)
 
     // ヒストリが取り出せる間、迷路生成を行う
     while (history.size() > 0) {
-        // ヒストリの最後のセルを取り出す
-        CellPoint cell = *(history.end() - 1);
+        // ヒストリのセルを取り出す
+        //auto targetIt = history.begin() + random() % history.size();
+        auto targetIt = history.end() - 1;
+        CellPoint cell = *targetIt;
         maze->SetCellTag(cell, 2);
         maze->Draw();
 
@@ -54,7 +56,7 @@ Maze *CreateMaze_GrowingTree(int xSize, int ySize)
         if (!hasMoved) {
             maze->SetCellTag(cell, 0);
             maze->Draw();
-            history.erase(history.end() - 1);
+            history.erase(targetIt);
         }
     }
 
