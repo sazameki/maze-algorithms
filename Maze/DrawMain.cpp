@@ -6,6 +6,7 @@
 #include "Maze_RecursiveBacktracking.hpp"
 #include "Maze_Prim.hpp"
 #include "Maze_Eller.hpp"
+#include "Maze_AldousBroder.hpp"
 #include "Maze_RecursiceDivision.hpp"
 #include "Maze_BlobbyRecursiveDivision.hpp"
 #include "Maze_HuntAndKill.hpp"
@@ -37,6 +38,7 @@ void DrawMain()
     //Maze *maze = CreateMaze_RecurvsiveBacktracking(xSize, ySize);
     //Maze *maze = CreateMaze_Prim(xSize, ySize);
     //Maze *maze = CreateMaze_Eller(xSize, ySize);
+    //Maze *maze = CreateMaze_AldousBroder(xSize, ySize);
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
     Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
     //Maze *maze = CreateMaze_HuntAndKill(xSize, ySize);
