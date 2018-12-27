@@ -17,8 +17,10 @@ Direction GetOppositeDirection(Direction dir)
         return Left;
     } else if (dir == Down) {
         return Up;
-    } else {
+    } else if (dir == Left) {
         return Right;
+    } else {
+        return NoDirection;
     }
 }
 
@@ -35,8 +37,10 @@ Direction RotateRight(Direction dir)
         return Down;
     } else if (dir == Down) {
         return Left;
-    } else {
+    } else if (dir == Left) {
         return Up;
+    } else {
+        return NoDirection;
     }
 }
 
@@ -48,8 +52,10 @@ Direction RotateLeft(Direction dir)
         return Down;
     } else if (dir == Down) {
         return Right;
-    } else {
+    } else if (dir == Right) {
         return Up;
+    } else {
+        return NoDirection;
     }
 }
 

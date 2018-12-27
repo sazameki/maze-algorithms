@@ -31,6 +31,7 @@
 		8E9A999B21C5FD5F002E55FA /* Maze_GrowingTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A999921C5FD5F002E55FA /* Maze_GrowingTree.cpp */; };
 		8E9A999E21C65507002E55FA /* Maze_HuntAndKill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A999C21C65507002E55FA /* Maze_HuntAndKill.cpp */; };
 		8E9A99A121CC8758002E55FA /* Maze_AldousBroder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A999F21CC8758002E55FA /* Maze_AldousBroder.cpp */; };
+		8E9A99A421CC9835002E55FA /* Maze_Wilson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99A221CC9835002E55FA /* Maze_Wilson.cpp */; };
 		8EFAF00121BAC86B0003A043 /* Maze_Eller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EFAEFFF21BAC86B0003A043 /* Maze_Eller.cpp */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,8 @@
 		8E9A999D21C65507002E55FA /* Maze_HuntAndKill.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_HuntAndKill.hpp; sourceTree = "<group>"; };
 		8E9A999F21CC8758002E55FA /* Maze_AldousBroder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_AldousBroder.cpp; sourceTree = "<group>"; };
 		8E9A99A021CC8758002E55FA /* Maze_AldousBroder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_AldousBroder.hpp; sourceTree = "<group>"; };
+		8E9A99A221CC9835002E55FA /* Maze_Wilson.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Wilson.cpp; sourceTree = "<group>"; };
+		8E9A99A321CC9835002E55FA /* Maze_Wilson.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_Wilson.hpp; sourceTree = "<group>"; };
 		8EFAEFFF21BAC86B0003A043 /* Maze_Eller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Eller.cpp; sourceTree = "<group>"; };
 		8EFAF00021BAC86B0003A043 /* Maze_Eller.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_Eller.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +112,8 @@
 				8EFAEFFF21BAC86B0003A043 /* Maze_Eller.cpp */,
 				8E9A99A021CC8758002E55FA /* Maze_AldousBroder.hpp */,
 				8E9A999F21CC8758002E55FA /* Maze_AldousBroder.cpp */,
+				8E9A99A321CC9835002E55FA /* Maze_Wilson.hpp */,
+				8E9A99A221CC9835002E55FA /* Maze_Wilson.cpp */,
 				8E856CF321B7A97D0045D00F /* Maze_RecursiceDivision.hpp */,
 				8E856CF221B7A97D0045D00F /* Maze_RecursiceDivision.cpp */,
 				8E37C59521B6B28900506F6B /* Maze_BlobbyRecursiveDivision.hpp */,
@@ -299,6 +304,7 @@
 				8E7D3860214D1534000A2D31 /* DrawMain.cpp in Sources */,
 				8E37C53B21B38DDE00506F6B /* MazeDraw.cpp in Sources */,
 				8E37C53221B3889100506F6B /* Maze.cpp in Sources */,
+				8E9A99A421CC9835002E55FA /* Maze_Wilson.cpp in Sources */,
 				8E37C53821B38BEB00506F6B /* Maze_Prim.cpp in Sources */,
 				8E7D3859214D1352000A2D31 /* MyImageView.m in Sources */,
 				8E37C53E21B38F4E00506F6B /* Maze_AnaHori.cpp in Sources */,

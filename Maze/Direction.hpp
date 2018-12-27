@@ -23,6 +23,9 @@ enum Direction
 
     /// 左方向
     Left,
+
+    /// 方向が設定されていない
+    NoDirection,
 };
 
 
