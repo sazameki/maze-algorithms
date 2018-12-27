@@ -13,6 +13,8 @@
 #include <stdexcept>
 
 
+// ---- 定数
+
 // 0〜3ビット目は壁
 const int   kCell_TopBorder    = 0x01;
 const int   kCell_RightBorder  = 0x02;
@@ -21,7 +23,7 @@ const int   kCell_LeftBorder   = 0x08;
 const int   kCell_AllBorders   = 0x0f;
 
 
-#pragma mark - CellPoint構造体
+// ---- CellPoint構造体
 
 CellPoint::CellPoint()
     : x(0), y(0)
@@ -57,7 +59,7 @@ CellPoint CellPoint::Move(Direction dir) const
 }
 
 
-#pragma mark - CrossPoint構造体
+// ---- CrossPoint構造体
 
 CrossPoint::CrossPoint()
     : x(0), y(0)
@@ -93,7 +95,7 @@ CrossPoint CrossPoint::Move(Direction dir) const
 }
 
 
-#pragma mark - Wall構造体
+// ---- Wall構造体
 
 Wall::Wall(const CellPoint& _pos, Direction _dir)
     : pos(_pos), dir(_dir)
@@ -102,7 +104,7 @@ Wall::Wall(const CellPoint& _pos, Direction _dir)
 }
 
 
-#pragma mark - Mazeクラスのコンストラクタ・デストラクタ
+// ---- Mazeクラスのコンストラクタ・デストラクタ
 
 Maze::Maze(int _xSize, int _ySize)
 {
@@ -134,7 +136,7 @@ void Maze::Create(int _xSize, int _ySize, int _data)
 }
 
 
-#pragma mark - MazeクラスのGetter系の関数
+// ---- MazeクラスのGetter系の関数
 
 int Maze::GetXSize() const
 {
@@ -230,7 +232,7 @@ vector<Direction> Maze::MakeValidMoveDirectionList_shuffled(const CellPoint& pos
 }
 
 
-#pragma mark - Mazeクラスの迷路生成用の関数
+// ---- Mazeクラスの迷路生成用の関数
 
 void Maze::AddCellFlag(int x, int y, int flag)
 {
@@ -384,7 +386,7 @@ void Maze::RemoveWall(const Wall& wall)
 }
 
 
-#pragma mark - Mazeクラスの迷路生成用の関数（交点ベース）
+// ---- Mazeクラスの迷路生成用の関数（交点ベース）
 
 bool Maze::IsValidCrossPoint(const CrossPoint& cp) const
 {
@@ -502,7 +504,7 @@ void Maze::MakeWallFromCrossPoint(const CrossPoint& cp, Direction dir)
 }
 
 
-#pragma mark - Mazeクラスの迷路の描画
+// ---- Mazeクラスの迷路の描画
 
 void Maze::Draw(bool usesBatch)
 {
@@ -515,7 +517,7 @@ void Maze::DrawCrossPoint(const CrossPoint& pos, bool usesBatch)
 }
 
 
-#pragma mark - 迷路生成用のヘルパー関数
+// ---- 迷路生成用のヘルパー関数
 
 vector<Direction>   MakeAllDirectionsList()
 {

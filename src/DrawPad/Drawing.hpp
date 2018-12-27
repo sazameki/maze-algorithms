@@ -1,15 +1,8 @@
 #ifndef Drawing_hpp
 #define Drawing_hpp
 
-//#include <algorithm>
-//#include <cassert>
-//#include <cmath>
-//#include <cstdio>
-//#include <cstdlib>
-//#include <ctime>
 
-
-#pragma mark - 変数・定数の定義
+// ---- 変数・定数の定義
 
 // 実行全体に関する変数
 extern bool     gIsBatchDrawing;    //!< バッチ処理がONになっているかどうか
@@ -54,7 +47,7 @@ extern const unsigned   kKeySpace;
 
 
 
-#pragma mark - 全般的な操作
+// ---- 全般的な操作
 
 /**
     秒数で指定した時間だけ処理を中断します。
@@ -73,7 +66,7 @@ void    EndBatch();
 
 
 
-#pragma mark - グラフィックス操作
+// ---- グラフィックス操作
 
 /**
     指定した色で画面をクリアします。
@@ -172,7 +165,7 @@ void    Scroll(int x, int y);
 
 
 
-#pragma mark - キーボード関係の操作
+// ---- キーボード関係の操作
 
 /**
     指定したキーが押されているかどうかを判定します。
@@ -181,7 +174,7 @@ bool    CheckKey(unsigned int key);
 
 
 
-#pragma mark - マウス関係の操作
+// ---- マウス関係の操作
 
 /**
     マウスカーソルの画面上のX座標を取得します。

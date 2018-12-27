@@ -155,7 +155,7 @@ const unsigned char kCharPattern[][10] =
 void    FinishDrawing();
 
 
-#pragma mark - 全般的な操作
+// ---- 全般的な操作
 
 // バッチ処理の開始
 void StartBatch()
@@ -171,7 +171,7 @@ void EndBatch()
 }
 
 
-#pragma mark - グラフィックス操作
+// ---- グラフィックス操作
 
 // RGB形式の色情報をABGR形式の色情報に変換する
 static inline unsigned RGBToABGR(int value)
@@ -1195,7 +1195,7 @@ void ShowAlphaPixels()
 }
 
 
-#pragma mark - キーボード関係の操作
+// ---- キーボード関係の操作
 
 // キーが押されているかどうか
 bool CheckKey(unsigned int key)
@@ -1205,7 +1205,7 @@ bool CheckKey(unsigned int key)
 
 
 
-#pragma mark - マウス関係の操作
+// ---- マウス関係の操作
 
 // マウスのX座標を取得する
 int GetMouseX()

@@ -7,6 +7,9 @@
 
 #include "Direction.hpp"
 #include <cstdlib>
+#ifdef _WINDOWS
+static int random() { return rand(); }
+#endif
 
 
 Direction GetOppositeDirection(Direction dir)
