@@ -160,24 +160,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\src\DrawPad\Drawing.hpp" />
+    <ClInclude Include="..\src\DrawPad\win\Resource.h" />
     <ClInclude Include="..\src\Maze\Direction.hpp" />
     <ClInclude Include="..\src\Maze\Maze.hpp" />
     <ClInclude Include="..\src\Maze\MazeDraw.hpp" />
-    <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DrawPad\Drawing.cpp" />
+    <ClCompile Include="..\src\DrawPad\win\main.cpp" />
     <ClCompile Include="..\src\Maze\Direction.cpp" />
     <ClCompile Include="..\src\Maze\Maze.cpp" />
     <ClCompile Include="..\src\Maze\MazeDraw.cpp" />
-    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Maze.rc" />
+    <ResourceCompile Include="..\src\DrawPad\win\Maze.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Maze.ico" />
-    <Image Include="small.ico" />
+    <Image Include="..\src\DrawPad\win\Maze.ico" />
+    <Image Include="..\src\DrawPad\win\small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
