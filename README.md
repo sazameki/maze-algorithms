@@ -35,7 +35,8 @@
 
 ## プログラム実行について
 
-+ プログラム実行は、DrawMain.cppのDrawMain()関数から始まります（基本的にはCocoaアプリなので、より内部的に言えば、main()関数から始まってAppDelegate.mmに書かれた処理が行われ、その後DrawMain()関数が描画用スレッドの中から呼び出されます）。
++ macOSで実行する場合、osx/Maze.xcodeprojをXcodeで開いて実行してください。
++ プログラム実行は、DrawMain.cppのDrawMain()関数から始まります。
 
 ## クラス構成について
 
