@@ -1,0 +1,461 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8E9A99C421D51B4E002E55FA /* Drawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99C221D51B4E002E55FA /* Drawing.cpp */; };
+		8E9A99D021D51B7A002E55FA /* MyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99C721D51B7A002E55FA /* MyImageView.m */; };
+		8E9A99D121D51B7A002E55FA /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99C821D51B7A002E55FA /* AppDelegate.mm */; };
+		8E9A99D321D51B7A002E55FA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A99CA21D51B7A002E55FA /* Images.xcassets */; };
+		8E9A99D421D51B7A002E55FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99CD21D51B7A002E55FA /* main.m */; };
+		8E9A99D521D51B7A002E55FA /* MyViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99CE21D51B7A002E55FA /* MyViewController.mm */; };
+		8E9A99D621D51B7A002E55FA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A99CF21D51B7A002E55FA /* MainMenu.xib */; };
+		8E9A99D921D51BC1002E55FA /* DrawMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99D821D51BC1002E55FA /* DrawMain.cpp */; };
+		8E9A9A0021D51BDB002E55FA /* Maze_RecursiceDivision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99DB21D51BD9002E55FA /* Maze_RecursiceDivision.cpp */; };
+		8E9A9A0121D51BDB002E55FA /* Maze_AldousBroder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99DF21D51BD9002E55FA /* Maze_AldousBroder.cpp */; };
+		8E9A9A0221D51BDB002E55FA /* Maze_BouTaoshi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99E021D51BD9002E55FA /* Maze_BouTaoshi.cpp */; };
+		8E9A9A0321D51BDB002E55FA /* Maze_KabeNobashi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99E121D51BD9002E55FA /* Maze_KabeNobashi.cpp */; };
+		8E9A9A0421D51BDB002E55FA /* Direction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99E221D51BD9002E55FA /* Direction.cpp */; };
+		8E9A9A0521D51BDB002E55FA /* Maze_BinaryTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99E321D51BD9002E55FA /* Maze_BinaryTree.cpp */; };
+		8E9A9A0621D51BDB002E55FA /* Maze_Sidewinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99E421D51BD9002E55FA /* Maze_Sidewinder.cpp */; };
+		8E9A9A0721D51BDB002E55FA /* Maze_GrowingBinaryTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99E721D51BDA002E55FA /* Maze_GrowingBinaryTree.cpp */; };
+		8E9A9A0821D51BDB002E55FA /* Maze_Eller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99EC21D51BDA002E55FA /* Maze_Eller.cpp */; };
+		8E9A9A0921D51BDB002E55FA /* Maze_GrowingTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99ED21D51BDA002E55FA /* Maze_GrowingTree.cpp */; };
+		8E9A9A0A21D51BDB002E55FA /* Maze_BlobbyRecursiveDivision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99EE21D51BDA002E55FA /* Maze_BlobbyRecursiveDivision.cpp */; };
+		8E9A9A0B21D51BDB002E55FA /* Maze.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99F021D51BDA002E55FA /* Maze.cpp */; };
+		8E9A9A0C21D51BDB002E55FA /* Maze_HuntAndKill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99F121D51BDA002E55FA /* Maze_HuntAndKill.cpp */; };
+		8E9A9A0D21D51BDB002E55FA /* Maze_Wilson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99F321D51BDA002E55FA /* Maze_Wilson.cpp */; };
+		8E9A9A0E21D51BDB002E55FA /* Maze_AnaHori.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99F521D51BDA002E55FA /* Maze_AnaHori.cpp */; };
+		8E9A9A0F21D51BDB002E55FA /* Maze_RightHand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99F621D51BDA002E55FA /* Maze_RightHand.cpp */; };
+		8E9A9A1021D51BDB002E55FA /* Maze_Prim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99F821D51BDB002E55FA /* Maze_Prim.cpp */; };
+		8E9A9A1121D51BDB002E55FA /* Maze_RecursiveBacktracking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99F921D51BDB002E55FA /* Maze_RecursiveBacktracking.cpp */; };
+		8E9A9A1221D51BDB002E55FA /* MazeDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99FF21D51BDB002E55FA /* MazeDraw.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8E7D3834214D126D000A2D31 /* Maze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maze.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E9A99C221D51B4E002E55FA /* Drawing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawing.cpp; sourceTree = "<group>"; };
+		8E9A99C321D51B4E002E55FA /* Drawing.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Drawing.hpp; sourceTree = "<group>"; };
+		8E9A99C621D51B7A002E55FA /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
+		8E9A99C721D51B7A002E55FA /* MyImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyImageView.m; sourceTree = "<group>"; };
+		8E9A99C821D51B7A002E55FA /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		8E9A99C921D51B7A002E55FA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E9A99CA21D51B7A002E55FA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		8E9A99CB21D51B7A002E55FA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8E9A99CC21D51B7A002E55FA /* MyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyImageView.h; sourceTree = "<group>"; };
+		8E9A99CD21D51B7A002E55FA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8E9A99CE21D51B7A002E55FA /* MyViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyViewController.mm; sourceTree = "<group>"; };
+		8E9A99CF21D51B7A002E55FA /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		8E9A99D821D51BC1002E55FA /* DrawMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DrawMain.cpp; path = ../src/DrawMain.cpp; sourceTree = "<group>"; };
+		8E9A99DA21D51BD9002E55FA /* Maze_Eller.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_Eller.hpp; sourceTree = "<group>"; };
+		8E9A99DB21D51BD9002E55FA /* Maze_RecursiceDivision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_RecursiceDivision.cpp; sourceTree = "<group>"; };
+		8E9A99DC21D51BD9002E55FA /* Maze_AldousBroder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_AldousBroder.hpp; sourceTree = "<group>"; };
+		8E9A99DD21D51BD9002E55FA /* Maze_AnaHori.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_AnaHori.hpp; sourceTree = "<group>"; };
+		8E9A99DE21D51BD9002E55FA /* Maze_BouTaoshi.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_BouTaoshi.hpp; sourceTree = "<group>"; };
+		8E9A99DF21D51BD9002E55FA /* Maze_AldousBroder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_AldousBroder.cpp; sourceTree = "<group>"; };
+		8E9A99E021D51BD9002E55FA /* Maze_BouTaoshi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_BouTaoshi.cpp; sourceTree = "<group>"; };
+		8E9A99E121D51BD9002E55FA /* Maze_KabeNobashi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_KabeNobashi.cpp; sourceTree = "<group>"; };
+		8E9A99E221D51BD9002E55FA /* Direction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Direction.cpp; sourceTree = "<group>"; };
+		8E9A99E321D51BD9002E55FA /* Maze_BinaryTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_BinaryTree.cpp; sourceTree = "<group>"; };
+		8E9A99E421D51BD9002E55FA /* Maze_Sidewinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Sidewinder.cpp; sourceTree = "<group>"; };
+		8E9A99E521D51BD9002E55FA /* Maze_HuntAndKill.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_HuntAndKill.hpp; sourceTree = "<group>"; };
+		8E9A99E621D51BDA002E55FA /* Maze_GrowingTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_GrowingTree.hpp; sourceTree = "<group>"; };
+		8E9A99E721D51BDA002E55FA /* Maze_GrowingBinaryTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_GrowingBinaryTree.cpp; sourceTree = "<group>"; };
+		8E9A99E821D51BDA002E55FA /* Maze_RecursiveBacktracking.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_RecursiveBacktracking.hpp; sourceTree = "<group>"; };
+		8E9A99E921D51BDA002E55FA /* Maze_BinaryTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_BinaryTree.hpp; sourceTree = "<group>"; };
+		8E9A99EA21D51BDA002E55FA /* Maze_GrowingBinaryTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_GrowingBinaryTree.hpp; sourceTree = "<group>"; };
+		8E9A99EB21D51BDA002E55FA /* Maze_BlobbyRecursiveDivision.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_BlobbyRecursiveDivision.hpp; sourceTree = "<group>"; };
+		8E9A99EC21D51BDA002E55FA /* Maze_Eller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Eller.cpp; sourceTree = "<group>"; };
+		8E9A99ED21D51BDA002E55FA /* Maze_GrowingTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_GrowingTree.cpp; sourceTree = "<group>"; };
+		8E9A99EE21D51BDA002E55FA /* Maze_BlobbyRecursiveDivision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_BlobbyRecursiveDivision.cpp; sourceTree = "<group>"; };
+		8E9A99EF21D51BDA002E55FA /* Maze_Prim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_Prim.hpp; sourceTree = "<group>"; };
+		8E9A99F021D51BDA002E55FA /* Maze.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze.cpp; sourceTree = "<group>"; };
+		8E9A99F121D51BDA002E55FA /* Maze_HuntAndKill.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_HuntAndKill.cpp; sourceTree = "<group>"; };
+		8E9A99F221D51BDA002E55FA /* Maze_RightHand.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_RightHand.hpp; sourceTree = "<group>"; };
+		8E9A99F321D51BDA002E55FA /* Maze_Wilson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Wilson.cpp; sourceTree = "<group>"; };
+		8E9A99F421D51BDA002E55FA /* Maze_Wilson.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_Wilson.hpp; sourceTree = "<group>"; };
+		8E9A99F521D51BDA002E55FA /* Maze_AnaHori.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_AnaHori.cpp; sourceTree = "<group>"; };
+		8E9A99F621D51BDA002E55FA /* Maze_RightHand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_RightHand.cpp; sourceTree = "<group>"; };
+		8E9A99F721D51BDA002E55FA /* MazeDraw.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MazeDraw.hpp; sourceTree = "<group>"; };
+		8E9A99F821D51BDB002E55FA /* Maze_Prim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Prim.cpp; sourceTree = "<group>"; };
+		8E9A99F921D51BDB002E55FA /* Maze_RecursiveBacktracking.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_RecursiveBacktracking.cpp; sourceTree = "<group>"; };
+		8E9A99FA21D51BDB002E55FA /* Direction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Direction.hpp; sourceTree = "<group>"; };
+		8E9A99FB21D51BDB002E55FA /* Maze_RecursiceDivision.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_RecursiceDivision.hpp; sourceTree = "<group>"; };
+		8E9A99FC21D51BDB002E55FA /* Maze_Sidewinder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_Sidewinder.hpp; sourceTree = "<group>"; };
+		8E9A99FD21D51BDB002E55FA /* Maze_KabeNobashi.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_KabeNobashi.hpp; sourceTree = "<group>"; };
+		8E9A99FE21D51BDB002E55FA /* Maze.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze.hpp; sourceTree = "<group>"; };
+		8E9A99FF21D51BDB002E55FA /* MazeDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MazeDraw.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8E7D3831214D126D000A2D31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8E7D382B214D126D000A2D31 = {
+			isa = PBXGroup;
+			children = (
+				8E9A99D821D51BC1002E55FA /* DrawMain.cpp */,
+				8E9A99D721D51B87002E55FA /* Maze */,
+				8E9A99C121D51AA0002E55FA /* DrawPad */,
+				8E7D3835214D126D000A2D31 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8E7D3835214D126D000A2D31 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8E7D3834214D126D000A2D31 /* Maze.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8E9A99C121D51AA0002E55FA /* DrawPad */ = {
+			isa = PBXGroup;
+			children = (
+				8E9A99C321D51B4E002E55FA /* Drawing.hpp */,
+				8E9A99C221D51B4E002E55FA /* Drawing.cpp */,
+				8E9A99C521D51B59002E55FA /* osx */,
+			);
+			name = DrawPad;
+			path = ../src/DrawPad;
+			sourceTree = "<group>";
+		};
+		8E9A99C521D51B59002E55FA /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				8E9A99CB21D51B7A002E55FA /* AppDelegate.h */,
+				8E9A99C821D51B7A002E55FA /* AppDelegate.mm */,
+				8E9A99CA21D51B7A002E55FA /* Images.xcassets */,
+				8E9A99C921D51B7A002E55FA /* Info.plist */,
+				8E9A99CD21D51B7A002E55FA /* main.m */,
+				8E9A99CF21D51B7A002E55FA /* MainMenu.xib */,
+				8E9A99CC21D51B7A002E55FA /* MyImageView.h */,
+				8E9A99C721D51B7A002E55FA /* MyImageView.m */,
+				8E9A99C621D51B7A002E55FA /* MyViewController.h */,
+				8E9A99CE21D51B7A002E55FA /* MyViewController.mm */,
+			);
+			path = osx;
+			sourceTree = "<group>";
+		};
+		8E9A99D721D51B87002E55FA /* Maze */ = {
+			isa = PBXGroup;
+			children = (
+				8E9A9A1321D51BE4002E55FA /* Maze Base */,
+				8E9A9A1421D51C1C002E55FA /* Maze Creation (Random Walk) */,
+				8E9A9A1521D51C71002E55FA /* Maze Creation (Divide&Conquer) */,
+				8E9A9A1621D51E84002E55FA /* Maze Creation (Simple) */,
+				8E9A9A1721D51EFB002E55FA /* Maze Solving */,
+			);
+			name = Maze;
+			path = ../src/Maze;
+			sourceTree = "<group>";
+		};
+		8E9A9A1321D51BE4002E55FA /* Maze Base */ = {
+			isa = PBXGroup;
+			children = (
+				8E9A99FA21D51BDB002E55FA /* Direction.hpp */,
+				8E9A99E221D51BD9002E55FA /* Direction.cpp */,
+				8E9A99FE21D51BDB002E55FA /* Maze.hpp */,
+				8E9A99F021D51BDA002E55FA /* Maze.cpp */,
+				8E9A99F721D51BDA002E55FA /* MazeDraw.hpp */,
+				8E9A99FF21D51BDB002E55FA /* MazeDraw.cpp */,
+			);
+			name = "Maze Base";
+			sourceTree = "<group>";
+		};
+		8E9A9A1421D51C1C002E55FA /* Maze Creation (Random Walk) */ = {
+			isa = PBXGroup;
+			children = (
+				8E9A99DD21D51BD9002E55FA /* Maze_AnaHori.hpp */,
+				8E9A99F521D51BDA002E55FA /* Maze_AnaHori.cpp */,
+				8E9A99E521D51BD9002E55FA /* Maze_HuntAndKill.hpp */,
+				8E9A99F121D51BDA002E55FA /* Maze_HuntAndKill.cpp */,
+				8E9A99E821D51BDA002E55FA /* Maze_RecursiveBacktracking.hpp */,
+				8E9A99F921D51BDB002E55FA /* Maze_RecursiveBacktracking.cpp */,
+				8E9A99E621D51BDA002E55FA /* Maze_GrowingTree.hpp */,
+				8E9A99ED21D51BDA002E55FA /* Maze_GrowingTree.cpp */,
+				8E9A99EA21D51BDA002E55FA /* Maze_GrowingBinaryTree.hpp */,
+				8E9A99E721D51BDA002E55FA /* Maze_GrowingBinaryTree.cpp */,
+				8E9A99EF21D51BDA002E55FA /* Maze_Prim.hpp */,
+				8E9A99F821D51BDB002E55FA /* Maze_Prim.cpp */,
+				8E9A99DC21D51BD9002E55FA /* Maze_AldousBroder.hpp */,
+				8E9A99DF21D51BD9002E55FA /* Maze_AldousBroder.cpp */,
+				8E9A99F421D51BDA002E55FA /* Maze_Wilson.hpp */,
+				8E9A99F321D51BDA002E55FA /* Maze_Wilson.cpp */,
+				8E9A99FD21D51BDB002E55FA /* Maze_KabeNobashi.hpp */,
+				8E9A99E121D51BD9002E55FA /* Maze_KabeNobashi.cpp */,
+			);
+			name = "Maze Creation (Random Walk)";
+			sourceTree = "<group>";
+		};
+		8E9A9A1521D51C71002E55FA /* Maze Creation (Divide&Conquer) */ = {
+			isa = PBXGroup;
+			children = (
+				8E9A99FB21D51BDB002E55FA /* Maze_RecursiceDivision.hpp */,
+				8E9A99DB21D51BD9002E55FA /* Maze_RecursiceDivision.cpp */,
+				8E9A99EB21D51BDA002E55FA /* Maze_BlobbyRecursiveDivision.hpp */,
+				8E9A99EE21D51BDA002E55FA /* Maze_BlobbyRecursiveDivision.cpp */,
+				8E9A99DA21D51BD9002E55FA /* Maze_Eller.hpp */,
+				8E9A99EC21D51BDA002E55FA /* Maze_Eller.cpp */,
+			);
+			name = "Maze Creation (Divide&Conquer)";
+			sourceTree = "<group>";
+		};
+		8E9A9A1621D51E84002E55FA /* Maze Creation (Simple) */ = {
+			isa = PBXGroup;
+			children = (
+				8E9A99DE21D51BD9002E55FA /* Maze_BouTaoshi.hpp */,
+				8E9A99E021D51BD9002E55FA /* Maze_BouTaoshi.cpp */,
+				8E9A99FC21D51BDB002E55FA /* Maze_Sidewinder.hpp */,
+				8E9A99E421D51BD9002E55FA /* Maze_Sidewinder.cpp */,
+				8E9A99E921D51BDA002E55FA /* Maze_BinaryTree.hpp */,
+				8E9A99E321D51BD9002E55FA /* Maze_BinaryTree.cpp */,
+			);
+			name = "Maze Creation (Simple)";
+			sourceTree = "<group>";
+		};
+		8E9A9A1721D51EFB002E55FA /* Maze Solving */ = {
+			isa = PBXGroup;
+			children = (
+				8E9A99F221D51BDA002E55FA /* Maze_RightHand.hpp */,
+				8E9A99F621D51BDA002E55FA /* Maze_RightHand.cpp */,
+			);
+			name = "Maze Solving";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8E7D3833214D126D000A2D31 /* Maze */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E7D3851214D126D000A2D31 /* Build configuration list for PBXNativeTarget "Maze" */;
+			buildPhases = (
+				8E7D3830214D126D000A2D31 /* Sources */,
+				8E7D3831214D126D000A2D31 /* Frameworks */,
+				8E7D3832214D126D000A2D31 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Maze;
+			productName = DrawPad;
+			productReference = 8E7D3834214D126D000A2D31 /* Maze.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8E7D382C214D126D000A2D31 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = numata;
+				TargetAttributes = {
+					8E7D3833214D126D000A2D31 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+				};
+			};
+			buildConfigurationList = 8E7D382F214D126D000A2D31 /* Build configuration list for PBXProject "Maze" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8E7D382B214D126D000A2D31;
+			productRefGroup = 8E7D3835214D126D000A2D31 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8E7D3833214D126D000A2D31 /* Maze */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8E7D3832214D126D000A2D31 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E9A99D321D51B7A002E55FA /* Images.xcassets in Resources */,
+				8E9A99D621D51B7A002E55FA /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8E7D3830214D126D000A2D31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E9A9A0D21D51BDB002E55FA /* Maze_Wilson.cpp in Sources */,
+				8E9A9A0B21D51BDB002E55FA /* Maze.cpp in Sources */,
+				8E9A9A0F21D51BDB002E55FA /* Maze_RightHand.cpp in Sources */,
+				8E9A9A0221D51BDB002E55FA /* Maze_BouTaoshi.cpp in Sources */,
+				8E9A9A1221D51BDB002E55FA /* MazeDraw.cpp in Sources */,
+				8E9A9A0121D51BDB002E55FA /* Maze_AldousBroder.cpp in Sources */,
+				8E9A9A0E21D51BDB002E55FA /* Maze_AnaHori.cpp in Sources */,
+				8E9A9A0321D51BDB002E55FA /* Maze_KabeNobashi.cpp in Sources */,
+				8E9A9A0721D51BDB002E55FA /* Maze_GrowingBinaryTree.cpp in Sources */,
+				8E9A9A0421D51BDB002E55FA /* Direction.cpp in Sources */,
+				8E9A9A0021D51BDB002E55FA /* Maze_RecursiceDivision.cpp in Sources */,
+				8E9A9A0521D51BDB002E55FA /* Maze_BinaryTree.cpp in Sources */,
+				8E9A9A0A21D51BDB002E55FA /* Maze_BlobbyRecursiveDivision.cpp in Sources */,
+				8E9A9A0C21D51BDB002E55FA /* Maze_HuntAndKill.cpp in Sources */,
+				8E9A99D021D51B7A002E55FA /* MyImageView.m in Sources */,
+				8E9A99D121D51B7A002E55FA /* AppDelegate.mm in Sources */,
+				8E9A9A1121D51BDB002E55FA /* Maze_RecursiveBacktracking.cpp in Sources */,
+				8E9A99D921D51BC1002E55FA /* DrawMain.cpp in Sources */,
+				8E9A9A0621D51BDB002E55FA /* Maze_Sidewinder.cpp in Sources */,
+				8E9A99D521D51B7A002E55FA /* MyViewController.mm in Sources */,
+				8E9A99D421D51B7A002E55FA /* main.m in Sources */,
+				8E9A9A1021D51BDB002E55FA /* Maze_Prim.cpp in Sources */,
+				8E9A9A0821D51BDB002E55FA /* Maze_Eller.cpp in Sources */,
+				8E9A9A0921D51BDB002E55FA /* Maze_GrowingTree.cpp in Sources */,
+				8E9A99C421D51B4E002E55FA /* Drawing.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8E7D384F214D126D000A2D31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		8E7D3850214D126D000A2D31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		8E7D3852214D126D000A2D31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/../src/DrawPad/osx/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mycompany.Maze;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		8E7D3853214D126D000A2D31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/../src/DrawPad/osx/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mycompany.Maze;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8E7D382F214D126D000A2D31 /* Build configuration list for PBXProject "Maze" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E7D384F214D126D000A2D31 /* Debug */,
+				8E7D3850214D126D000A2D31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8E7D3851214D126D000A2D31 /* Build configuration list for PBXNativeTarget "Maze" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E7D3852214D126D000A2D31 /* Debug */,
+				8E7D3853214D126D000A2D31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8E7D382C214D126D000A2D31 /* Project object */;
+}
