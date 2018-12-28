@@ -173,8 +173,8 @@ void EndBatch()
 
 // ---- グラフィックス操作
 
-// RGB形式の色情報をABGR形式の色情報に変換する
-static inline unsigned RGBToABGR(int value)
+// RGB形式の色情報を機種依存形式の色情報に変換する
+static inline unsigned RGBToNativeColor(int value)
 {
 #ifdef _WINDOWS
     return value;
@@ -186,8 +186,8 @@ static inline unsigned RGBToABGR(int value)
 #endif  //#ifdef _WINDOWS
 }
 
-// ABGR形式の色情報をRGB形式の色情報に変換する
-static inline int ABGRToRGB(unsigned value)
+// 機種依存形式の色情報をRGB形式の色情報に変換する
+static inline int NativeColorToRGB(unsigned value)
 {
 #ifdef _WINDOWS
     return value;
@@ -203,10 +203,10 @@ static inline int ABGRToRGB(unsigned value)
 void Clear(int color)
 {
     // バッファの先頭から最後まで、同じ値を繰り返しセットする。
-    unsigned abgr = RGBToABGR(color);
+    unsigned nativeColor = RGBToNativeColor(color);
     unsigned *p = (unsigned *)gpBuffer;
     for (int i = 0; i < 640*480; i++) {
-        *p = abgr;
+        *p = nativeColor;
         p++;
     }
 
@@ -228,9 +228,9 @@ int GetColor(int x, int y)
     x = x + 320;
     y = 480 - (y + 240) - 1;
 
-    // バッファの色情報を参照し、ABGR形式からRGB形式に変換してリターンする。
+    // バッファの色情報を参照し、機種依存形式からRGB形式に変換してリターンする。
     unsigned *p = (unsigned *)gpBuffer;
-    return ABGRToRGB(*(p + y * 640 + x));
+    return NativeColorToRGB(*(p + y * 640 + x));
 }
 
 // 点の描画
@@ -246,9 +246,9 @@ void DrawPoint(int x, int y, int color)
     y = 480 - (y + 240) - 1;
 
     // バッファにデータを書き込み
-    unsigned abgr = RGBToABGR(color);
+    unsigned nativeColor = RGBToNativeColor(color);
     unsigned *p = (unsigned *)gpBuffer;
-    p[y * 640 + x] = abgr;
+    p[y * 640 + x] = nativeColor;
 
     // バッチ処理中でなければ画面表示
     if (!gIsBatchDrawing) {
@@ -258,7 +258,7 @@ void DrawPoint(int x, int y, int color)
 
 // 線分の描画（実装）
 // ブレゼンハムのアルゴリズムで誤差を計算しながら線分を描画する。
-static void DrawLine_impl(int x1, int y1, int x2, int y2, int abgr)
+static void DrawLine_impl(int x1, int y1, int x2, int y2, int nativeColor)
 {
     // 座標変換
     x1 = x1 + 320;
@@ -277,7 +277,7 @@ static void DrawLine_impl(int x1, int y1, int x2, int y2, int abgr)
     int error = 0;
     while (x != x2 || y != y2) {
         if (x >= 0 && x <= 639 && y >= 0 && y <= 479) {
-            p[y * 640 + x] = abgr;
+            p[y * 640 + x] = nativeColor;
         }
         if (isXBigger) {
             x += step;
@@ -302,15 +302,15 @@ static void DrawLine_impl(int x1, int y1, int x2, int y2, int abgr)
         }
     }
     if (x >= 0 && x <= 639 && y >= 0 && y <= 479) {
-        p[y * 640 + x] = abgr;
+        p[y * 640 + x] = nativeColor;
     }
 }
 
 // 線分の描画
 void DrawLine(int x1, int y1, int x2, int y2, int color)
 {
-    unsigned abgr = RGBToABGR(color);
-    DrawLine_impl(x1, y1, x2, y2, abgr);
+    unsigned nativeColor = RGBToNativeColor(color);
+    DrawLine_impl(x1, y1, x2, y2, nativeColor);
 
     // バッチ処理中でなければ画面表示
     if (!gIsBatchDrawing) {
@@ -422,7 +422,7 @@ void FillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, int color)
         yMax = 479;
     }
     unsigned *p = (unsigned *)gpBuffer;
-    unsigned abgr = RGBToABGR(color);
+    unsigned nativeColor = RGBToNativeColor(color);
     for (int y = yMin; y <= yMax; y++) {
         std::vector<int>& xList = yMap[y];
         if (xList.size() == 0) {
@@ -437,7 +437,7 @@ void FillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, int color)
             xMax = 639;
         }
         for (int x = xMin; x <= xMax; x++) {
-            p[y * 640 + x] = abgr;
+            p[y * 640 + x] = nativeColor;
         }
     }
 
@@ -473,7 +473,7 @@ void DrawRect(int x, int y, int width, int height, int color)
 // 矩形の塗りつぶし
 void FillRect(int x, int y, int width, int height, int color)
 {
-    unsigned abgr = RGBToABGR(color);
+    unsigned nativeColor = RGBToNativeColor(color);
     unsigned *p = (unsigned *)gpBuffer;
 
     x = x + 320;
@@ -510,7 +510,7 @@ void FillRect(int x, int y, int width, int height, int color)
     for (int y = y1; y <= y2; y++) {
         unsigned *p2 = p + x1;
         for (int x = x1; x <= x2; x++) {
-            *(p2++) = abgr;
+            *(p2++) = nativeColor;
         }
         p += 640;
     }
@@ -581,7 +581,7 @@ static int fillX = 0;
 static int fillY = 0;
 
 // 円または円弧の描画の実装
-static void DrawCircle_impl(int cx, int cy, int r, int abgr, float startRad, float endRad)
+static void DrawCircle_impl(int cx, int cy, int r, int nativeColor, float startRad, float endRad)
 {
     // 座標の調整
     unsigned *p = (unsigned *)gpBuffer;
@@ -593,7 +593,7 @@ static void DrawCircle_impl(int cx, int cy, int r, int abgr, float startRad, flo
     // 半径=0の場合は中心に点を描画する
     if (r == 0) {
         if (cx >= 0 && cx <= 639 && cy >= 0 && cy <= 479) {
-            p[cy*640+cx] = abgr;
+            p[cy*640+cx] = nativeColor;
         }
         return;
     }
@@ -604,7 +604,7 @@ static void DrawCircle_impl(int cx, int cy, int r, int abgr, float startRad, flo
     int y = cy;
     float angle = atan2f(cy - y, x - cx);
     if (range.Contains(angle) && x >= 0 && x <= 639 && y >= 0 && y <= 479) {
-        p[y*640+x] = abgr;
+        p[y*640+x] = nativeColor;
         if (x > 1) {
             fillX = x - 1;
             fillY = y;
@@ -626,7 +626,7 @@ static void DrawCircle_impl(int cx, int cy, int r, int abgr, float startRad, flo
         }
         angle = atan2f(cy - y, x - cx);
         if (range.Contains(angle) && x >= 0 && x <= 639 && y >= 0 && y <= 479) {
-            p[y*640+x] = abgr;
+            p[y*640+x] = nativeColor;
             if (x > 1) {
                 fillX = x - 1;
                 fillY = y;
@@ -651,7 +651,7 @@ static void DrawCircle_impl(int cx, int cy, int r, int abgr, float startRad, flo
         }
         angle = atan2f(cy - y, x - cx);
         if (range.Contains(angle) && x >= 0 && x <= 639 && y >= 0 && y <= 479) {
-            p[y*640+x] = abgr;
+            p[y*640+x] = nativeColor;
             if (x < 639) {
                 fillX = x + 1;
                 fillY = y;
@@ -676,7 +676,7 @@ static void DrawCircle_impl(int cx, int cy, int r, int abgr, float startRad, flo
         }
         angle = atan2f(cy - y, x - cx);
         if (range.Contains(angle) && x >= 0 && x <= 639 && y >= 0 && y <= 479) {
-            p[y*640+x] = abgr;
+            p[y*640+x] = nativeColor;
             if (x < 639) {
                 fillX = x + 1;
                 fillY = y;
@@ -701,7 +701,7 @@ static void DrawCircle_impl(int cx, int cy, int r, int abgr, float startRad, flo
         }
         angle = atan2f(cy - y, x - cx);
         if (range.Contains(angle) && x >= 0 && x <= 639 && y >= 0 && y <= 479) {
-            p[y*640+x] = abgr;
+            p[y*640+x] = nativeColor;
             if (x > 1) {
                 fillX = x - 1;
                 fillY = y;
@@ -713,8 +713,8 @@ static void DrawCircle_impl(int cx, int cy, int r, int abgr, float startRad, flo
 // 円または円弧の描画
 void DrawCircle(int cx, int cy, int r, int color, float startRad, float endRad)
 {
-    unsigned abgr = RGBToABGR(color);
-    DrawCircle_impl(cx, cy, r, abgr, startRad, endRad);
+    unsigned nativeColor = RGBToNativeColor(color);
+    DrawCircle_impl(cx, cy, r, nativeColor, startRad, endRad);
 
     // バッチ処理中でなければ画面表示
     if (!gIsBatchDrawing) {
@@ -726,7 +726,7 @@ void DrawCircle(int cx, int cy, int r, int color, float startRad, float endRad)
 void FillCircle(int cx, int cy, int r, int color)
 {
     // 座標の調整
-    unsigned abgr = RGBToABGR(color);
+    unsigned nativeColor = RGBToNativeColor(color);
     unsigned *p = (unsigned *)gpBuffer;
     cx = cx + 320;
     cy = 480 - (cy + 240) - 1;
@@ -734,7 +734,7 @@ void FillCircle(int cx, int cy, int r, int color)
     // 半径=0の場合は中心に点を描画する
     if (r == 0) {
         if (cx >= 0 && cx <= 639 && cy >= 0 && cy <= 479) {
-            p[cy*640+cx] = abgr;
+            p[cy*640+cx] = nativeColor;
         }
         return;
     }
@@ -744,7 +744,7 @@ void FillCircle(int cx, int cy, int r, int color)
     int y = cy;
     for (int x2 = cx; x2 <= x; x2++) {
         if (x2 >= 0 && x2 <= 639 && y >= 0 && y <= 479) {
-            p[y*640+x2] = abgr;
+            p[y*640+x2] = nativeColor;
         }
     }
     while (x != cx) {
@@ -763,7 +763,7 @@ void FillCircle(int cx, int cy, int r, int color)
         }
         for (int x2 = cx; x2 <= x; x2++) {
             if (x2 >= 0 && x2 <= 639 && y >= 0 && y <= 479) {
-                p[y*640+x2] = abgr;
+                p[y*640+x2] = nativeColor;
             }
         }
     }
@@ -785,7 +785,7 @@ void FillCircle(int cx, int cy, int r, int color)
         }
         for (int x2 = x; x2 < cx; x2++) {
             if (x2 >= 0 && x2 <= 639 && y >= 0 && y <= 479) {
-                p[y*640+x2] = abgr;
+                p[y*640+x2] = nativeColor;
             }
         }
     }
@@ -807,7 +807,7 @@ void FillCircle(int cx, int cy, int r, int color)
         }
         for (int x2 = x; x2 < cx; x2++) {
             if (x2 >= 0 && x2 <= 639 && y >= 0 && y <= 479) {
-                p[y*640+x2] = abgr;
+                p[y*640+x2] = nativeColor;
             }
         }
     }
@@ -829,7 +829,7 @@ void FillCircle(int cx, int cy, int r, int color)
         }
         for (int x2 = cx; x2 <= x; x2++) {
             if (x2 >= 0 && x2 <= 639 && y >= 0 && y <= 479) {
-                p[y*640+x2] = abgr;
+                p[y*640+x2] = nativeColor;
             }
         }
     }
@@ -840,7 +840,7 @@ void FillCircle(int cx, int cy, int r, int color)
     }
 }
 
-static void Paint_impl(int x, int y, int paintABGR, int borderABGR);
+static void Paint_impl(int x, int y, int paintNativeColor, int borderNativeColor);
 
 // 円または円弧の塗りつぶし
 void FillCircle(int cx, int cy, int r, int color, float startRad, float endRad)
@@ -878,13 +878,13 @@ void FillCircle(int cx, int cy, int r, int color, float startRad, float endRad)
     DrawLine_impl(cx, cy, x2, y2, 0xff000000);
 
     // 指定色で塗りつぶす
-    unsigned abgr = RGBToABGR(color);
-    Paint_impl(fillX - 320, 239 - fillY, abgr, 0xff000000);
+    unsigned nativeColor = RGBToNativeColor(color);
+    Paint_impl(fillX - 320, 239 - fillY, nativeColor, 0xff000000);
 
     // 円弧と直線を指定色で上書きする
-    DrawCircle_impl(cx, cy, r, abgr, startRad, endRad);
-    DrawLine_impl(cx, cy, x1, y1, abgr);
-    DrawLine_impl(cx, cy, x2, y2, abgr);
+    DrawCircle_impl(cx, cy, r, nativeColor, startRad, endRad);
+    DrawLine_impl(cx, cy, x1, y1, nativeColor);
+    DrawLine_impl(cx, cy, x2, y2, nativeColor);
 
     // バッチ処理中でなければ画面表示
     if (!gIsBatchDrawing) {
@@ -893,7 +893,7 @@ void FillCircle(int cx, int cy, int r, int color, float startRad, float endRad)
 }
 
 // 指定色で囲まれた領域の塗りつぶし（実装）
-static void Paint_impl(int x, int y, int paintABGR, int borderABGR)
+static void Paint_impl(int x, int y, int paintNativeColor, int borderNativeColor)
 {
     x = x + 320;
     y = 480 - (y + 240) - 1;
@@ -908,7 +908,7 @@ static void Paint_impl(int x, int y, int paintABGR, int borderABGR)
     std::vector<IntPoint> scannedPoints;
 
     // 最初の左端を見つける
-    while (x > 0 && p[y*640+(x-1)] != borderABGR) {
+    while (x > 0 && p[y*640+(x-1)] != borderNativeColor) {
         x--;
     }
     scanPoints.push_back({x, y});
@@ -919,7 +919,7 @@ static void Paint_impl(int x, int y, int paintABGR, int borderABGR)
         IntPoint pos = *(scanPoints.end() - 1);
         scanPoints.erase(scanPoints.end() - 1);
         scannedPoints.push_back(pos);
-        if (p[pos.y*640+pos.x] == borderABGR) {
+        if (p[pos.y*640+pos.x] == borderNativeColor) {
             continue;
         }
         // 右端まで塗りつぶしていく
@@ -928,24 +928,24 @@ static void Paint_impl(int x, int y, int paintABGR, int borderABGR)
         bool hasDownYChecked = false;
         int downY = pos.y + 1;
         for (int xx = pos.x; xx <= 639; xx++) {
-            if (p[pos.y*640+xx] == borderABGR) {
+            if (p[pos.y*640+xx] == borderNativeColor) {
                 break;
             }
-            p[pos.y*640+xx] = paintABGR;
+            p[pos.y*640+xx] = paintNativeColor;
             // 上下のピクセルをチェック
             if (upY >= 0) {
                 // 上のピクセルからスキャンした左端がチェック済みの場合、直上に境界色が出てきたらチェック済みフラグを取り下げる
                 if (hasUpYChecked) {
-                    if (p[upY*640+xx] == borderABGR) {
+                    if (p[upY*640+xx] == borderNativeColor) {
                         hasUpYChecked = false;
                     }
                 }
                 // チェック済みでない場合、左端の境界色が出てくる直前のピクセルを見つけて登録する
                 else {
                     // 直上が境界色でなければ左端の境界色が出てくる直前のピクセルを探す
-                    if (p[upY*640+xx] != borderABGR) {
+                    if (p[upY*640+xx] != borderNativeColor) {
                         int theX = xx;
-                        while (theX > 0 && p[upY*640+(theX-1)] != borderABGR) {
+                        while (theX > 0 && p[upY*640+(theX-1)] != borderNativeColor) {
                             theX--;
                         }
                         bool hasScanned = false;
@@ -966,16 +966,16 @@ static void Paint_impl(int x, int y, int paintABGR, int borderABGR)
             if (downY <= 479) {
                 // 下のピクセルからスキャンした左端がチェック済みの場合、直下に境界色が出てきたらチェック済みフラグを取り下げる
                 if (hasDownYChecked) {
-                    if (p[downY*640+xx] == borderABGR) {
+                    if (p[downY*640+xx] == borderNativeColor) {
                         hasDownYChecked = false;
                     }
                 }
                 // チェック済みでない場合、左端の境界色が出てくる直前のピクセルを見つけて登録する
                 else {
                     // 直下が境界色でなければ左端の境界色が出てくる直前のピクセルを探す
-                    if (p[downY*640+xx] != borderABGR) {
+                    if (p[downY*640+xx] != borderNativeColor) {
                         int theX = xx;
-                        while (theX > 0 && p[downY*640+(theX-1)] != borderABGR) {
+                        while (theX > 0 && p[downY*640+(theX-1)] != borderNativeColor) {
                             theX--;
                         }
                         bool hasScanned = false;
@@ -1000,9 +1000,9 @@ static void Paint_impl(int x, int y, int paintABGR, int borderABGR)
 // 指定色で囲まれた領域の塗りつぶし
 void Paint(int x, int y, int paintColor, int borderColor)
 {
-    unsigned borderABGR = RGBToABGR(borderColor);
-    unsigned paintABGR = RGBToABGR(paintColor);
-    Paint_impl(x, y, paintABGR, borderABGR);
+    unsigned borderNativeColor = RGBToNativeColor(borderColor);
+    unsigned paintNativeColor = RGBToNativeColor(paintColor);
+    Paint_impl(x, y, paintNativeColor, borderNativeColor);
 
     // バッチ処理中でなければ画面表示
     if (!gIsBatchDrawing) {
@@ -1028,7 +1028,7 @@ void DrawPattern(unsigned int *buffer, int x, int y)
             }
             unsigned argb = buffer[y2*width+x2+2];
             if (!(argb & 0xff000000)) {
-                *(p+py*640+px) = RGBToABGR((int)argb);
+                *(p+py*640+px) = RGBToNativeColor((int)argb);
             }
         }
     }
@@ -1053,7 +1053,7 @@ void DrawCharacter(char c, int x, int y, int color)
     unsigned width = 5;
     unsigned height = 10;
     unsigned *p = (unsigned *)gpBuffer;
-    unsigned abgr = RGBToABGR(color);
+    unsigned nativeColor = RGBToNativeColor(color);
     x = x + 320;
     y = 480 - (y + 240) - 1;
     for (int y2 = 0; y2 < height*2; y2++) {
@@ -1065,7 +1065,7 @@ void DrawCharacter(char c, int x, int y, int color)
                 continue;
             }
             if ((patternY >> (4 - x2 / 2)) & 1) {
-                *(p+py*640+px) = abgr;
+                *(p+py*640+px) = nativeColor;
             }
         }
     }
@@ -1190,6 +1190,7 @@ void Scroll(int x, int y)
 // 各画素のアルファ値が0以外になっている部分を黄色で、それ以外の部分を青で表示します。
 void ShowAlphaPixels()
 {
+    // TODO: Windowsの場合のピクセル値の並びを考慮する。
     unsigned *p = (unsigned *)gpBuffer; // 生のバッファの色の並びはABGR
 
     for (int i = 0; i < 640*480; i++) {
