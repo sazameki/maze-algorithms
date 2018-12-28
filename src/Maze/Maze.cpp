@@ -103,6 +103,12 @@ Wall::Wall(const CellPoint& _pos, Direction _dir)
     // Do nothing
 }
 
+Wall::Wall(const Wall& wall)
+    : pos(wall.pos), dir(wall.dir)
+{
+    // Do nothing
+}
+
 
 // ---- Mazeクラスのコンストラクタ・デストラクタ
 

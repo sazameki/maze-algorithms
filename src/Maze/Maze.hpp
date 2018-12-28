@@ -113,10 +113,27 @@ struct CrossPoint
  */
 struct Wall
 {
+    /**
+        壁のあるセルの座標
+     */
     CellPoint   pos;
+
+    /**
+        壁の方向
+     */
     Direction   dir;
 
+    /**
+        コンストラクタ。セルの座標と壁のある方向を指定して初期化します。
+        @param  pos セルの座標
+        @param  dir 壁のある方向
+     */
     Wall(const CellPoint& pos, Direction dir);
+
+    /**
+        コピーコンストラクタ。壁のあるセルの座標と壁の方向をコピーします。
+     */
+    Wall(const Wall& wall);
 };
 
 /**
