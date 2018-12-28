@@ -22,7 +22,6 @@
 		8E9A9A0421D51BDB002E55FA /* Direction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99E221D51BD9002E55FA /* Direction.cpp */; };
 		8E9A9A0521D51BDB002E55FA /* Maze_BinaryTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99E321D51BD9002E55FA /* Maze_BinaryTree.cpp */; };
 		8E9A9A0621D51BDB002E55FA /* Maze_Sidewinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99E421D51BD9002E55FA /* Maze_Sidewinder.cpp */; };
-		8E9A9A0721D51BDB002E55FA /* Maze_GrowingBinaryTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99E721D51BDA002E55FA /* Maze_GrowingBinaryTree.cpp */; };
 		8E9A9A0821D51BDB002E55FA /* Maze_Eller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99EC21D51BDA002E55FA /* Maze_Eller.cpp */; };
 		8E9A9A0921D51BDB002E55FA /* Maze_GrowingTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99ED21D51BDA002E55FA /* Maze_GrowingTree.cpp */; };
 		8E9A9A0A21D51BDB002E55FA /* Maze_BlobbyRecursiveDivision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99EE21D51BDA002E55FA /* Maze_BlobbyRecursiveDivision.cpp */; };
@@ -64,10 +63,8 @@
 		8E9A99E421D51BD9002E55FA /* Maze_Sidewinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Sidewinder.cpp; sourceTree = "<group>"; };
 		8E9A99E521D51BD9002E55FA /* Maze_HuntAndKill.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_HuntAndKill.hpp; sourceTree = "<group>"; };
 		8E9A99E621D51BDA002E55FA /* Maze_GrowingTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_GrowingTree.hpp; sourceTree = "<group>"; };
-		8E9A99E721D51BDA002E55FA /* Maze_GrowingBinaryTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_GrowingBinaryTree.cpp; sourceTree = "<group>"; };
 		8E9A99E821D51BDA002E55FA /* Maze_RecursiveBacktracking.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_RecursiveBacktracking.hpp; sourceTree = "<group>"; };
 		8E9A99E921D51BDA002E55FA /* Maze_BinaryTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_BinaryTree.hpp; sourceTree = "<group>"; };
-		8E9A99EA21D51BDA002E55FA /* Maze_GrowingBinaryTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_GrowingBinaryTree.hpp; sourceTree = "<group>"; };
 		8E9A99EB21D51BDA002E55FA /* Maze_BlobbyRecursiveDivision.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_BlobbyRecursiveDivision.hpp; sourceTree = "<group>"; };
 		8E9A99EC21D51BDA002E55FA /* Maze_Eller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Eller.cpp; sourceTree = "<group>"; };
 		8E9A99ED21D51BDA002E55FA /* Maze_GrowingTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_GrowingTree.cpp; sourceTree = "<group>"; };
@@ -185,8 +182,6 @@
 				8E9A99F921D51BDB002E55FA /* Maze_RecursiveBacktracking.cpp */,
 				8E9A99E621D51BDA002E55FA /* Maze_GrowingTree.hpp */,
 				8E9A99ED21D51BDA002E55FA /* Maze_GrowingTree.cpp */,
-				8E9A99EA21D51BDA002E55FA /* Maze_GrowingBinaryTree.hpp */,
-				8E9A99E721D51BDA002E55FA /* Maze_GrowingBinaryTree.cpp */,
 				8E9A99EF21D51BDA002E55FA /* Maze_Prim.hpp */,
 				8E9A99F821D51BDB002E55FA /* Maze_Prim.cpp */,
 				8E9A99DC21D51BD9002E55FA /* Maze_AldousBroder.hpp */,
@@ -311,7 +306,6 @@
 				8E9A9A0121D51BDB002E55FA /* Maze_AldousBroder.cpp in Sources */,
 				8E9A9A0E21D51BDB002E55FA /* Maze_AnaHori.cpp in Sources */,
 				8E9A9A0321D51BDB002E55FA /* Maze_KabeNobashi.cpp in Sources */,
-				8E9A9A0721D51BDB002E55FA /* Maze_GrowingBinaryTree.cpp in Sources */,
 				8E9A9A0421D51BDB002E55FA /* Direction.cpp in Sources */,
 				8E9A9A0021D51BDB002E55FA /* Maze_RecursiceDivision.cpp in Sources */,
 				8E9A9A0521D51BDB002E55FA /* Maze_BinaryTree.cpp in Sources */,
