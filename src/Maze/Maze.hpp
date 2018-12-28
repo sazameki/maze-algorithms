@@ -50,12 +50,12 @@ extern const int    kCell_AllBorders;
 struct CellPoint
 {
     /**
-        セルのX座標
+        セルのX座標。有効なセルのX座標の値は[0, xSize-1]です。
      */
     int x;
 
     /**
-        セルのY座標
+        セルのY座標。有効なセルのY座標の値は[0, ySize-1]です。
      */
     int y;
 
@@ -79,6 +79,7 @@ struct CellPoint
 
     /**
         現在のセルの座標から、指定された方向に移動した場所にあるセルの座標を計算します。
+        移動後の座標は有効な座標ではない可能性があります。必ずMazeクラスのIsValidCell()関数で有効性をチェックしてください。
      */
     CellPoint   Move(Direction direction) const;
 };
@@ -91,19 +92,37 @@ struct CellPoint
 struct CrossPoint
 {
     /**
-        交点のX座標
+        交点のX座標。有効な交点のX座標の値は[0, xSize]です。
      */
     int x;
 
     /**
-        交点のY座標
+        交点のY座標。有効な交点のY座標の値は[0, ySize]です。
      */
     int y;
 
+    /**
+        コンストラクタ。X座標とY座標はゼロで初期化されます。
+     */
     CrossPoint();
+
+    /**
+        コンストラクタ。X座標とY座標は指定された値で初期化されます。
+        @param  x   交点のX座標
+        @param  y   交点のY座標
+     */
     CrossPoint(int x, int y);
+
+    /**
+        コピーコンストラクタ。座標は指定された座標値で初期化されます。
+        @param  pos 交点の座標
+     */
     CrossPoint(const CrossPoint& pos);
 
+    /**
+        現在の交点の座標から、指定された方向に移動した場所にある交点の座標を計算します。
+        移動後の座標は有効な座標ではない可能性があります。必ずMazeクラスのIsValidCrossPoint()関数で有効性をチェックしてください。
+     */
     CrossPoint  Move(Direction direction) const;
 };
 
@@ -243,29 +262,153 @@ public:
 
 
     // ---- 迷路生成用の関数（セルベース）
+
+    /**
+        指定された座標のセルから、指定された方向に移動できるか（移動先が有効なセルであるか）をチェックします。
+        @param  pos 移動元のセル座標
+        @param  dir 移動方向
+     */
     bool    CanMove(const CellPoint& pos, Direction dir) const;
+
+    /**
+        指定された座標のセルから、指定された方向にある壁を削除できるかをチェックします。
+        有効なセル座標でない場合や、壁がない場合には、falseがリターンされます。
+        @param  x   セルのX座標
+        @param  y   セルのY座標
+        @param  dir 壁の方向
+     */
     bool    CanRemoveWall(int x, int y, Direction dir) const;
+
+    /**
+        指定された座標のセルから、指定された方向にある壁を削除できるかをチェックします。
+        有効なセル座標でない場合や、壁がない場合には、falseがリターンされます。
+        @param  pos セルの座標
+        @param  dir 壁の方向
+     */
     bool    CanRemoveWall(const CellPoint& pos, Direction dir) const;
+
+    /**
+        指定された壁が削除できるかをチェックします。
+        有効なセル座標でない場合や、壁がない場合には、falseがリターンされます。
+        @param  wall    削除対象の壁（セル座標＋方向）
+     */
     bool    CanRemoveWall(const Wall& wall) const;
+
+    /**
+        指定された座標のセルの指定された方向に壁があるかをチェックします。
+        @param  x   セルのX座標
+        @param  y   セルのY座標
+        @param  dir 壁の方向
+     */
     bool    CheckWall(int x, int y, Direction dir) const;
+
+    /**
+        指定された座標のセルの指定された方向に壁があるかをチェックします。
+        @param  pos セルの座標
+        @param  dir 壁の方向
+     */
     bool    CheckWall(const CellPoint& pos, Direction dir) const;
+
+    /**
+        指定された情報の壁があるかをチェックします。
+        @param  wall    壁の情報（セル座標＋方向）
+     */
     bool    CheckWall(const Wall& wall) const;
+
+    /**
+        指定されたセル座標が有効な座標かどうかをチェックします。
+        @param  pos チェック対象のセル座標
+     */
     bool    IsValidCell(const CellPoint& pos) const;
+
+    /**
+        指定されたセルの座標から移動可能なすべての方向のリストをvectorとして取得します。
+        @param  pos セルの座標
+     */
     vector<Direction>   MakeValidMoveDirectionList(const CellPoint& pos) const;
+
+    /**
+        指定されたセルの座標から移動可能なすべての方向のリストを、シャッフルされたvectorとして取得します。
+        @param  pos セルの座標
+     */
     vector<Direction>   MakeValidMoveDirectionList_shuffled(const CellPoint& pos) const;
+
+    /**
+        指定されたセル座標の指定された方向に壁を作成します。
+        @param  x   セルのX座標
+        @param  y   セルのY座標
+        @param  dir 壁の方向
+     */
     void    MakeWall(int x, int y, Direction dir);
+
+    /**
+        指定されたセル座標の指定された方向に壁を作成します。
+        @param  pos セルの座標
+        @param  dir 壁の方向
+     */
     void    MakeWall(const CellPoint& pos, Direction dir);
+
+    /**
+        指定された情報の壁を作成します。
+        @param  wall    壁の情報（セル座標＋壁の方向）
+     */
     void    MakeWall(const Wall& wall);
+
+    /**
+        指定されたセル座標の指定された方向の壁を削除します。
+        @param  x   セルのX座標
+        @param  y   セルのY座標
+        @param  dir 壁の方向
+     */
     void    RemoveWall(int x, int y, Direction dir);
+
+    /**
+        指定されたセル座標の指定された方向の壁を削除します。
+        @param  pos セルの座標
+        @param  dir 壁の方向
+     */
     void    RemoveWall(const CellPoint& pos, Direction dir);
+
+    /**
+        指定された情報の壁を削除します。
+        @param  wall    壁の情報（セル座標＋壁の方向）
+     */
     void    RemoveWall(const Wall& wall);
 
 
     // ---- 迷路生成用の関数（交点ベース）
+
+    /**
+        指定された交点の座標から、指定された方向に移動できるかをチェックします。
+        @param  cp  移動元の交点の座標
+        @param  dir 移動方向
+     */
     bool    CanMoveFromCrossPoint(const CrossPoint& cp, Direction dir) const;
+
+    /**
+        指定された交点から見て上下左右いずれかの方向に壁があるかどうかをチェックします。
+        @param  cp  チェック対象の交点座標
+     */
     bool    CheckWallFromCrossPoint(const CrossPoint& cp) const;
+
+    /**
+        指定された交点から見て、指定された方向に壁があるかどうかをチェックします。
+        @param  cp  チェック対象の交点座標
+        @param  dir 壁の方向
+     */
     bool    CheckWallFromCrossPoint(const CrossPoint& cp, Direction dir) const;
+
+    /**
+        与えられた交点の座標が有効なものであるかどうかをチェックします。
+        @param  cp  チェック対象の交点座標
+     */
     bool    IsValidCrossPoint(const CrossPoint& cp) const;
+
+    /**
+        指定された交点座標から、指定された方向に壁を作成します。
+        @param  cp  交点座標
+        @param  dir 壁を作成する方向
+     */
     void    MakeWallFromCrossPoint(const CrossPoint& cp, Direction dir);
 
 

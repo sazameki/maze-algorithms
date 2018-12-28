@@ -210,19 +210,7 @@ bool Maze::CanMove(const CellPoint& pos, Direction dir) const
 
 bool Maze::CanRemoveWall(int x, int y, Direction dir) const
 {
-    if (x == 0 && dir == Left) {
-        return false;
-    }
-    if (y == 0 && dir == Up) {
-        return false;
-    }
-    if (x == xSize - 1 && dir == Right) {
-        return false;
-    }
-    if (y == ySize - 1 && dir == Down) {
-        return false;
-    }
-    return CheckWall(x, y, dir);
+    return (IsValidCell(CellPoint(x, y)) && CheckWall(x, y, dir));
 }
 
 bool Maze::CanRemoveWall(const CellPoint& pos, Direction dir) const
@@ -237,6 +225,10 @@ bool Maze::CanRemoveWall(const Wall& wall) const
 
 bool Maze::CheckWall(int x, int y, Direction dir) const
 {
+    assert(x >= 0 && x < xSize);
+    assert(y >= 0 && y < ySize);
+    assert(dir != NoDirection);
+
     if (dir == Up) {
         return ((data[y * xSize + x] & kCell_TopBorder) > 0);
     } else if (dir == Right) {
