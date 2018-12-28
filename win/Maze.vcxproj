@@ -164,6 +164,22 @@
     <ClInclude Include="..\src\Maze\Direction.hpp" />
     <ClInclude Include="..\src\Maze\Maze.hpp" />
     <ClInclude Include="..\src\Maze\MazeDraw.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_AldousBroder.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_AnaHori.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_BinaryTree.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_BlobbyRecursiveDivision.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_BouTaoshi.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_Eller.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_GrowingBinaryTree.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_GrowingTree.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_HuntAndKill.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_KabeNobashi.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_Prim.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_RecursiceDivision.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_RecursiveBacktracking.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_RightHand.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_Sidewinder.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_Wilson.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DrawPad\Drawing.cpp" />
@@ -171,6 +187,22 @@
     <ClCompile Include="..\src\Maze\Direction.cpp" />
     <ClCompile Include="..\src\Maze\Maze.cpp" />
     <ClCompile Include="..\src\Maze\MazeDraw.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_AldousBroder.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_AnaHori.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_BinaryTree.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_BlobbyRecursiveDivision.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_BouTaoshi.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_Eller.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_GrowingBinaryTree.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_GrowingTree.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_HuntAndKill.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_KabeNobashi.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_Prim.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_RecursiceDivision.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_RecursiveBacktracking.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_RightHand.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_Sidewinder.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_Wilson.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\src\DrawPad\win\Maze.rc" />

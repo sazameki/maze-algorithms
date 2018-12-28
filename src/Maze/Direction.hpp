@@ -8,6 +8,11 @@
 #ifndef Direction_hpp
 #define Direction_hpp
 
+#ifdef _WINDOWS
+void srandom(unsigned);
+int random();
+#endif
+
 
 /// 方向を表す定数
 enum Direction
