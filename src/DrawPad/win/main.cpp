@@ -17,17 +17,13 @@ void DrawMain();
 HINSTANCE   hAppInstance;   // アプリケーションのインスタンス
 HWND        hWindow;        // ウィンドウ
 HANDLE      hThread;        // 描画用スレッド
+HDC         hMainDC;        // メインのウィンドウ描画用デバイスコンテキスト
 HDC         hDibDC;         // DIB描画用のデバイスコンテキスト
 
 
 void FinishDrawing()
 {
-    InvalidateRect(hWindow, NULL, FALSE);
-    PAINTSTRUCT ps;
-    HDC hDC = BeginPaint(hWindow, &ps);
-    BitBlt(hDC, 0, 0, 640, 480, hDibDC, 0, 0, SRCCOPY);
-    EndPaint(hWindow, &ps);
-    ReleaseDC(hWindow, hDC);
+    BitBlt(hMainDC, 0, 0, 640, 480, hDibDC, 0, 0, SRCCOPY);
 }
 
 void Sleep(float seconds)
@@ -67,7 +63,9 @@ static DWORD WINAPI ThreadProc(LPVOID arg)
     gIsMouseDown = false;
 
     // DrawPadのメイン関数の実行
+    hMainDC = GetDC(hWindow);
     DrawMain();
+    ReleaseDC(hWindow, hMainDC);
 
     // クリーンアップ
     DeleteObject(hBitmap);
