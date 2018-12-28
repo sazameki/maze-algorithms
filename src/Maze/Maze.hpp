@@ -44,7 +44,8 @@ extern const int    kCell_AllBorders;
 
 
 /**
-    迷路上の各セルの座標を表す構造体。
+    迷路上の各セルの座標を表す構造体です。
+    有効なセルのX座標の値は[0, xSize-1]、Y座標の値は[0, ySize-1]です。
  */
 struct CellPoint
 {
@@ -84,11 +85,19 @@ struct CellPoint
 
 
 /**
-    迷路の線の各交点を表す構造体。
+    迷路の線の各交点を表す構造体です。
+    有効な交点のX座標の値は[0, xSize], Y座標の値は[0, ySize]です。
  */
 struct CrossPoint
 {
+    /**
+        交点のX座標
+     */
     int x;
+
+    /**
+        交点のY座標
+     */
     int y;
 
     CrossPoint();
