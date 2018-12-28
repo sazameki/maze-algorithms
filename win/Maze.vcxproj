@@ -170,7 +170,6 @@
     <ClInclude Include="..\src\Maze\Maze_BlobbyRecursiveDivision.hpp" />
     <ClInclude Include="..\src\Maze\Maze_BouTaoshi.hpp" />
     <ClInclude Include="..\src\Maze\Maze_Eller.hpp" />
-    <ClInclude Include="..\src\Maze\Maze_GrowingBinaryTree.hpp" />
     <ClInclude Include="..\src\Maze\Maze_GrowingTree.hpp" />
     <ClInclude Include="..\src\Maze\Maze_HuntAndKill.hpp" />
     <ClInclude Include="..\src\Maze\Maze_KabeNobashi.hpp" />
@@ -194,7 +193,6 @@
     <ClCompile Include="..\src\Maze\Maze_BlobbyRecursiveDivision.cpp" />
     <ClCompile Include="..\src\Maze\Maze_BouTaoshi.cpp" />
     <ClCompile Include="..\src\Maze\Maze_Eller.cpp" />
-    <ClCompile Include="..\src\Maze\Maze_GrowingBinaryTree.cpp" />
     <ClCompile Include="..\src\Maze\Maze_GrowingTree.cpp" />
     <ClCompile Include="..\src\Maze\Maze_HuntAndKill.cpp" />
     <ClCompile Include="..\src\Maze\Maze_KabeNobashi.cpp" />
