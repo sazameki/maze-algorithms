@@ -176,19 +176,27 @@ void EndBatch()
 // RGB形式の色情報をABGR形式の色情報に変換する
 static inline unsigned RGBToABGR(int value)
 {
+#ifdef _WINDOWS
+    return value;
+#else
     int r = (value >> 16) & 0xff;
     int g = (value >> 8) & 0xff;
     int b = value & 0xff;
     return ((b << 16) | (g << 8) | r);
+#endif  //#ifdef _WINDOWS
 }
 
 // ABGR形式の色情報をRGB形式の色情報に変換する
 static inline int ABGRToRGB(unsigned value)
 {
+#ifdef _WINDOWS
+    return value;
+#else
     int r = value & 0xff;
     int g = (value >> 8) & 0xff;
     int b = (value >> 16) & 0xff;
     return ((r << 16) | (g << 8) | b);
+#endif  //#ifdef _WINDOWS
 }
 
 // 画面のクリア

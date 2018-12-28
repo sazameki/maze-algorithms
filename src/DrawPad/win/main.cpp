@@ -7,180 +7,77 @@
 
 #include <windows.h>
 #include "Resource.h"
-
-#ifdef _WINDOWS
-#include <cstdlib>
-void srandom(unsigned seed) { srand(seed); }
-int random() { return rand(); }
-#endif
+#include "Drawing.hpp"
 
 
-#define MAX_LOADSTRING 100
+void DrawMain();
 
-// グローバル変数:
-HINSTANCE hInst;                                // 現在のインターフェイス
-WCHAR szTitle[MAX_LOADSTRING];                  // タイトル バーのテキスト
-WCHAR szWindowClass[MAX_LOADSTRING];            // メイン ウィンドウ クラス名
 
-// このコード モジュールに含まれる関数の宣言を転送します:
-ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+// 変数
+HINSTANCE   hAppInstance;   // アプリケーションのインスタンス
+HWND        hWindow;        // ウィンドウ
+HANDLE      hThread;        // 描画用スレッド
+HDC         hDibDC;         // DIB描画用のデバイスコンテキスト
+
 
 void FinishDrawing()
 {
-    // TODO: FinishDrawing()関数を実装する。
+    InvalidateRect(hWindow, NULL, FALSE);
+    PAINTSTRUCT ps;
+    HDC hDC = BeginPaint(hWindow, &ps);
+    BitBlt(hDC, 0, 0, 640, 480, hDibDC, 0, 0, SRCCOPY);
+    EndPaint(hWindow, &ps);
+    ReleaseDC(hWindow, hDC);
 }
 
 void Sleep(float seconds)
 {
+    // FIXME: ::Sleep(DWORD)でスリープさせると、直前の描画が画面に反映されない場合があるのを修正する。
     Sleep((DWORD)(seconds * 1000));
 }
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+/**
+    描画用スレッド関数
+ */
+static DWORD WINAPI ThreadProc(LPVOID arg)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+    // ビットマップの構成
+    BITMAPINFO  bmpInfo;
+    bmpInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    bmpInfo.bmiHeader.biWidth = 640;
+    bmpInfo.bmiHeader.biHeight = -480;
+    bmpInfo.bmiHeader.biPlanes = 1;
+    bmpInfo.bmiHeader.biBitCount = 32;
+    bmpInfo.bmiHeader.biCompression = BI_RGB;
 
-    // TODO: ここにコードを挿入してください。
+    // DIBを生成してhDibDCに割り当てる
+    HDC hDC = GetDC(hWindow);
+    hDibDC = CreateCompatibleDC(hDC);
+    HBITMAP hBitmap = CreateDIBSection(hDC, &bmpInfo, DIB_RGB_COLORS, (void**)&gpBuffer, NULL, 0);
+    SelectObject(hDibDC, hBitmap);
+    ReleaseDC(hWindow, hDC);
 
-    // グローバル文字列を初期化する
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_MAZE, szWindowClass, MAX_LOADSTRING);
-    MyRegisterClass(hInstance);
+    // 画面のクリア
+    gIsBatchDrawing = true;
+    Clear(kColorBlack);
+    gIsBatchDrawing = false;
 
-    // アプリケーション初期化の実行:
-    if (!InitInstance (hInstance, nCmdShow))
-    {
-        return FALSE;
-    }
+    // キーボード・マウス関係の変数の初期化
+    gKeyData = 0;
+    gIsMouseDown = false;
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MAZE));
+    // DrawPadのメイン関数の実行
+    DrawMain();
 
-    MSG msg;
-
-    // メイン メッセージ ループ:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
-
-    return (int) msg.wParam;
-}
-
-
-
-//
-//  関数: MyRegisterClass()
-//
-//  目的: ウィンドウ クラスを登録します。
-//
-ATOM MyRegisterClass(HINSTANCE hInstance)
-{
-    WNDCLASSEXW wcex;
-
-    wcex.cbSize = sizeof(WNDCLASSEX);
-
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAZE));
-    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_MAZE);
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
-
-    return RegisterClassExW(&wcex);
-}
-
-//
-//   関数: InitInstance(HINSTANCE, int)
-//
-//   目的: インスタンス ハンドルを保存して、メイン ウィンドウを作成します
-//
-//   コメント:
-//
-//        この関数で、グローバル変数でインスタンス ハンドルを保存し、
-//        メイン プログラム ウィンドウを作成および表示します。
-//
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
-{
-   hInst = hInstance; // グローバル変数にインスタンス ハンドルを格納する
-
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
-   if (!hWnd)
-   {
-      return FALSE;
-   }
-
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
-
-   return TRUE;
-}
-
-//
-//  関数: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  目的: メイン ウィンドウのメッセージを処理します。
-//
-//  WM_COMMAND  - アプリケーション メニューの処理
-//  WM_PAINT    - メイン ウィンドウを描画する
-//  WM_DESTROY  - 中止メッセージを表示して戻る
-//
-//
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    switch (message)
-    {
-    case WM_COMMAND:
-        {
-            int wmId = LOWORD(wParam);
-            // 選択されたメニューの解析:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
-        break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: HDC を使用する描画コードをここに追加してください...
-            EndPaint(hWnd, &ps);
-        }
-        break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-    }
+    // クリーンアップ
+    DeleteObject(hBitmap);
+    DeleteDC(hDibDC);
     return 0;
 }
 
-// バージョン情報ボックスのメッセージ ハンドラーです。
+/**
+    バージョン情報ボックスのメッセージハンドラ
+ */
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     UNREFERENCED_PARAMETER(lParam);
@@ -199,3 +96,203 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
+
+/**
+    イベント・ハンドラ
+ */
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    // TODO: マウスの処理を追加する。
+    switch (message)
+    {
+    case WM_CREATE:
+    {
+        hThread = CreateThread(NULL, 0, ThreadProc, 0, 0, NULL);
+        break;
+    }
+    case WM_KEYDOWN:
+        switch (wParam) {
+        case VK_LEFT:
+            gKeyData |= kKeyLeftArrow;
+            break;
+        case VK_RIGHT:
+            gKeyData |= kKeyRightArrow;
+            break;
+        case VK_UP:
+            gKeyData |= kKeyUpArrow;
+            break;
+        case VK_DOWN:
+            gKeyData |= kKeyDownArrow;
+            break;
+        case VK_RETURN:
+            gKeyData |= kKeyReturn;
+            break;
+        case VK_SPACE:
+            gKeyData |= kKeySpace;
+            break;
+        case 'A':
+            gKeyData |= kKeyA;
+            break;
+        case 'S':
+            gKeyData |= kKeyS;
+            break;
+        case 'D':
+            gKeyData |= kKeyD;
+            break;
+        case 'W':
+            gKeyData |= kKeyW;
+            break;
+        }
+        break;
+    case WM_KEYUP:
+        switch (wParam) {
+        case VK_LEFT:
+            gKeyData &= ~kKeyLeftArrow;
+            break;
+        case VK_RIGHT:
+            gKeyData &= ~kKeyRightArrow;
+            break;
+        case VK_UP:
+            gKeyData &= ~kKeyUpArrow;
+            break;
+        case VK_DOWN:
+            gKeyData &= ~kKeyDownArrow;
+            break;
+        case VK_RETURN:
+            gKeyData &= ~kKeyReturn;
+            break;
+        case VK_SPACE:
+            gKeyData &= ~kKeySpace;
+            break;
+        case 'A':
+            gKeyData &= ~kKeyA;
+            break;
+        case 'S':
+            gKeyData &= ~kKeyS;
+            break;
+        case 'D':
+            gKeyData &= ~kKeyD;
+            break;
+        case 'W':
+            gKeyData &= ~kKeyW;
+            break;
+        }
+        break;
+    case WM_COMMAND:
+    {
+        switch (LOWORD(wParam))
+        {
+        case IDM_ABOUT:
+            DialogBox(hAppInstance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+            break;
+        case IDM_EXIT:
+            DestroyWindow(hWnd);
+            break;
+        default:
+            return DefWindowProc(hWnd, message, wParam, lParam);
+        }
+    }
+    break;
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+    default:
+        return DefWindowProc(hWnd, message, wParam, lParam);
+    }
+    return 0;
+}
+
+/**
+    ウィンドウ・クラスの登録
+ */
+ATOM RegisterWindowClass(LPCTSTR className)
+{
+    WNDCLASSEXW wcex;
+
+    wcex.cbSize = sizeof(WNDCLASSEX);
+
+    wcex.style          = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc    = WndProc;
+    wcex.cbClsExtra     = 0;
+    wcex.cbWndExtra     = 0;
+    wcex.hInstance      = hAppInstance;
+    wcex.hIcon          = LoadIcon(hAppInstance, MAKEINTRESOURCE(IDI_MAZE));
+    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_MAZE);
+    wcex.lpszClassName  = className;
+    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+
+    return RegisterClassExW(&wcex);
+}
+
+/**
+    ウィンドウを生成します。
+ */
+bool MakeWindow(LPCTSTR className, int nCmdShow)
+{
+   // 最大化できないウィンドウスタイル
+   DWORD winStyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
+
+   // タイトルバーなどのサイズを考慮したウィンドウサイズの計算
+   RECT rect = { 0, 0, 640, 480 };
+   AdjustWindowRect(&rect, winStyle, true);
+
+   // ウィンドウの生成
+   hWindow = CreateWindowW(
+       className, TEXT("Maze"), winStyle,
+       CW_USEDEFAULT, CW_USEDEFAULT,
+       rect.right - rect.left, rect.bottom - rect.top,
+       nullptr, nullptr, hAppInstance, nullptr);
+
+   if (!hWindow)
+   {
+      return false;
+   }
+
+   // ウィンドウの表示
+   ShowWindow(hWindow, nCmdShow);
+   UpdateWindow(hWindow);
+
+   return true;
+}
+
+/**
+    エントリ・ポイント
+ */
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_ LPWSTR    lpCmdLine,
+    _In_ int       nCmdShow)
+{
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+
+    // アプリケーション・インスタンスの保持
+    hAppInstance = hInstance;
+
+    // グローバル文字列を初期化する
+    const wchar_t* windowClassName = TEXT("Maze Window");
+    RegisterWindowClass(windowClassName);
+
+    // ウィンドウの生成
+    if (!MakeWindow(windowClassName, nCmdShow))
+    {
+        return FALSE;
+    }
+
+    // メインのメッセージループ
+    MSG msg;
+    HACCEL hAccelTable = LoadAccelerators(hAppInstance, MAKEINTRESOURCE(IDC_MAZE));
+    while (GetMessage(&msg, nullptr, 0, 0))
+    {
+        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+    }
+
+    return (int)msg.wParam;
+}
+

@@ -9,8 +9,8 @@
 #define Direction_hpp
 
 #ifdef _WINDOWS
-void srandom(unsigned);
-int random();
+#define srandom(seed)   srand((seed))
+#define random()        rand()
 #endif
 
 

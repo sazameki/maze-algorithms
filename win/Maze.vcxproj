@@ -72,19 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\src\DrawPad;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\..\src\DrawPad;$(SolutionDir)\..\src\Maze;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\src\DrawPad;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\..\src\DrawPad;$(SolutionDir)\..\src\Maze;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\src\DrawPad;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\..\src\DrawPad;$(SolutionDir)\..\src\Maze;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\src\DrawPad;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\..\src\DrawPad;$(SolutionDir)\..\src\Maze;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -182,6 +182,7 @@
     <ClInclude Include="..\src\Maze\Maze_Wilson.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\DrawMain.cpp" />
     <ClCompile Include="..\src\DrawPad\Drawing.cpp" />
     <ClCompile Include="..\src\DrawPad\win\main.cpp" />
     <ClCompile Include="..\src\Maze\Direction.cpp" />
