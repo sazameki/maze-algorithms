@@ -14,29 +14,60 @@
 #endif
 
 
-/// 方向を表す定数
+/**
+    方向を表す定数の列挙型
+ */
 enum Direction
 {
-    /// 上方向
+    /**
+        上方向を表す定数
+     */
     Up,
 
-    /// 右方向
+    /**
+        右方向を表す定数
+     */
     Right,
 
-    /// 下方向
+    /**
+        下方向を表す定数
+     */
     Down,
 
-    /// 左方向
+    /**
+        左方向を表す定数
+     */
     Left,
 
-    /// 方向が設定されていない
+    /**
+        方向が設定されていないことを表すDirection列挙型の定数
+     */
     NoDirection,
 };
 
 
+/**
+    与えられた方向と反対の方向をリターンします。
+ */
 Direction   GetOppositeDirection(Direction dir);
+
+/**
+    上下左右いずれかの方向から、ランダムに一方向を選択してリターンします。
+ */
 Direction   GetRandomDirection();
+
+/**
+    与えられた方向を右方向に回転します。
+    NoDirectionが与えられた場合、NoDirectionがリターンされます。
+    例. 上->右, 右->下
+ */
 Direction   RotateRight(Direction dir);
+
+/**
+    与えられた方向を左方向に回転します。
+    NoDirectionが与えられた場合、NoDirectionがリターンされます。
+    例. 上->左, 左->下
+ */
 Direction   RotateLeft(Direction dir);
 
 

@@ -111,7 +111,7 @@ Maze::Maze(int _xSize, int _ySize)
     Create(_xSize, _ySize, 0);
 }
 
-Maze::Maze(int _xSize, int _ySize, int _data)
+Maze::Maze(int _xSize, int _ySize, unsigned _data)
 {
     Create(_xSize, _ySize, _data);
 }
@@ -121,7 +121,7 @@ Maze::~Maze()
     delete[] data;
 }
 
-void Maze::Create(int _xSize, int _ySize, int _data)
+void Maze::Create(int _xSize, int _ySize, unsigned _data)
 {
     assert(_xSize >= 2);
     assert(_ySize >= 2);
@@ -148,19 +148,8 @@ int Maze::GetYSize() const
     return ySize;
 }
 
-unsigned Maze::GetCellData(int x, int y) const
-{
-    assert(x >= 0 && x < xSize);
-    assert(y >= 0 && y < ySize);
-    return data[y * xSize + x];
-}
 
-unsigned Maze::GetCellData(const CellPoint& pos) const
-{
-    assert(pos.x >= 0 && pos.x < xSize);
-    assert(pos.y >= 0 && pos.y < ySize);
-    return data[pos.y * xSize + pos.x];
-}
+// ---- Mazeクラスの迷路生成用の関数（タグ操作）
 
 int Maze::GetCellTag(int x, int y) const
 {
@@ -180,6 +169,7 @@ void Maze::SetCellTag(int x, int y, int tag)
 {
     assert(x >= 0 && x < xSize);
     assert(y >= 0 && y < ySize);
+    assert(tag >= 0 && tag <= 65535);
     data[y * xSize + x] &= kCell_AllBorders;
     data[y * xSize + x] |= (tag << 4);
 }
@@ -188,12 +178,14 @@ void Maze::SetCellTag(const CellPoint& pos, int tag)
 {
     assert(pos.x >= 0 && pos.x < xSize);
     assert(pos.y >= 0 && pos.y < ySize);
+    assert(tag >= 0 && tag <= 65535);
     data[pos.y * xSize + pos.x] &= kCell_AllBorders;
     data[pos.y * xSize + pos.x] |= (tag << 4);
 }
 
 void Maze::SetTagForAllCells(int tag)
 {
+    assert(tag >= 0 && tag <= 65535);
     for (int y = 0; y < ySize; y++) {
         for (int x = 0; x < xSize; x++) {
             SetCellTag(x, y, tag);
@@ -201,122 +193,13 @@ void Maze::SetTagForAllCells(int tag)
     }
 }
 
-bool Maze::IsValidCell(const CellPoint& pos) const
-{
-    return (pos.x >= 0 && pos.x < xSize && pos.y >= 0 && pos.y < ySize);
-}
+
+// ---- Mazeクラスの迷路生成用の関数（セルベース）
 
 bool Maze::CanMove(const CellPoint& pos, Direction dir) const
 {
     CellPoint nextPos = pos.Move(dir);
     return IsValidCell(nextPos);
-}
-
-vector<Direction> Maze::MakeValidMoveDirectionList(const CellPoint& pos) const
-{
-    vector<Direction> dirs = MakeAllDirectionsList();
-    vector<Direction> ret;
-    for (int i = 0; i < 4; i++) {
-        if (CanMove(pos, dirs[i])) {
-            ret.push_back(dirs[i]);
-        }
-    }
-    return ret;
-}
-
-vector<Direction> Maze::MakeValidMoveDirectionList_shuffled(const CellPoint& pos) const
-{
-    vector<Direction> dirs = MakeValidMoveDirectionList(pos);
-    random_shuffle(dirs.begin(), dirs.end());
-    return dirs;
-}
-
-
-// ---- Mazeクラスの迷路生成用の関数
-
-void Maze::AddCellFlag(int x, int y, int flag)
-{
-    data[y * xSize + x] |= flag;
-}
-
-void Maze::AddCellFlag(const CellPoint& pos, int flag)
-{
-    data[pos.y * xSize + pos.x] |= flag;
-}
-
-void Maze::RemoveCellFlag(int x, int y, int flag)
-{
-    data[y * xSize + x] &= ~flag;
-}
-
-void Maze::RemoveCellFlag(const CellPoint& pos, int flag)
-{
-    data[pos.y * xSize + pos.x] &= ~flag;
-}
-
-bool Maze::CheckWall(int x, int y, Direction dir) const
-{
-    if (dir == Up) {
-        return ((data[y * xSize + x] & kCell_TopBorder) > 0);
-    } else if (dir == Right) {
-        return ((data[y * xSize + x] & kCell_RightBorder) > 0);
-    } else if (dir == Down) {
-        return ((data[y * xSize + x] & kCell_BottomBorder) > 0);
-    } else {
-        return ((data[y * xSize + x] & kCell_LeftBorder) > 0);
-    }
-}
-
-bool Maze::CheckWall(const CellPoint& pos, Direction dir) const
-{
-    return CheckWall(pos.x, pos.y, dir);
-}
-
-bool Maze::CheckWall(const Wall& wall) const
-{
-    return CheckWall(wall.pos.x, wall.pos.y, wall.dir);
-}
-
-void Maze::MakeWall(int x, int y, Direction dir)
-{
-    assert(x >= 0 && x <= xSize - 1);
-    assert(y >= 0 && y <= ySize - 1);
-
-    if (dir == Up) {
-        data[y * xSize + x] |= kCell_TopBorder;
-        int ny = y - 1;
-        if (ny >= 0) {
-            data[ny * xSize + x] |= kCell_BottomBorder;
-        }
-    } else if (dir == Right) {
-        data[y * xSize + x] |= kCell_RightBorder;
-        int nx = x + 1;
-        if (nx < xSize) {
-            data[y * xSize + nx] |= kCell_LeftBorder;
-        }
-    } else if (dir == Down) {
-        data[y * xSize + x] |= kCell_BottomBorder;
-        int ny = y + 1;
-        if (ny < ySize) {
-            data[ny * xSize + x] |= kCell_TopBorder;
-        }
-    } else {
-        data[y * xSize + x] |= kCell_LeftBorder;
-        int nx = x - 1;
-        if (nx >= 0) {
-            data[y * xSize + nx] |= kCell_RightBorder;
-        }
-    }
-}
-
-void Maze::MakeWall(const CellPoint& pos, Direction dir)
-{
-    return MakeWall(pos.x, pos.y, dir);
-}
-
-void Maze::MakeWall(const Wall& wall)
-{
-    return MakeWall(wall.pos.x, wall.pos.y, wall.dir);
 }
 
 bool Maze::CanRemoveWall(int x, int y, Direction dir) const
@@ -346,8 +229,102 @@ bool Maze::CanRemoveWall(const Wall& wall) const
     return CanRemoveWall(wall.pos.x, wall.pos.y, wall.dir);
 }
 
+bool Maze::CheckWall(int x, int y, Direction dir) const
+{
+    if (dir == Up) {
+        return ((data[y * xSize + x] & kCell_TopBorder) > 0);
+    } else if (dir == Right) {
+        return ((data[y * xSize + x] & kCell_RightBorder) > 0);
+    } else if (dir == Down) {
+        return ((data[y * xSize + x] & kCell_BottomBorder) > 0);
+    } else {
+        return ((data[y * xSize + x] & kCell_LeftBorder) > 0);
+    }
+}
+
+bool Maze::CheckWall(const CellPoint& pos, Direction dir) const
+{
+    return CheckWall(pos.x, pos.y, dir);
+}
+
+bool Maze::CheckWall(const Wall& wall) const
+{
+    return CheckWall(wall.pos.x, wall.pos.y, wall.dir);
+}
+
+bool Maze::IsValidCell(const CellPoint& pos) const
+{
+    return (pos.x >= 0 && pos.x < xSize && pos.y >= 0 && pos.y < ySize);
+}
+
+vector<Direction> Maze::MakeValidMoveDirectionList(const CellPoint& pos) const
+{
+    vector<Direction> dirs = MakeAllDirectionsList();
+    vector<Direction> ret;
+    for (int i = 0; i < 4; i++) {
+        if (CanMove(pos, dirs[i])) {
+            ret.push_back(dirs[i]);
+        }
+    }
+    return ret;
+}
+
+vector<Direction> Maze::MakeValidMoveDirectionList_shuffled(const CellPoint& pos) const
+{
+    vector<Direction> dirs = MakeValidMoveDirectionList(pos);
+    random_shuffle(dirs.begin(), dirs.end());
+    return dirs;
+}
+
+void Maze::MakeWall(int x, int y, Direction dir)
+{
+    assert(x >= 0 && x <= xSize - 1);
+    assert(y >= 0 && y <= ySize - 1);
+    assert(dir != NoDirection);
+
+    if (dir == Up) {
+        AddCellFlag(x, y, kCell_TopBorder);
+        int ny = y - 1;
+        if (ny >= 0) {
+            AddCellFlag(x, ny, kCell_BottomBorder);
+        }
+    } else if (dir == Right) {
+        AddCellFlag(x, y, kCell_RightBorder);
+        int nx = x + 1;
+        if (nx < xSize) {
+            AddCellFlag(nx, y, kCell_LeftBorder);
+        }
+    } else if (dir == Down) {
+        AddCellFlag(x, y, kCell_BottomBorder);
+        int ny = y + 1;
+        if (ny < ySize) {
+            AddCellFlag(x, ny, kCell_TopBorder);
+        }
+    } else {
+        AddCellFlag(x, y, kCell_LeftBorder);
+        int nx = x - 1;
+        if (nx >= 0) {
+            AddCellFlag(nx, y, kCell_RightBorder);
+        }
+    }
+}
+
+void Maze::MakeWall(const CellPoint& pos, Direction dir)
+{
+    return MakeWall(pos.x, pos.y, dir);
+}
+
+void Maze::MakeWall(const Wall& wall)
+{
+    return MakeWall(wall.pos.x, wall.pos.y, wall.dir);
+}
+
 void Maze::RemoveWall(int x, int y, Direction dir)
 {
+    assert(x >= 0 && x <= xSize - 1);
+    assert(y >= 0 && y <= ySize - 1);
+    assert(dir != NoDirection);
+
     if (dir == Up) {
         RemoveCellFlag(x, y, kCell_TopBorder);
         int ny = y - 1;
@@ -514,6 +491,37 @@ void Maze::Draw(bool usesBatch)
 void Maze::DrawCrossPoint(const CrossPoint& pos, bool usesBatch)
 {
     ::DrawCrossPoint(this, pos, usesBatch);
+}
+
+
+// ---- Mazeクラスの迷路生成用の関数（ビットフラグの操作）
+
+void Maze::AddCellFlag(int x, int y, unsigned flag)
+{
+    assert(x >= 0 && x <= xSize - 1);
+    assert(y >= 0 && y <= ySize - 1);
+    data[y * xSize + x] |= flag;
+}
+
+void Maze::AddCellFlag(const CellPoint& pos, unsigned flag)
+{
+    assert(pos.x >= 0 && pos.x <= xSize - 1);
+    assert(pos.y >= 0 && pos.y <= ySize - 1);
+    data[pos.y * xSize + pos.x] |= flag;
+}
+
+void Maze::RemoveCellFlag(int x, int y, unsigned flag)
+{
+    assert(x >= 0 && x <= xSize - 1);
+    assert(y >= 0 && y <= ySize - 1);
+    data[y * xSize + x] &= ~flag;
+}
+
+void Maze::RemoveCellFlag(const CellPoint& pos, unsigned flag)
+{
+    assert(pos.x >= 0 && pos.x <= xSize - 1);
+    assert(pos.y >= 0 && pos.y <= ySize - 1);
+    data[pos.y * xSize + pos.x] &= ~flag;
 }
 
 
