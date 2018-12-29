@@ -12,7 +12,9 @@
 #include "MazeDraw.hpp"
 
 
-/// Growing Treeのアルゴリズムによる迷路生成
+/**
+    Growing Treeのアルゴリズムによる迷路生成
+ */
 Maze    *CreateMaze_GrowingTree(int xSize, int ySize);
 
 

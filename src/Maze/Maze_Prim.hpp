@@ -12,8 +12,11 @@
 #include "MazeDraw.hpp"
 
 
-/// Primのアルゴリズムによる迷路生成
+/**
+    Primのアルゴリズムによる迷路生成
+ */
 Maze    *CreateMaze_Prim(int xSize, int ySize);
 
 
 #endif /* Maze_Prim_hpp */
+

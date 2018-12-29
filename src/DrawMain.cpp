@@ -1,3 +1,10 @@
+//
+//  DrawMain.cpp
+//
+//  Created by Satoshi Numata on 2018/09/16.
+//  License: Public domain.
+//
+
 #include "Drawing.hpp"
 #include "MazeDraw.hpp"
 #include "Maze_BouTaoshi.hpp"

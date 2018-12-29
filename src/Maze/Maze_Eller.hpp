@@ -12,7 +12,9 @@
 #include "MazeDraw.hpp"
 
 
-/// Ellerのアルゴリズムによる迷路生成
+/**
+    Ellerのアルゴリズムによる迷路生成
+ */
 Maze    *CreateMaze_Eller(int xSize, int ySize);
 
 

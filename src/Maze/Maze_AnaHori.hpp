@@ -12,7 +12,9 @@
 #include "MazeDraw.hpp"
 
 
-/// 穴掘り法による迷路生成
+/**
+    穴掘り法による迷路生成
+ */
 Maze    *CreateMaze_AnaHori(int xSize, int ySize);
 
 

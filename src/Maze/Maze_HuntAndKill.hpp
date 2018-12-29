@@ -12,7 +12,9 @@
 #include "MazeDraw.hpp"
 
 
-/// Hunt and Killのアルゴリズムによる迷路生成
+/**
+    Hunt and Killのアルゴリズムによる迷路生成
+ */
 Maze    *CreateMaze_HuntAndKill(int xSize, int ySize);
 
 

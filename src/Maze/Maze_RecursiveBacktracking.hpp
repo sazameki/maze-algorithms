@@ -12,7 +12,9 @@
 #include "MazeDraw.hpp"
 
 
-/// Recurvsive Backtrackingによる迷路生成
+/**
+    Recurvsive Backtrackingによる迷路生成
+ */
 Maze    *CreateMaze_RecurvsiveBacktracking(int xSize, int ySize);
 
 

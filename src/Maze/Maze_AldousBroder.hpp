@@ -12,7 +12,9 @@
 #include "MazeDraw.hpp"
 
 
-/// Aldous-Broderのアルゴリズムによる迷路生成
+/**
+    Aldous-Broderのアルゴリズムによる迷路生成
+ */
 Maze    *CreateMaze_AldousBroder(int xSize, int ySize);
 
 

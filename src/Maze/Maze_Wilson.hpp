@@ -12,7 +12,9 @@
 #include "MazeDraw.hpp"
 
 
-/// Wilsonのアルゴリズムによる迷路生成
+/**
+    Wilsonのアルゴリズムによる迷路生成
+ */
 Maze    *CreateMaze_Wilson(int xSize, int ySize);
 
 

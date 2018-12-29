@@ -12,8 +12,11 @@
 #include "MazeDraw.hpp"
 
 
-/// 右手法で迷路を解く
+/**
+    右手法による迷路探索
+ */
 void    SolveMaze_RightHand(Maze *maze);
 
 
 #endif /* Maze_RightHand_hpp */
+

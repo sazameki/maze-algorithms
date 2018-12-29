@@ -12,8 +12,11 @@
 #include "MazeDraw.hpp"
 
 
-/// 棒倒し法による迷路生成
+/**
+    棒倒し法による迷路生成
+ */
 Maze    *CreateMaze_BouTaoshi(int xSize, int ySize);
 
 
 #endif /* Maze_BouTaoshi_hpp */
+

@@ -12,7 +12,9 @@
 #include "MazeDraw.hpp"
 
 
-/// 壁延ばし法による迷路生成
+/**
+    壁延ばし法による迷路生成
+ */
 Maze    *CreateMaze_KabeNobashi(int xSize, int ySize);
 
 

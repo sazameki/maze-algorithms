@@ -12,7 +12,9 @@
 #include "MazeDraw.hpp"
 
 
-/// Sidewinderのアルゴリズムによる迷路生成
+/**
+    Sidewinderのアルゴリズムによる迷路生成
+ */
 Maze    *CreateMaze_Sidewinder(int xSize, int ySize);
 
 

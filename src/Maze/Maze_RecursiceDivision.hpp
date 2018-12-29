@@ -12,8 +12,10 @@
 #include "MazeDraw.hpp"
 
 
-/// Recursive Divisionのアルゴリズムによる迷路生成
-/// cf: https://www.jamisbuck.org/mazes/
+/**
+    Recursive Divisionのアルゴリズムによる迷路生成
+    cf: https://www.jamisbuck.org/mazes/
+ */
 Maze    *CreateMaze_RecursiveDivision(int xSize, int ySize);
 
 
