@@ -227,7 +227,6 @@ bool Maze::CheckWall(int x, int y, Direction dir) const
 {
     assert(x >= 0 && x < xSize);
     assert(y >= 0 && y < ySize);
-    assert(dir != NoDirection);
 
     if (dir == Up) {
         return ((data[y * xSize + x] & kCell_TopBorder) > 0);
@@ -278,7 +277,6 @@ void Maze::MakeWall(int x, int y, Direction dir)
 {
     assert(x >= 0 && x <= xSize - 1);
     assert(y >= 0 && y <= ySize - 1);
-    assert(dir != NoDirection);
 
     if (dir == Up) {
         AddCellFlag(x, y, kCell_TopBorder);
@@ -321,7 +319,6 @@ void Maze::RemoveWall(int x, int y, Direction dir)
 {
     assert(x >= 0 && x <= xSize - 1);
     assert(y >= 0 && y <= ySize - 1);
-    assert(dir != NoDirection);
 
     if (dir == Up) {
         RemoveCellFlag(x, y, kCell_TopBorder);

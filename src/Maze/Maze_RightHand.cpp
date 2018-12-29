@@ -56,7 +56,5 @@ void SolveMaze_RightHand(Maze *maze)
             }
         }
     }
-
-    DrawText("SOLVED!! CMD-R TO RESTART.", -12*13, -240, kColorBlue);
 }
 
