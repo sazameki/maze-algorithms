@@ -182,6 +182,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_LBUTTONUP:
         gIsMouseDown = false;
         break;
+    case WM_MOUSEMOVE:
+        gMouseX = LOWORD(lParam);
+        gMouseY = 480 - HIWORD(lParam);
+        break;
     case WM_COMMAND:
     {
         switch (LOWORD(wParam))

@@ -169,6 +169,8 @@ void    Scroll(int x, int y);
 
 /**
     指定したキーが押されているかどうかを判定します。
+    @param  key キーマスク（kKeyUpArrow, kKeyRightArrow, kKeyReturn, kKeySpaceなどの定数またはその組み合わせ）
+    @return 指定されたキーが押されていればtrue、そうでなければfalse
  */
 bool    CheckKey(unsigned int key);
 
@@ -178,11 +180,13 @@ bool    CheckKey(unsigned int key);
 
 /**
     マウスカーソルの画面上のX座標を取得します。
+    画面の中央が0になる、描画システムと同じ座標です。
  */
 int     GetMouseX();
 
 /**
     マウスカーソルの画面上のY座標を取得します。
+    画面の中央が0になる、描画システムと同じ座標です。
  */
 int     GetMouseY();
 
