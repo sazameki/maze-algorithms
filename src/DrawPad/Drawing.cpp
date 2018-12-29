@@ -1,3 +1,10 @@
+//
+//  Drawing.cpp
+//
+//  Created by Satoshi Numata on 2018/09/16.
+//  License: Public domain.
+//
+
 #include "Drawing.hpp"
 
 #include <algorithm>
@@ -30,12 +37,31 @@ const int   kColorLightGray = 0xc0c0c0;
 const int   kColorDarkGray  = 0x404040;
 const int   kColorGray      = 0x808080;
 const int   kColorWhite     = 0xffffff;
-const int   kColorRed       = 0xff0000;
-const int   kColorGreen     = 0x00ff00;
+
 const int   kColorBlue      = 0x0000ff;
-const int   kColorYellow    = 0xffff00;
+const int   kColorCyan      = 0x00ffff;
+const int   kColorGreen     = 0x00ff00;
 const int   kColorOrange    = 0xff8000;
-const int   kColorDarkBlue  = 0x00007f;
+const int   kColorPurple    = 0xff00ff;
+const int   kColorRed       = 0xff0000;
+const int   kColorYellow    = 0xffff00;
+
+const int   kColorLightBlue     = 0x8080ff;
+const int   kColorLightCyan     = 0x80ffff;
+const int   kColorLightGreen    = 0x80ff80;
+const int   kColorLightOrange   = 0xff8040;
+const int   kColorLightPurple   = 0xff80ff;
+const int   kColorLightRed      = 0xff8080;
+const int   kColorLightYellow   = 0xffff80;
+
+const int   kColorDarkBlue      = 0x000080;
+const int   kColorDarkCyan      = 0x008080;
+const int   kColorDarkGreen     = 0x008000;
+const int   kColorDarkOrange    = 0x804000;
+const int   kColorDarkPurple    = 0x800080;
+const int   kColorDarkRed       = 0x800000;
+const int   kColorDarkYellow    = 0x808000;
+
 
 // キーボードの定数
 const unsigned  kKeyA           = 0x0001;
