@@ -11,11 +11,15 @@
 using namespace std;
 
 
-/// 分割を切り上げるまでの回数
+/**
+    分割を切り上げるまでの回数
+ */
 static const int    kGrowSpeed  = 5;
 
 
-/// 分割対象の領域を表す構造体
+/**
+    分割対象の領域を表す構造体
+ */
 struct BlobbyRegion
 {
     vector<CellPoint>   cells;
@@ -47,7 +51,9 @@ struct BlobbyRegion
 };
 
 
-/// 与えられた領域を2分割する
+/**
+    与えられた領域を2分割します。
+ */
 void DivideRegion(Maze *maze, const BlobbyRegion& region)
 {
     // 対象の領域をマーキング

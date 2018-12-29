@@ -8,12 +8,14 @@
 #include "Maze_GrowingTree.hpp"
 
 
-// https://www.jamisbuck.org/mazes/において「Growing Binary Tree」と呼ばれているアルゴリズムを
-// 使用する場合は、USES_GROWING_BINARY_TREEマクロを1にしてください。
+/**
+    https://www.jamisbuck.org/mazes/において「Growing Binary Tree」と呼ばれているアルゴリズムを
+    使用する場合は、USES_GROWING_BINARY_TREEマクロを1にしてください。
+ */
 #define USES_GROWING_BINARY_TREE    0
 
 
-/// Growing Treeのアルゴリズムによる迷路生成
+// Growing Treeのアルゴリズムによる迷路生成
 Maze *CreateMaze_GrowingTree(int xSize, int ySize)
 {
     // 迷路の生成

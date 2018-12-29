@@ -8,7 +8,7 @@
 #include "Maze_BinaryTree.hpp"
 
 
-/// Binary Treeのアルゴリズムによる迷路生成
+// Binary Treeのアルゴリズムによる迷路生成
 Maze *CreateMaze_BinaryTree(int xSize, int ySize)
 {
     // 迷路の生成
