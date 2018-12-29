@@ -23,6 +23,7 @@
 + Growing Tree / Growing Binary Tree
 + Primの迷路生成アルゴリズム
 + Aldous-Broderの迷路生成アルゴリズム
++ Wilsonの迷路生成アルゴリズム
 + 壁のばし法
 
 ### 分割統治法

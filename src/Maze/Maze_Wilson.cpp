@@ -21,35 +21,26 @@ static Direction CheckMoveDirection(const CellPoint& from, const CellPoint& to)
     }
 }
 
-// Wilsonのアルゴリズムによる迷路生成
-Maze *CreateMaze_Wilson(int xSize, int ySize)
+void Wilson_Impl(Maze *maze, int cellCountThreshold, bool opensFirstCell)
 {
-    // 迷路の生成
-    Maze *maze = new Maze(xSize, ySize, kCell_AllBorders);
-    maze->SetTagForAllCells(1);
-    maze->Draw();
-
-    // 開始のためのキー入力待ち
-    while (!CheckKey(kKeySpace)) {
-        DrawText("SPACE KEY TO CREATE!!", -12*10.5, -240, kColorRed);
-    }
-
-    // まだ通過していないセルの数
-    int cellCount = maze->GetXSize() * maze->GetYSize();
+    // 処理したセルのカウント
+    int cellCount = 0;
 
     // 最初のセルをランダムに選択して「処理済み」にする。
     CellPoint cell;
-    cell.x = random() % maze->GetXSize();
-    cell.y = random() % maze->GetYSize();
-    cellCount--;
-    maze->SetCellTag(cell, 3);
-    maze->Draw();
-    Sleep(0.7f);
-    maze->SetCellTag(cell, 0);
-    maze->Draw();
+    if (opensFirstCell) {
+        cell.x = random() % maze->GetXSize();
+        cell.y = random() % maze->GetYSize();
+        cellCount++;
+        maze->SetCellTag(cell, 3);
+        maze->Draw();
+        Sleep(0.7f);
+        maze->SetCellTag(cell, 0);
+        maze->Draw();
+    }
 
     // 「処理済み」でないセルが残っている間、処理を続ける
-    while (cellCount > 0) {
+    while (cellCount < cellCountThreshold) {
         // 「処理済み」でないセルから開始点をランダムに選択する
         do {
             cell.x = random() % maze->GetXSize();
@@ -141,13 +132,30 @@ Maze *CreateMaze_Wilson(int xSize, int ySize)
         }
 
         // 移動ログをたどってすべて「処理済み」にする
-        for (int i = visitedCells.size() - 1; i >= 0; i--) {
+        for (int i = (int)visitedCells.size() - 1; i >= 0; i--) {
             CellPoint cell = visitedCells[i];
             maze->SetCellTag(cell, 0);
             maze->Draw();
-            cellCount--;
+            cellCount++;
         }
     }
+}
+
+// Wilsonのアルゴリズムによる迷路生成
+Maze *CreateMaze_Wilson(int xSize, int ySize)
+{
+    // 迷路の生成
+    Maze *maze = new Maze(xSize, ySize, kCell_AllBorders);
+    maze->SetTagForAllCells(1);
+    maze->Draw();
+
+    // 開始のためのキー入力待ち
+    while (!CheckKey(kKeySpace)) {
+        DrawText("SPACE KEY TO CREATE!!", -12*10.5, -240, kColorRed);
+    }
+
+    // 迷路生成の実装
+    Wilson_Impl(maze, maze->GetXSize() * maze->GetYSize(), true);
 
     // 終了
     return maze;

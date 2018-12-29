@@ -25,6 +25,15 @@
  */
 Maze    *CreateMaze_Wilson(int xSize, int ySize);
 
+/**
+    Wilsonのアルゴリズムによる迷路生成の実装です。
+    Houstonのアルゴリズムのために実装部分を分けています。
+    @param  maze    迷路
+    @param  cellCountThreshold  このアルゴリズムで処理するセルの個数
+    @param  opensFirstCell      最初のセルを1個ランダムに選択して処理済みにするかどうか
+ */
+void Wilson_Impl(Maze *maze, int cellCountThreshold, bool opensFirstCell);
+
 
 #endif /* Maze_Wilson_hpp */
 

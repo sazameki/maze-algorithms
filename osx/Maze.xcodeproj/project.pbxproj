@@ -33,6 +33,7 @@
 		8E9A9A1021D51BDB002E55FA /* Maze_Prim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99F821D51BDB002E55FA /* Maze_Prim.cpp */; };
 		8E9A9A1121D51BDB002E55FA /* Maze_RecursiveBacktracking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99F921D51BDB002E55FA /* Maze_RecursiveBacktracking.cpp */; };
 		8E9A9A1221D51BDB002E55FA /* MazeDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99FF21D51BDB002E55FA /* MazeDraw.cpp */; };
+		8E9A9A1A21D7DB8C002E55FA /* Maze_Houston.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A9A1821D7DB8C002E55FA /* Maze_Houston.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,8 @@
 		8E9A99FD21D51BDB002E55FA /* Maze_KabeNobashi.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze_KabeNobashi.hpp; sourceTree = "<group>"; };
 		8E9A99FE21D51BDB002E55FA /* Maze.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Maze.hpp; sourceTree = "<group>"; };
 		8E9A99FF21D51BDB002E55FA /* MazeDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MazeDraw.cpp; sourceTree = "<group>"; };
+		8E9A9A1821D7DB8C002E55FA /* Maze_Houston.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Houston.cpp; sourceTree = "<group>"; };
+		8E9A9A1921D7DB8C002E55FA /* Maze_Houston.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_Houston.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +191,8 @@
 				8E9A99DF21D51BD9002E55FA /* Maze_AldousBroder.cpp */,
 				8E9A99F421D51BDA002E55FA /* Maze_Wilson.hpp */,
 				8E9A99F321D51BDA002E55FA /* Maze_Wilson.cpp */,
+				8E9A9A1921D7DB8C002E55FA /* Maze_Houston.hpp */,
+				8E9A9A1821D7DB8C002E55FA /* Maze_Houston.cpp */,
 				8E9A99FD21D51BDB002E55FA /* Maze_KabeNobashi.hpp */,
 				8E9A99E121D51BD9002E55FA /* Maze_KabeNobashi.cpp */,
 			);
@@ -301,6 +306,7 @@
 				8E9A9A0D21D51BDB002E55FA /* Maze_Wilson.cpp in Sources */,
 				8E9A9A0B21D51BDB002E55FA /* Maze.cpp in Sources */,
 				8E9A9A0F21D51BDB002E55FA /* Maze_RightHand.cpp in Sources */,
+				8E9A9A1A21D7DB8C002E55FA /* Maze_Houston.cpp in Sources */,
 				8E9A9A0221D51BDB002E55FA /* Maze_BouTaoshi.cpp in Sources */,
 				8E9A9A1221D51BDB002E55FA /* MazeDraw.cpp in Sources */,
 				8E9A9A0121D51BDB002E55FA /* Maze_AldousBroder.cpp in Sources */,
