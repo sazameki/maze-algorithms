@@ -12,25 +12,25 @@
 
 
 /**
-    –À˜H‚ğ•`‰æ‚µ‚Ü‚·B
-    @param  maze        –À˜H
-    @param  usesBatch   •`‰æ‚Éƒoƒbƒ`ˆ—‚ğg—p‚·‚é‚©iƒfƒtƒHƒ‹ƒg‚Ítruej
+    è¿·è·¯ã‚’æç”»ã—ã¾ã™ã€‚
+    @param  maze        è¿·è·¯
+    @param  usesBatch   æç”»ã«ãƒãƒƒãƒå‡¦ç†ã‚’ä½¿ç”¨ã™ã‚‹ã‹ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯trueï¼‰
  */
 void    DrawMaze(Maze *maze, bool usesBatch = true);
 
 /**
-    –À˜Hã‚ÌŒğ“_‚ğ•`‰æ‚µ‚Ü‚·B
-    @param  maze    –À˜H
-    @param  pos     Œğ“_‚ÌÀ•W
-    @param  usesBatch   •`‰æ‚Éƒoƒbƒ`ˆ—‚ğg—p‚·‚é‚©iƒfƒtƒHƒ‹ƒg‚Ítruej
+    è¿·è·¯ä¸Šã®äº¤ç‚¹ã‚’æç”»ã—ã¾ã™ã€‚
+    @param  maze    è¿·è·¯
+    @param  pos     äº¤ç‚¹ã®åº§æ¨™
+    @param  usesBatch   æç”»ã«ãƒãƒƒãƒå‡¦ç†ã‚’ä½¿ç”¨ã™ã‚‹ã‹ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯trueï¼‰
  */
 void    DrawCrossPoint(Maze *maze, const CrossPoint& pos, bool usesBatch = true);
 
 /**
-    –À˜Hã‚É’Tõ‚Ì‚½‚ß‚ÌlŒ`‚ğ•`‰æ‚µ‚Ü‚·B
-    @param  maze    –À˜H
-    @param  pos     ƒZƒ‹‚ÌÀ•W
-    @param  dir     lŒ`‚ÌŒü‚«
+    è¿·è·¯ä¸Šã«æ¢ç´¢ã®ãŸã‚ã®äººå½¢ã‚’æç”»ã—ã¾ã™ã€‚
+    @param  maze    è¿·è·¯
+    @param  pos     ã‚»ãƒ«ã®åº§æ¨™
+    @param  dir     äººå½¢ã®å‘ã
  */
 void    DrawMan(Maze *maze, const CellPoint& pos, Direction dir);
 
