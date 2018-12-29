@@ -41,6 +41,7 @@ void FinishDrawing()
         frameCalcTime = oldTime;
         frameCount = 0;
 
+        // フレームレートをウィンドウタイトルに表示
         static char buffer[64];
         sprintf_s(buffer, 64, "Maze (Running) %.1ffps", gFrameRate);
         SetWindowTextA(hWindow, buffer);
@@ -53,6 +54,20 @@ void Sleep(float seconds)
     clock_t end = clock() + (clock_t)(seconds * CLOCKS_PER_SEC);
     while (clock() < end) {
         BitBlt(hMainDC, 0, 0, 640, 480, hDibDC, 0, 0, SRCCOPY);
+
+        // フレームレートの計算
+        oldTime = clock();
+        float duration = (float)(oldTime - frameCalcTime) / CLOCKS_PER_SEC;
+        if (duration >= 1.0f) {
+            gFrameRate = frameCount / duration;
+            frameCalcTime = oldTime;
+            frameCount = 0;
+
+            // フレームレートをウィンドウタイトルに表示
+            static char buffer[64];
+            sprintf_s(buffer, 64, "Maze (Running) %.1ffps", gFrameRate);
+            SetWindowTextA(hWindow, buffer);
+        }
     }
 }
 
