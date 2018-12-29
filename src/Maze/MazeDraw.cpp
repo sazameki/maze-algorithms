@@ -9,28 +9,72 @@
 #include "Drawing.hpp"
 
 
+/**
+    迷路の通常のセルを描画する色
+ */
 static const int    kColorFloor = 0xffffff;
+
+/**
+    迷路の壁を描画する色
+ */
 static const int    kColorWall  = 0x404040;
 
+/**
+    迷路のタグに対応したセルの描画色の個数
+ */
 static const int    kTagColorCount = 10;
+
+/**
+    迷路のタグに対応したセルの描画色のリスト
+ */
 static const int    kTagColors[] = {
-    0xE85A70, 0x73D0C2, 0xFFC530, 0xF6E5D7,
-    0x9020A0, 0xFF008B, 0xFEE4A6, 0x5893D4,
-    0xA7D129, 0x616F39,
+    0xe85a70, 0x73d0c2, 0xffc530, 0xf6e5d7,
+    0x9020a0, 0xff008b, 0xfee4a6, 0x5893d4,
+    0xa7d129, 0x616f39,
 };
 
+/**
+    迷路探索の開始位置の描画色
+ */
 static const int kColorStart       = 0x40d040;
+
+/**
+    迷路探索の終了位置の描画色
+ */
 static const int kColorGoal        = 0xe04040;
 
+/**
+    迷路描画のX方向のパディングサイズ
+ */
 static const int kPaddingSizeX = 20;
-static const int kPaddingSizeY = 25;
-static const int kBorderSize   = 2;
-static int gCellSize    = -1;
 
+/**
+    迷路描画のY方向のパディングサイズ
+ */
+static const int kPaddingSizeY = 25;
+
+/**
+    迷路の壁の描画サイズ
+ */
+static const int kBorderSize   = 2;
+
+/**
+    迷路を描画するたびにスリープする時間
+ */
 static const float kWaitMaze   = 0.01f;
+
+/**
+    迷路探索の人形を描画するたびにスリープする時間
+ */
 static const float kWaitMan    = 0.02f;
 
+/**
+    セルの描画サイズ。実行開始時に、セルの個数と描画設定から、自動的に計算されます。
+ */
+static int gCellSize = -1;
 
+
+// セルのX方向の描画座標を計算する
 static int GetCellX(int x, int xSize)
 {
     int bodyX = (gCellSize + kBorderSize) * xSize + kBorderSize;
@@ -38,6 +82,7 @@ static int GetCellX(int x, int xSize)
     return -320 + paddingX + x * (gCellSize + kBorderSize);
 }
 
+// セルのY方向の描画座標を計算する
 static int GetCellY(int y, int ySize)
 {
     int bodyY = (gCellSize + kBorderSize) * ySize + kBorderSize;
@@ -45,18 +90,21 @@ static int GetCellY(int y, int ySize)
     return -240 + paddingY + (ySize - y - 1) * (gCellSize + kBorderSize);
 }
 
+// セルの交点のX方向の描画座標を計算する
 static int GetCrossPointX(int x, int xSize)
 {
     int cellX = GetCellX(x, xSize);
     return cellX;
 }
 
+// セルの交点のY方向の描画座標を計算する
 static int GetCrossPointY(int y, int ySize)
 {
     int cellY = GetCellY(y-1, ySize);
     return cellY;
 }
 
+// セルの描画サイズを計算する
 static int CalcCellSize(Maze *maze)
 {
     int sizeX = (640 - kPaddingSizeX * 2 - kBorderSize) / maze->GetXSize() - kBorderSize;
