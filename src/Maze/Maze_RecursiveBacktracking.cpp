@@ -12,8 +12,10 @@
 using namespace std;
 
 
-/*!
+/**
     Recurvsive Backtrackingの再帰関数
+    @param  maze    処理対象の迷路
+    @param  pos     処理を開始するセル座標
  */
 static void CarvePassage(Maze *maze, const CellPoint& pos)
 {
