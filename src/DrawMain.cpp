@@ -67,6 +67,7 @@ void DrawMain()
     // 右手法で迷路を解く
     maze->SetTagForAllCells(0);
     SolveMaze_RightHand(maze);
+    DrawText("SOLVED!!", -4 * 13, -240, kColorBlue);
 
     delete maze;
 }
