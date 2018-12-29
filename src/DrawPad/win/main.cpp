@@ -19,18 +19,49 @@ void DrawMain();
 HINSTANCE   hAppInstance;   // アプリケーションのインスタンス
 HWND        hWindow;        // ウィンドウ
 HANDLE      hThread;        // 描画用スレッド
+HBITMAP     hBitmap;        // DIBのハンドル
 HDC         hMainDC;        // メインのウィンドウ描画用デバイスコンテキスト
 HDC         hDibDC;         // DIB描画用のデバイスコンテキスト
 clock_t     oldTime;        // 前のフレームの終了時間
 clock_t     frameCalcTime;  // フレーム計測の開始時間
 int         frameCount;     // 1回の計測におけるフレーム実行の回数
+bool        doStepOver;     // ステップ実行
+bool        doReset;        // リセットの実行
 
+
+static DWORD WINAPI ThreadProc(LPVOID arg);
+
+
+// 描画スレッドの終了
+static void FinishThread()
+{
+    ReleaseDC(hWindow, hMainDC);
+    DeleteObject(hBitmap);
+    DeleteDC(hDibDC);
+    hThread = CreateThread(NULL, 0, ThreadProc, 0, 0, NULL);
+    ExitThread(0);
+}
 
 // メモリ上に描画された内容の表示
 void FinishDrawing()
 {
     // DIBの表示
     BitBlt(hMainDC, 0, 0, 640, 480, hDibDC, 0, 0, SRCCOPY);
+
+    // 一時停止の処理
+    bool hasPaused = gIsPausing;
+    while (gIsPausing && !doStepOver && !doReset) {
+        BitBlt(hMainDC, 0, 0, 640, 480, hDibDC, 0, 0, SRCCOPY);
+        static char buffer[64];
+        sprintf_s(buffer, 64, "Maze (Pausing) %.1ffps", gFrameRate);
+        SetWindowTextA(hWindow, buffer);
+    }
+    if (doReset) {
+        doReset = false;
+        FinishThread();
+        return;
+    }
+    doStepOver = false;
 
     // フレームレートの計算
     frameCount++;
@@ -88,7 +119,7 @@ static DWORD WINAPI ThreadProc(LPVOID arg)
     // DIBを生成してhDibDCに割り当てる
     HDC hDC = GetDC(hWindow);
     hDibDC = CreateCompatibleDC(hDC);
-    HBITMAP hBitmap = CreateDIBSection(hDC, &bmpInfo, DIB_RGB_COLORS, (void**)&gpBuffer, NULL, 0);
+    hBitmap = CreateDIBSection(hDC, &bmpInfo, DIB_RGB_COLORS, (void**)&gpBuffer, NULL, 0);
     SelectObject(hDibDC, hBitmap);
     ReleaseDC(hWindow, hDC);
 
@@ -237,6 +268,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         case IDM_ABOUT:
             DialogBox(hAppInstance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
             break;
+        case IDM_PAUSE:
+            gIsPausing = !gIsPausing;
+            break;
+        case IDM_RESET:
+            doReset = true;
+            break;
+        case IDM_STEP:
+            doStepOver = true;
+            break;
         case IDM_EXIT:
             DestroyWindow(hWnd);
             break;
@@ -322,6 +362,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // アプリケーション・インスタンスの保持
     hAppInstance = hInstance;
+    doStepOver = false;
+    doReset = false;
 
     // グローバル文字列を初期化する
     const wchar_t* windowClassName = TEXT("Maze Window");
