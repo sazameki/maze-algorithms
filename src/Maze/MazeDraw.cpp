@@ -25,7 +25,7 @@ static const int    kColorWall  = 0x404040;
 static const int    kTagColorCount = 10;
 
 /**
-    迷路のタグに対応したセルの描画色のリスト
+    迷路のタグに対応したセルの描画色のリスト（タグ1に対応した最初の色は一度のみ、それ以外の色は循環して使用されます）
  */
 static const int    kTagColors[] = {
     0xe85a70, 0x73d0c2, 0xffc530, 0xf6e5d7,
@@ -116,6 +116,7 @@ static int CalcCellSize(Maze *maze)
     return cellSize;
 }
 
+// 迷路の描画
 void DrawMaze(Maze *maze, bool usesBatch)
 {
     if (gCellSize <= 0) {
@@ -192,6 +193,7 @@ void DrawMaze(Maze *maze, bool usesBatch)
     }
 }
 
+// 交点の描画
 void DrawCrossPoint(Maze *maze, const CrossPoint& pos, bool usesBatch)
 {
     if (usesBatch) {
@@ -207,6 +209,7 @@ void DrawCrossPoint(Maze *maze, const CrossPoint& pos, bool usesBatch)
     }
 }
 
+// 探索用の人形の描画
 void DrawMan(Maze *maze, const CellPoint& pos, Direction dir)
 {
     int x = GetCellX(pos.x, maze->GetXSize()) + gCellSize / 2 + kBorderSize;
