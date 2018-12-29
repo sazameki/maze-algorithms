@@ -8,48 +8,17 @@
 #include "Maze_Wilson.hpp"
 
 
-struct WilsonLog
+static Direction CheckMoveDirection(const CellPoint& from, const CellPoint& to)
 {
-    CellPoint   cell;
-    Direction   dir;
-
-    WilsonLog(CellPoint _cell, Direction _dir)
-        : cell(_cell), dir(_dir)
-    {
-        // 何もしない
+    if (to.x > from.x) {
+        return Right;
+    } else if (to.x < from.x) {
+        return Left;
+    } else if (to.y > from.y) {
+        return Down;
+    } else {
+        return Up;
     }
-};
-
-struct WilsonHistory
-{
-    vector<WilsonLog>   logs;
-
-    void PutLog(WilsonLog log)
-    {
-        // 同じ座標のログがあれば上書きするために削除しておく
-        auto it = logs.begin();
-        auto itEnd = logs.end();
-        while (it != itEnd) {
-            if ((*it).cell.x == log.cell.x && (*it).cell.y == log.cell.y) {
-                logs.erase(it);
-                break;
-            }
-            it++;
-        }
-
-        // ログを追加
-        logs.push_back(log);
-    }
-};
-
-bool CheckVisited(const vector<WilsonLog>& history, const CellPoint& cell)
-{
-    for (auto log : history) {
-        if (log.cell.x == cell.x && log.cell.y == cell.y) {
-            return true;
-        }
-    }
-    return false;
 }
 
 // Wilsonのアルゴリズムによる迷路生成
@@ -68,48 +37,117 @@ Maze *CreateMaze_Wilson(int xSize, int ySize)
     // まだ通過していないセルの数
     int cellCount = maze->GetXSize() * maze->GetYSize();
 
-    // セルAをランダムに選択する
-    CellPoint cellA;
-    cellA.x = random() % maze->GetXSize();
-    cellA.y = random() % maze->GetYSize();
+    // 最初のセルをランダムに選択して「処理済み」にする。
+    CellPoint cell;
+    cell.x = random() % maze->GetXSize();
+    cell.y = random() % maze->GetYSize();
     cellCount--;
-    maze->SetCellTag(cellA, 2);
+    maze->SetCellTag(cell, 3);
+    maze->Draw();
+    Sleep(0.7f);
+    maze->SetCellTag(cell, 0);
     maze->Draw();
 
-    // まだ訪れていないセルをランダムに選択して、セルBとする
-    WilsonHistory history;
-    CellPoint cellB;
-    while (true) {
-        cellB.x = random() % maze->GetXSize();
-        cellB.y = random() % maze->GetYSize();
-        if (maze->GetCellTag(cellB) == 1) {
-            maze->SetCellTag(cellB, 3);
-            maze->Draw();
-            history.PutLog(WilsonLog(cellB, NoDirection));
-            break;
-        }
-    }
+    // 「処理済み」でないセルが残っている間、処理を続ける
+    while (cellCount > 0) {
+        // 「処理済み」でないセルから開始点をランダムに選択する
+        do {
+            cell.x = random() % maze->GetXSize();
+            cell.y = random() % maze->GetYSize();
+        } while (maze->GetCellTag(cell) != 1);
+        maze->SetCellTag(cell, 3);
+        maze->Draw();
 
-    // セルBからセルAにたどり着くまでランダムウォークして、ログを取る
-    CellPoint cell = cellB;
-    while (cell.x != cellA.x || cell.y != cellA.y) {
-        vector<Direction> dirs = MakeAllDirectionsList_shuffled();
-        for (int i = 0; i < 4; i++) {
-            CellPoint nextCell = cell.Move(dirs[i]);
-            if (maze->IsValidCell(nextCell)) {
-                history.PutLog(WilsonLog(cellB, NoDirection));
-                if (cell.x != cellB.x || cell.y != cellB.y) {
-                    maze->SetCellTag(cell, 4);
+        // 移動のログ
+        vector<CellPoint> visitedCells;
+        visitedCells.push_back(cell);
+
+        // 「処理済み」のセルにたどり着くまでランダムウォーク
+        bool isWalking = true;
+        while (isWalking) {
+            vector<Direction> dirs = MakeAllDirectionsList_shuffled();
+            CellPoint lastCell(-1, -1);
+            if (visitedCells.size() >= 2) {
+                lastCell = visitedCells[visitedCells.size() - 2];
+            }
+            for (Direction dir : dirs) {
+                CellPoint cell2 = cell.Move(dir);
+                if (maze->IsValidCell(cell2) && (lastCell.x != cell2.x || lastCell.y != cell2.y)) {
+                    // 移動したセルのタグを確認する
+                    int tag = maze->GetCellTag(cell2);
+
+                    // タグが0なら「処理済み」
+                    if (tag == 0) {
+                        // ゴールにたどり着いたのでランダムウォーク終了
+                        maze->SetCellTag(cell, 2);
+                        maze->RemoveWall(cell, dir);
+                        maze->Draw();
+                        isWalking = false;
+                    }
+                    // タグが1なら「未処理」
+                    else if (tag == 1) {
+                        // 移動ログに追加して探索を続ける
+                        maze->SetCellTag(cell, 2);
+                        maze->RemoveWall(cell, dir);
+                        maze->SetCellTag(cell2, 3);
+                        maze->Draw();
+                        visitedCells.push_back(cell2);
+                        cell = cell2;
+                    }
+                    // タグがそれ以外なら探索中のセルに戻ってきた
+                    else {
+                        maze->SetCellTag(cell2, 8);
+                        maze->Draw();
+                        // 削除対象のセルをマーキングしながら壁を戻す
+                        int index = (int)(visitedCells.size() - 1);
+                        CellPoint lastCell = cell;
+                        while (index >= 0) {
+                            CellPoint delCell = visitedCells[index];
+                            Direction dir2 = CheckMoveDirection(lastCell, delCell);
+                            maze->MakeWall(lastCell, dir2);
+                            maze->Draw();
+                            if (delCell.x == cell2.x && delCell.y == cell2.y) {
+                                break;
+                            }
+                            maze->SetCellTag(delCell, 8);
+                            maze->Draw();
+                            lastCell = delCell;
+                            index--;
+                        }
+                        // 移動ログを該当位置まで削除しながら壁を戻す
+                        lastCell = cell;
+                        maze->SetCellTag(lastCell, 1);
+                        maze->Draw();
+                        while (visitedCells.size() > 0) {
+                            CellPoint delCell = *(visitedCells.end() - 1);
+                            visitedCells.erase(visitedCells.end() - 1);
+                            if (delCell.x == cell2.x && delCell.y == cell2.y) {
+                                break;
+                            }
+                            maze->SetCellTag(delCell, 1);
+                            maze->Draw();
+                            lastCell = delCell;
+                        }
+
+                        // 移動ログに追加して探索を再開する
+                        visitedCells.push_back(cell2);
+                        maze->SetCellTag(cell2, 2);
+                        maze->Draw();
+                        cell = cell2;
+                    }
+                    break;
                 }
-                maze->SetCellTag(nextCell, 3);
-                maze->Draw();
-                Sleep(0.01f);
-                cell = nextCell;
-                break;
             }
         }
-    }
 
+        // 移動ログをたどってすべて「処理済み」にする
+        for (int i = visitedCells.size() - 1; i >= 0; i--) {
+            CellPoint cell = visitedCells[i];
+            maze->SetCellTag(cell, 0);
+            maze->Draw();
+            cellCount--;
+        }
+    }
 
     // 終了
     return maze;
