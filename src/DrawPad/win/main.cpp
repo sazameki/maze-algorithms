@@ -50,14 +50,9 @@ void FinishDrawing()
 // 指定された時間のスリープ
 void Sleep(float seconds)
 {
-    clock_t start = clock();
-    while (true) {
+    clock_t end = clock() + (clock_t)(seconds * CLOCKS_PER_SEC);
+    while (clock() < end) {
         BitBlt(hMainDC, 0, 0, 640, 480, hDibDC, 0, 0, SRCCOPY);
-        clock_t end = clock();
-        float duration = (float)(clock() - start) / CLOCKS_PER_SEC;
-        if (duration >= seconds) {
-            break;
-        }
     }
 }
 
