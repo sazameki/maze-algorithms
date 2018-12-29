@@ -1,6 +1,6 @@
 # Maze Algorithms
 
-<p align="center"><img src="https://github.com/sazameki/maze-algorithms/raw/readme/screenshot_prim.png" width=45%><img src="https://github.com/sazameki/maze-algorithms/raw/readme/screenshot_recursive-backtracking.png" width=45%></p>
+<p align="center"><img src="https://github.com/sazameki/maze-algorithms/raw/readme/screenshot_prim.png" width=45%><img src="https://github.com/sazameki/maze-algorithms/raw/readme/screenshot_recursive-backtracking.png" width=45%><img src="https://raw.githubusercontent.com/sazameki/maze-algorithms/readme/screenshot_blobby-recursive-division.png" width=45%></p>
 
 ## このプロジェクトについて
 
