@@ -6,6 +6,8 @@
 //
 
 #include <windows.h>
+#include <cstdio>
+#include <ctime>
 #include "Resource.h"
 #include "Drawing.hpp"
 
@@ -19,17 +21,44 @@ HWND        hWindow;        // ウィンドウ
 HANDLE      hThread;        // 描画用スレッド
 HDC         hMainDC;        // メインのウィンドウ描画用デバイスコンテキスト
 HDC         hDibDC;         // DIB描画用のデバイスコンテキスト
+clock_t     oldTime;        // 前のフレームの終了時間
+clock_t     frameCalcTime;  // フレーム計測の開始時間
+int         frameCount;     // 1回の計測におけるフレーム実行の回数
 
 
+// メモリ上に描画された内容の表示
 void FinishDrawing()
 {
+    // DIBの表示
     BitBlt(hMainDC, 0, 0, 640, 480, hDibDC, 0, 0, SRCCOPY);
+
+    // フレームレートの計算
+    frameCount++;
+    oldTime = clock();
+    float duration = (float)(oldTime - frameCalcTime) / CLOCKS_PER_SEC;
+    if (duration >= 1.0f) {
+        gFrameRate = frameCount / duration;
+        frameCalcTime = oldTime;
+        frameCount = 0;
+
+        static char buffer[64];
+        sprintf_s(buffer, 64, "Maze (Running) %.1ffps", gFrameRate);
+        SetWindowTextA(hWindow, buffer);
+    }
 }
 
+// 指定された時間のスリープ
 void Sleep(float seconds)
 {
-    // FIXME: ::Sleep(DWORD)でスリープさせると、直前の描画が画面に反映されない場合があるのを修正する。
-    Sleep((DWORD)(seconds * 1000));
+    clock_t start = clock();
+    while (true) {
+        BitBlt(hMainDC, 0, 0, 640, 480, hDibDC, 0, 0, SRCCOPY);
+        clock_t end = clock();
+        float duration = (float)(clock() - start) / CLOCKS_PER_SEC;
+        if (duration >= seconds) {
+            break;
+        }
+    }
 }
 
 /**
@@ -61,6 +90,11 @@ static DWORD WINAPI ThreadProc(LPVOID arg)
     // キーボード・マウス関係の変数の初期化
     gKeyData = 0;
     gIsMouseDown = false;
+
+    // フレームレート計算のための変数の初期化
+    frameCalcTime = clock();
+    frameCount = 0;
+    oldTime = frameCalcTime;
 
     // DrawPadのメイン関数の実行
     hMainDC = GetDC(hWindow);

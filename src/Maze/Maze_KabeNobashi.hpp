@@ -19,3 +19,4 @@ Maze    *CreateMaze_KabeNobashi(int xSize, int ySize);
 
 
 #endif /* Maze_KabeNobashi_hpp */
+
