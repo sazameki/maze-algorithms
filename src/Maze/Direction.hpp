@@ -38,11 +38,6 @@ enum Direction
         左方向を表す定数
      */
     Left,
-
-    /**
-        方向が設定されていないことを表すDirection列挙型の定数
-     */
-    NoDirection,
 };
 
 
@@ -58,14 +53,12 @@ Direction   GetRandomDirection();
 
 /**
     与えられた方向を右方向に回転します。
-    NoDirectionが与えられた場合、NoDirectionがリターンされます。
     例. 上->右, 右->下
  */
 Direction   RotateRight(Direction dir);
 
 /**
     与えられた方向を左方向に回転します。
-    NoDirectionが与えられた場合、NoDirectionがリターンされます。
     例. 上->左, 左->下
  */
 Direction   RotateLeft(Direction dir);
