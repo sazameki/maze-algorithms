@@ -12,6 +12,9 @@
 using namespace std;
 
 
+/**
+    隣接したfromとtoのセルについて、fromからtoに移動するための方向を計算します。
+ */
 static Direction CheckMoveDirection(const CellPoint& from, const CellPoint& to)
 {
     if (to.x > from.x) {
@@ -25,6 +28,11 @@ static Direction CheckMoveDirection(const CellPoint& from, const CellPoint& to)
     }
 }
 
+/**
+    重複のないようにvectorにセル座標を追加します。
+    @param  cells   追加先のvector
+    @param  newCell 追加するセル座標
+ */
 static void AddCellToVector(vector<CellPoint> &cells, const CellPoint& newCell)
 {
     for (CellPoint &cell : cells) {
@@ -35,7 +43,13 @@ static void AddCellToVector(vector<CellPoint> &cells, const CellPoint& newCell)
     cells.push_back(newCell);
 }
 
-void StepDijkstra(Maze *maze, const CellPoint& start, const CellPoint& goal, vector<CellPoint> &cells, int tag)
+/**
+    Dijkstraの探索アルゴリズムのために番号を割り振ります。
+    @param  maze    迷路
+    @param  start   スタート位置
+    @param  goal
+ */
+static void StepDijkstra(Maze *maze, const CellPoint& start, const CellPoint& goal, vector<CellPoint> &cells, int tag)
 {
     vector<CellPoint> nextCells;
     for (CellPoint cell : cells) {
@@ -86,6 +100,8 @@ void SolveMaze_Dijkstra(Maze *maze, const CellPoint& start, const CellPoint& goa
         EndBatch();
         tag--;
 
+        // ランダムに最短経路を選択してたどっていきます。ランダムにしない場合、コメントアウトされた次の方向リストを使ってください。
+        //vector<Direction> dirs = MakeAllDirectionsList();
         vector<Direction> dirs = MakeAllDirectionsList_shuffled();
         for (Direction dir : dirs) {
             if (maze->CheckWall(cell, dir)) {
