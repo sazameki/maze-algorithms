@@ -34,6 +34,7 @@
 		8E9A9A1121D51BDB002E55FA /* Maze_RecursiveBacktracking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99F921D51BDB002E55FA /* Maze_RecursiveBacktracking.cpp */; };
 		8E9A9A1221D51BDB002E55FA /* MazeDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A99FF21D51BDB002E55FA /* MazeDraw.cpp */; };
 		8E9A9A1A21D7DB8C002E55FA /* Maze_Houston.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A9A1821D7DB8C002E55FA /* Maze_Houston.cpp */; };
+		8E9A9A2021D8648A002E55FA /* Maze_Kruskal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A9A1E21D8648A002E55FA /* Maze_Kruskal.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,8 @@
 		8E9A99FF21D51BDB002E55FA /* MazeDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MazeDraw.cpp; sourceTree = "<group>"; };
 		8E9A9A1821D7DB8C002E55FA /* Maze_Houston.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Houston.cpp; sourceTree = "<group>"; };
 		8E9A9A1921D7DB8C002E55FA /* Maze_Houston.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_Houston.hpp; sourceTree = "<group>"; };
+		8E9A9A1E21D8648A002E55FA /* Maze_Kruskal.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maze_Kruskal.cpp; sourceTree = "<group>"; };
+		8E9A9A1F21D8648A002E55FA /* Maze_Kruskal.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Maze_Kruskal.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +211,8 @@
 				8E9A99EE21D51BDA002E55FA /* Maze_BlobbyRecursiveDivision.cpp */,
 				8E9A99DA21D51BD9002E55FA /* Maze_Eller.hpp */,
 				8E9A99EC21D51BDA002E55FA /* Maze_Eller.cpp */,
+				8E9A9A1F21D8648A002E55FA /* Maze_Kruskal.hpp */,
+				8E9A9A1E21D8648A002E55FA /* Maze_Kruskal.cpp */,
 			);
 			name = "Maze Creation (Divide&Conquer)";
 			sourceTree = "<group>";
@@ -311,6 +316,7 @@
 				8E9A9A1221D51BDB002E55FA /* MazeDraw.cpp in Sources */,
 				8E9A9A0121D51BDB002E55FA /* Maze_AldousBroder.cpp in Sources */,
 				8E9A9A0E21D51BDB002E55FA /* Maze_AnaHori.cpp in Sources */,
+				8E9A9A2021D8648A002E55FA /* Maze_Kruskal.cpp in Sources */,
 				8E9A9A0321D51BDB002E55FA /* Maze_KabeNobashi.cpp in Sources */,
 				8E9A9A0421D51BDB002E55FA /* Direction.cpp in Sources */,
 				8E9A9A0021D51BDB002E55FA /* Maze_RecursiceDivision.cpp in Sources */,

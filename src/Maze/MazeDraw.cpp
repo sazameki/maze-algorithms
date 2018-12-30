@@ -28,9 +28,9 @@ static const int    kTagColorCount = 10;
     迷路のタグに対応したセルの描画色のリスト（タグ1に対応した最初の色は一度のみ、それ以外の色は循環して使用されます）
  */
 static const int    kTagColors[] = {
-    0xe85a70, 0x73d0c2, 0xffc530, 0xf6e5d7,
-    0x9020a0, 0xff008b, 0xfee4a6, 0x5893d4,
-    0xa7d129, 0x616f39,
+    0xe85a70, 0x73d0c2, 0xffc500, 0xa7c5f6,
+    0x9020a0, 0xff008b, 0xffff00, 0x5893d4,
+    0xa7e020, 0x00a039,
 };
 
 /**

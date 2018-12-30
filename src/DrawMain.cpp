@@ -7,21 +7,26 @@
 
 #include "Drawing.hpp"
 #include "MazeDraw.hpp"
-#include "Maze_BouTaoshi.hpp"
+
 #include "Maze_AnaHori.hpp"
-#include "Maze_KabeNobashi.hpp"
+#include "Maze_HuntAndKill.hpp"
 #include "Maze_RecursiveBacktracking.hpp"
+#include "Maze_GrowingTree.hpp"
 #include "Maze_Prim.hpp"
-#include "Maze_Eller.hpp"
 #include "Maze_AldousBroder.hpp"
 #include "Maze_Wilson.hpp"
 #include "Maze_Houston.hpp"
+#include "Maze_KabeNobashi.hpp"
+
 #include "Maze_RecursiceDivision.hpp"
 #include "Maze_BlobbyRecursiveDivision.hpp"
-#include "Maze_HuntAndKill.hpp"
-#include "Maze_GrowingTree.hpp"
-#include "Maze_BinaryTree.hpp"
+#include "Maze_Eller.hpp"
+#include "Maze_Kruskal.hpp"
+
+#include "Maze_BouTaoshi.hpp"
 #include "Maze_Sidewinder.hpp"
+#include "Maze_BinaryTree.hpp"
+
 #include "Maze_RightHand.hpp"
 
 #include <cstdlib>
@@ -41,21 +46,24 @@ void DrawMain()
     srandom((unsigned int)time(NULL));
 
     // 迷路の生成
-    //Maze *maze = CreateMaze_BouTaoshi(xSize, ySize);
     //Maze *maze = CreateMaze_AnaHori(xSize, ySize);
-    //Maze *maze = CreateMaze_KabeNobashi(xSize, ySize);
+    //Maze *maze = CreateMaze_HuntAndKill(xSize, ySize);
     //Maze *maze = CreateMaze_RecurvsiveBacktracking(xSize, ySize);
+    //Maze *maze = CreateMaze_GrowingTree(xSize, ySize);
     //Maze *maze = CreateMaze_Prim(xSize, ySize);
-    //Maze *maze = CreateMaze_Eller(xSize, ySize);
     //Maze *maze = CreateMaze_AldousBroder(xSize, ySize);
     //Maze *maze = CreateMaze_Wilson(xSize, ySize);
     //Maze *maze = CreateMaze_Houston(xSize, ySize);
+    //Maze *maze = CreateMaze_KabeNobashi(xSize, ySize);
+
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
-    Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
-    //Maze *maze = CreateMaze_HuntAndKill(xSize, ySize);
-    //Maze *maze = CreateMaze_GrowingTree(xSize, ySize);
-    //Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
+    //Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
+    //Maze *maze = CreateMaze_Eller(xSize, ySize);
+    Maze *maze = CreateMaze_Kruskal(xSize, ySize);
+
+    //Maze *maze = CreateMaze_BouTaoshi(xSize, ySize);
     //Maze *maze = CreateMaze_Sidewinder(xSize, ySize);
+    //Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
 
     // 念のために出来上がった迷路を再度描画
     maze->Draw();
