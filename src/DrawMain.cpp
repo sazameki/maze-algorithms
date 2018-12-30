@@ -110,8 +110,8 @@ void DrawMain()
 
     // 迷路探索
     maze->SetTagForAllCells(0);
-    //SolveMaze_RightHand(maze, start, Down, goal);
-    SolveMaze_Dijkstra(maze, start, goal);
+    SolveMaze_RightHand(maze, start, Down, goal);
+    //SolveMaze_Dijkstra(maze, start, goal);
     DrawText("SOLVED!!", -4 * 13, -240, kColorBlue);
 
     delete maze;
