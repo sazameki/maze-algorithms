@@ -32,6 +32,7 @@
 + Recursive Division
 + Blobby Recursive Division
 + Ellerの迷路生成アルゴリズム
++ Kruskalの迷路生成アルゴリズム
 
 ### 各セルごとの処理によるアドホックな生成アルゴリズム
 
