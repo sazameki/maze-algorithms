@@ -28,6 +28,7 @@
 #include "Maze_BinaryTree.hpp"
 
 #include "Maze_RightHand.hpp"
+#include "Maze_Dijkstra.hpp"
 
 #include <cstdlib>
 #include <ctime>
@@ -101,15 +102,16 @@ void DrawMain()
     maze->DrawGoal(goal);
     EndBatch();
 
-    // 開始のためのキー入力待ち
+    // 探索開始のためのキー入力待ち
     Sleep(0.7f);
     while (!CheckKey(kKeySpace)) {
         DrawText("SPACE KEY TO SOLVE!!", -12*10, -240, kColorOrange);
     }
 
-    // 右手法で迷路を解く
+    // 迷路探索
     maze->SetTagForAllCells(0);
-    SolveMaze_RightHand(maze, start, Down, goal);
+    //SolveMaze_RightHand(maze, start, Down, goal);
+    SolveMaze_Dijkstra(maze, start, goal);
     DrawText("SOLVED!!", -4 * 13, -240, kColorBlue);
 
     delete maze;
