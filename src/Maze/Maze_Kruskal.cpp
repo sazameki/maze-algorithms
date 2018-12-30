@@ -7,6 +7,8 @@
 
 #include "Maze_Kruskal.hpp"
 
+#include <algorithm>
+
 
 /**
     Kruskalのアルゴリズムで使用するセット
