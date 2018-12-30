@@ -169,6 +169,7 @@
     <ClInclude Include="..\src\Maze\Maze_BinaryTree.hpp" />
     <ClInclude Include="..\src\Maze\Maze_BlobbyRecursiveDivision.hpp" />
     <ClInclude Include="..\src\Maze\Maze_BouTaoshi.hpp" />
+    <ClInclude Include="..\src\Maze\Maze_Dijkstra.hpp" />
     <ClInclude Include="..\src\Maze\Maze_Eller.hpp" />
     <ClInclude Include="..\src\Maze\Maze_GrowingTree.hpp" />
     <ClInclude Include="..\src\Maze\Maze_Houston.hpp" />
@@ -194,6 +195,7 @@
     <ClCompile Include="..\src\Maze\Maze_BinaryTree.cpp" />
     <ClCompile Include="..\src\Maze\Maze_BlobbyRecursiveDivision.cpp" />
     <ClCompile Include="..\src\Maze\Maze_BouTaoshi.cpp" />
+    <ClCompile Include="..\src\Maze\Maze_Dijkstra.cpp" />
     <ClCompile Include="..\src\Maze\Maze_Eller.cpp" />
     <ClCompile Include="..\src\Maze\Maze_GrowingTree.cpp" />
     <ClCompile Include="..\src\Maze\Maze_Houston.cpp" />
