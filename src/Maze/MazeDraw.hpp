@@ -26,6 +26,9 @@ void    DrawMaze(Maze *maze, bool usesBatch = true);
  */
 void    DrawCrossPoint(Maze *maze, const CrossPoint& pos, bool usesBatch = true);
 
+void    DrawStart(Maze *maze, const CellPoint& start);
+void    DrawGoal(Maze *maze, const CellPoint& goal);
+
 /**
     迷路上に探索のための人形を描画します。
     @param  maze    迷路

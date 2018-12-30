@@ -35,15 +35,44 @@
 using namespace std;
 
 
+// 右下の点をゴールとする
+static CellPoint MakeRightBottomGoal(int xSize, int ySize)
+{
+    return CellPoint(xSize - 1, ySize - 1);
+}
+
+// 中央の点をゴールとする
+static CellPoint MakeCenterGoal(int xSize, int ySize)
+{
+    return CellPoint(xSize / 2, ySize / 2);
+}
+
+// ランダムな座標をゴールとする
+static CellPoint MakeRandomGoal(const CellPoint& start, int xSize, int ySize)
+{
+    CellPoint goal;
+    do {
+        goal.x = random() % xSize;
+        goal.y = random() % ySize;
+    } while (goal.Equals(start));
+    return goal;
+}
+
 // 描画エンジンのエントリポイント
 void DrawMain()
 {
+    // 乱数の初期化
+    srandom((unsigned int)time(NULL));
+
     // 迷路のサイズ
     int xSize = 30;
     int ySize = 20;
 
-    // 乱数の初期化
-    srandom((unsigned int)time(NULL));
+    // スタート位置とゴール位置
+    CellPoint start(0, 0);
+    CellPoint goal = MakeRightBottomGoal(xSize, ySize);
+    //CellPoint goal = MakeCenterGoal(xSize, ySize);
+    //CellPoint goal = MakeRandomGoal(start, xSize, ySize);
 
     // 迷路の生成
     //Maze *maze = CreateMaze_AnaHori(xSize, ySize);
@@ -66,7 +95,11 @@ void DrawMain()
     //Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
 
     // 念のために出来上がった迷路を再度描画
-    maze->Draw();
+    StartBatch();
+    maze->Draw(false);
+    maze->DrawStart(start);
+    maze->DrawGoal(goal);
+    EndBatch();
 
     // 開始のためのキー入力待ち
     Sleep(0.7f);
@@ -76,7 +109,7 @@ void DrawMain()
 
     // 右手法で迷路を解く
     maze->SetTagForAllCells(0);
-    SolveMaze_RightHand(maze);
+    SolveMaze_RightHand(maze, start, Down, goal);
     DrawText("SOLVED!!", -4 * 13, -240, kColorBlue);
 
     delete maze;

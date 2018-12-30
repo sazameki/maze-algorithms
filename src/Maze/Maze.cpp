@@ -43,6 +43,11 @@ CellPoint::CellPoint(const CellPoint& p)
     // Do nothing
 }
 
+bool CellPoint::Equals(const CellPoint& otherCell) const
+{
+    return (x == otherCell.x && y == otherCell.y);
+}
+
 CellPoint CellPoint::Move(Direction dir) const
 {
     CellPoint ret(*this);
@@ -77,6 +82,11 @@ CrossPoint::CrossPoint(const CrossPoint& pos)
     : x(pos.x), y(pos.y)
 {
     // Do nothing
+}
+
+bool CrossPoint::Equals(const CrossPoint& otherCP) const
+{
+    return (x == otherCP.x && y == otherCP.y);
 }
 
 CrossPoint CrossPoint::Move(Direction dir) const
@@ -486,6 +496,16 @@ void Maze::Draw(bool usesBatch)
 void Maze::DrawCrossPoint(const CrossPoint& pos, bool usesBatch)
 {
     ::DrawCrossPoint(this, pos, usesBatch);
+}
+
+void Maze::DrawStart(const CellPoint& start)
+{
+    ::DrawStart(this, start);
+}
+
+void Maze::DrawGoal(const CellPoint& goal)
+{
+    ::DrawGoal(this, goal);
 }
 
 

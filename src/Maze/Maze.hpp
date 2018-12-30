@@ -78,6 +78,12 @@ struct CellPoint
     CellPoint(const CellPoint& pos);
 
     /**
+        他のセル座標と同じ値をもつかどうかをチェックします。
+        @param  otherCell   他のセル座標
+     */
+    bool Equals(const CellPoint& otherCell) const;
+
+    /**
         現在のセルの座標から、指定された方向に移動した場所にあるセルの座標を計算します。
         移動後の座標は有効な座標ではない可能性があります。必ずMazeクラスのIsValidCell()関数で有効性をチェックしてください。
      */
@@ -118,6 +124,12 @@ struct CrossPoint
         @param  pos 交点の座標
      */
     CrossPoint(const CrossPoint& pos);
+
+    /**
+        他の交点座標と同じ値をもつかどうかをチェックします。
+        @param  otherCP 他の交点座標
+     */
+    bool Equals(const CrossPoint& otherCP) const;
 
     /**
         現在の交点の座標から、指定された方向に移動した場所にある交点の座標を計算します。
@@ -427,6 +439,8 @@ public:
      */
     void    DrawCrossPoint(const CrossPoint& pos, bool usesBatch = true);
 
+    void    DrawStart(const CellPoint& start);
+    void    DrawGoal(const CellPoint& goal);
 
 private:
     // ---- 迷路生成用の関数（ビットフラグの操作）

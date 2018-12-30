@@ -166,27 +166,6 @@ void DrawMaze(Maze *maze, bool usesBatch)
         }
     }
 
-    // スタートとゴールの描画
-    int sx = GetCellX(0, maze->GetXSize()) + gCellSize/2 + kBorderSize;
-    int sy = GetCellY(0, maze->GetYSize()) + gCellSize/2 + kBorderSize;
-    int gx = GetCellX(maze->GetXSize()-1, maze->GetXSize()) + gCellSize/2 + kBorderSize;
-    int gy = GetCellY(maze->GetYSize()-1, maze->GetYSize()) + gCellSize/2 + kBorderSize;
-
-    int r = gCellSize / 2 - 2;
-    if (r < 1) {
-        r = 1;
-    }
-    FillCircle(sx, sy, r, kColorStart);
-    if (r >= 2) {
-        DrawCircle(sx, sy, r, kColorWhite);
-        DrawCircle(sx, sy, r - 1, kColorWhite);
-    }
-    FillCircle(gx, gy, r, kColorGoal);
-    if (r >= 2) {
-        DrawCircle(gx, gy, r, kColorWhite);
-        DrawCircle(gx, gy, r - 1, kColorWhite);
-    }
-
     if (usesBatch) {
         EndBatch();
         Sleep(kWaitMaze);
@@ -206,6 +185,38 @@ void DrawCrossPoint(Maze *maze, const CrossPoint& pos, bool usesBatch)
 
     if (usesBatch) {
         EndBatch();
+    }
+}
+
+// スタート位置の描画
+void DrawStart(Maze *maze, const CellPoint& start)
+{
+    int sx = GetCellX(start.x, maze->GetXSize()) + gCellSize/2 + kBorderSize;
+    int sy = GetCellY(start.y, maze->GetYSize()) + gCellSize/2 + kBorderSize;
+    int r = gCellSize / 2 - 2;
+    if (r < 1) {
+        r = 1;
+    }
+    FillCircle(sx, sy, r, kColorStart);
+    if (r >= 2) {
+        DrawCircle(sx, sy, r, kColorWhite);
+        DrawCircle(sx, sy, r - 1, kColorWhite);
+    }
+}
+
+// ゴール位置の描画
+void DrawGoal(Maze *maze, const CellPoint& goal)
+{
+    int gx = GetCellX(goal.x, maze->GetXSize()) + gCellSize/2 + kBorderSize;
+    int gy = GetCellY(goal.y, maze->GetYSize()) + gCellSize/2 + kBorderSize;
+    int r = gCellSize / 2 - 2;
+    if (r < 1) {
+        r = 1;
+    }
+    FillCircle(gx, gy, r, kColorGoal);
+    if (r >= 2) {
+        DrawCircle(gx, gy, r, kColorWhite);
+        DrawCircle(gx, gy, r - 1, kColorWhite);
     }
 }
 
