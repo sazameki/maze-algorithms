@@ -8,22 +8,35 @@
 #include "Maze_Kruskal.hpp"
 
 
+/**
+    Kruskalのアルゴリズムで使用するセット
+ */
 struct KruskalSet
 {
+    /**
+        このセットが表すタグ
+     */
     int tag;
+
+    /**
+        このセットに属するセル
+     */
     vector<CellPoint>   cells;
 
-    KruskalSet(int _tag)
+    /**
+        コンストラクタ
+        @param  _tag    タグ
+        @param  cell    最初のセル
+     */
+    KruskalSet(int _tag, const CellPoint& cell)
         : tag(_tag)
-    {
-        // Do nothing
-    }
-
-    void AddCell(const CellPoint& cell)
     {
         cells.push_back(cell);
     }
 
+    /**
+        与えられたセルがこのセットに属するかどうかをチェックします。
+     */
     bool Contains(const CellPoint& cell) const
     {
         for (auto aCell : cells) {
@@ -34,14 +47,25 @@ struct KruskalSet
         return false;
     }
 
-    CellPoint FindRandomNeighbor(Maze *maze, Direction &theDir)
+    /**
+        このセットに含まれるいずれかのセルに隣接する、異なるセットのセルを探します。
+        @param  maze    迷路
+        @param  outDir  見つかったセルにたどり着くために最後に移動した方向がこの引数にセットされます
+     */
+    CellPoint FindRandomNeighbor(Maze *maze, Direction &outDir)
     {
-        for (auto cell : cells) {
+        vector<int> indices;
+        for (int i = 0; i < cells.size(); i++) {
+            indices.push_back(i);
+        }
+        random_shuffle(indices.begin(), indices.end());
+        for (int index : indices) {
+            CellPoint cell = cells[index];
             vector<Direction> dirs = MakeAllDirectionsList_shuffled();
             for (auto dir : dirs) {
                 CellPoint cell2 = cell.Move(dir);
                 if (maze->IsValidCell(cell2) && maze->GetCellTag(cell2) != tag) {
-                    theDir = dir;
+                    outDir = dir;
                     return cell2;
                 }
             }
@@ -49,6 +73,11 @@ struct KruskalSet
         return CellPoint(-1, -1);
     }
 
+    /**
+        異なるセットを、このセットにマージします。
+        @param  maze        迷路
+        @param  otherSet    マージするセット
+     */
     void Merge(Maze *maze, KruskalSet *otherSet)
     {
         for (auto cell : otherSet->cells) {
@@ -61,10 +90,19 @@ struct KruskalSet
 };
 
 
+/**
+    Kruskalのアルゴリズムで使用するセットを管理するクラス
+ */
 struct KruskalSetMap
 {
+    /**
+        セットの配列
+     */
     vector<KruskalSet *>    sets;
 
+    /**
+        デストラクタ
+     */
     ~KruskalSetMap()
     {
         for (auto set : sets) {
@@ -73,11 +111,17 @@ struct KruskalSetMap
         sets.clear();
     }
 
+    /**
+        新しいセットを追加します。
+     */
     void AddSet(KruskalSet *set)
     {
         sets.push_back(set);
     }
 
+    /**
+        与えられたセルを含むセットをリターンします。
+     */
     KruskalSet *FindSet(const CellPoint& cell)
     {
         for (auto set : sets) {
@@ -89,6 +133,7 @@ struct KruskalSetMap
     }
 };
 
+// Kruskalの迷路生成アルゴリズム
 Maze *CreateMaze_Kruskal(int xSize, int ySize)
 {
     // 迷路の生成
@@ -102,12 +147,11 @@ Maze *CreateMaze_Kruskal(int xSize, int ySize)
 
     // 各セルごとに異なるセットを用意する
     KruskalSetMap setMap;
-    int tag = 1;
+    int tag = 0;
     for (int y = 0; y < maze->GetYSize(); y++) {
         for (int x = 0; x < maze->GetXSize(); x++) {
             // 新しいセットの作成
-            KruskalSet *set = new KruskalSet(tag);
-            set->AddCell(CellPoint(x, y));
+            KruskalSet *set = new KruskalSet(tag, CellPoint(x, y));
             setMap.AddSet(set);
 
             // タグを付ける
@@ -117,8 +161,8 @@ Maze *CreateMaze_Kruskal(int xSize, int ySize)
         }
     }
 
-    KruskalSet *firstSet = setMap.FindSet(CellPoint(0, 0));
-    while (firstSet->cells.size() < maze->GetXSize() * maze->GetYSize()) {
+    // 最初のセットにすべてのセルがマージされるまで繰り返す
+    while (setMap.sets[0]->cells.size() < maze->GetXSize() * maze->GetYSize()) {
         // ランダムにセルを1つ選ぶ
         CellPoint cellA;
         cellA.x = random() % maze->GetXSize();
@@ -129,18 +173,17 @@ Maze *CreateMaze_Kruskal(int xSize, int ySize)
         Direction theDir;
         CellPoint cellB = setA->FindRandomNeighbor(maze, theDir);
         KruskalSet *setB = setMap.FindSet(cellB);
+
+        // 見つかったセルとの間の壁を取り除く
         maze->RemoveWall(cellB, GetOppositeDirection(theDir));
+
+        // 小さなタグのセットにマージする
         if (setA->tag < setB->tag) {
             setA->Merge(maze, setB);
         } else {
             setB->Merge(maze, setA);
         }
     }
-
-    // タグをクリア
-    Sleep(0.7f);
-    maze->SetTagForAllCells(0);
-    maze->Draw();
 
     // 終了
     return maze;
