@@ -367,6 +367,8 @@ void FinishDrawing()
 // 指定された秒数だけスリープさせる
 void Sleep(float seconds)
 {
-    [NSThread sleepForTimeInterval:(NSTimeInterval)seconds];
+    if (seconds > 0.0f) {
+        [NSThread sleepForTimeInterval:(NSTimeInterval)seconds];
+    }
 }
 

@@ -82,6 +82,9 @@ void FinishDrawing()
 // 指定された時間のスリープ
 void Sleep(float seconds)
 {
+    if (seconds <= 0.0f) {
+        return;
+    }
     clock_t end = clock() + (clock_t)(seconds * CLOCKS_PER_SEC);
     while (clock() < end) {
         BitBlt(hMainDC, 0, 0, 640, 480, hDibDC, 0, 0, SRCCOPY);
