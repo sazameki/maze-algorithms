@@ -76,6 +76,8 @@ void DrawMain()
     //CellPoint goal = MakeRandomGoal(start, xSize, ySize);
 
     // 迷路の生成
+    clock_t startTime = clock();
+
     //Maze *maze = CreateMaze_AnaHori(xSize, ySize);
     //Maze *maze = CreateMaze_HuntAndKill(xSize, ySize);
     //Maze *maze = CreateMaze_RecurvsiveBacktracking(xSize, ySize);
@@ -94,6 +96,9 @@ void DrawMain()
     //Maze *maze = CreateMaze_BouTaoshi(xSize, ySize);
     //Maze *maze = CreateMaze_Sidewinder(xSize, ySize);
     //Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
+
+    clock_t endTime = clock();
+    DebugLog("Maze-Creation Time: %.2f sec", (float)(endTime - startTime) / CLOCKS_PER_SEC);
 
     // 出来上がった迷路データをテキストファイルとして読み込み/保存
     //string filepath = AddPathComponent(GetDesktopFolderPath(), "mymaze.txt");
