@@ -95,6 +95,11 @@ void DrawMain()
     //Maze *maze = CreateMaze_Sidewinder(xSize, ySize);
     //Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
 
+    // 出来上がった迷路データをテキストファイルとして読み込み/保存
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "mymaze.txt");
+    //Maze *maze = new Maze(filepath);
+    //maze->Save(filepath);
+
     // 念のために出来上がった迷路を再度描画
     StartBatch();
     maze->Draw(false);

@@ -7,10 +7,13 @@
 
 #include "Maze.hpp"
 #include "MazeDraw.hpp"
+#include "Drawing.hpp"
 
 #include <algorithm>
 #include <cassert>
+#include <cstdio>
 #include <stdexcept>
+#include <string>
 
 
 // ---- 定数
@@ -121,6 +124,12 @@ Wall::Wall(const Wall& wall)
 
 
 // ---- Mazeクラスのコンストラクタ・デストラクタ
+
+Maze::Maze(const std::string& filepath)
+{
+    data = nullptr;
+    Load(filepath);
+}
 
 Maze::Maze(int _xSize, int _ySize)
 {
@@ -506,6 +515,57 @@ void Maze::DrawStart(const CellPoint& start)
 void Maze::DrawGoal(const CellPoint& goal)
 {
     ::DrawGoal(this, goal);
+}
+
+// 迷路のデータを指定されたパス位置のファイルから読み込みます。
+bool Maze::Load(const std::string& filepath)
+{
+    // 迷路データのメモリ解放
+    if (data) {
+        delete[] data;
+    }
+
+    // ファイルのオープン
+    FILE *fp = fopen(filepath.c_str(), "r");
+    if (!fp) {
+        DebugLog("Failed to open a file for loading maze: %s", filepath.c_str());
+        return false;
+    }
+
+    // データの読み込み（X方向のサイズ、Y方向のサイズ）とデータバッファの確保
+    fscanf(fp, "%x\n", &xSize);
+    fscanf(fp, "%x\n", &ySize);
+    data = new unsigned[xSize * ySize];
+
+    // データの読み込み（1つのセルのデータ=1文字）
+    for (int i = 0; i < xSize * ySize; i++) {
+        char c = fgetc(fp);
+        std::string str;
+        str += c;
+        data[i] = (int)strtol(str.c_str(), NULL, 16);
+    }
+
+    // クリーンアップ
+    fclose(fp);
+    return true;
+}
+
+// 迷路のデータを指定されたパス位置のファイルに保存します。
+bool Maze::Save(const std::string& filepath)
+{
+    FILE *fp = fopen(filepath.c_str(), "w");
+    if (!fp) {
+        DebugLog("Failed to open a file for saving maze: %s", filepath.c_str());
+        return false;
+    }
+    fprintf(fp, "%x\n", xSize);
+    fprintf(fp, "%x\n", ySize);
+    for (int i = 0; i < xSize * ySize; i++) {
+        fprintf(fp, "%x", (data[i] & kCell_AllBorders));
+    }
+    fprintf(fp, "\n");
+    fclose(fp);
+    return true;
 }
 
 

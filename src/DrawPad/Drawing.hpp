@@ -8,6 +8,8 @@
 #ifndef Drawing_hpp
 #define Drawing_hpp
 
+#include <string>
+
 
 // ---- 変数・定数の定義
 
@@ -439,6 +441,30 @@ int     GetMouseY();
     @return マウスの左ボタンが押されていればtrue、そうでなければfalse
  */
 bool    CheckMouse();
+
+
+// ---- パスの操作
+
+/**
+    デスクトップ・フォルダのパスをC++文字列として取得します。
+ */
+std::string GetDesktopFolderPath();
+
+/**
+    パス文字列pathにnewComponentを追加した新しいパス文字列を作成してリターンします。
+
+ */
+std::string AddPathComponent(const std::string& path, const std::string& newComponent);
+
+
+// ---- デバッグ出力
+
+/**
+    デバッグ文字列を出力ウィンドウに表示します。
+    Windows環境ではOutputDebugString()関数の呼び出しになります。
+    macOS環境ではprintf()関数の呼び出しになります。
+ */
+void    DebugLog(const char* format, ...);
 
 
 #endif /* Drawing_hpp */

@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <cstdarg>
 #include <cstdlib>
 #include <map>
 #include <vector>
@@ -1258,5 +1259,25 @@ int GetMouseY()
 bool CheckMouse()
 {
     return gIsMouseDown;
+}
+
+
+// ---- デバッグ出力
+
+// デバッグ文字列を出力ウィンドウに表示します。
+void DebugLog(const char* format, ...)
+{
+    static char buffer[1024];
+    va_list marker;
+    va_start(marker, format);
+    vsnprintf(buffer, 1024, format, marker);
+    va_end(marker);
+
+#if _WINDOWS
+    OutputDebugStringA(buffer);
+    OutputDebugStringA("");
+#else
+    printf("%s\n", buffer);
+#endif  //#if _WINDOWS
 }
 

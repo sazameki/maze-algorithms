@@ -194,6 +194,11 @@ public:
     // ---- コンストラクタ・デストラクタ
 
     /**
+        コンストラクタ。指定されたテキストファイルからデータを読み込んで初期化します。
+     */
+    Maze(const std::string& filepath);
+
+    /**
         コンストラクタ。指定されたサイズで初期化します。すべてのセルのデータ値は0になります。
         @param xSize    X方向のサイズ
         @param ySize    Y方向のサイズ
@@ -439,8 +444,28 @@ public:
      */
     void    DrawCrossPoint(const CrossPoint& pos, bool usesBatch = true);
 
+    /**
+        迷路のスタート位置を描画します。
+        @param  start   スタート位置の座標
+     */
     void    DrawStart(const CellPoint& start);
+
+    /**
+        迷路のゴール位置を描画します。
+        @param  goal    ゴール位置の座標
+     */
     void    DrawGoal(const CellPoint& goal);
+
+    /**
+        迷路のデータを指定されたパス位置のファイルから読み込みます。
+     */
+    bool    Load(const std::string& filepath);
+
+    /**
+        迷路のデータを指定されたパス位置のファイルに保存します。
+     */
+    bool    Save(const std::string& filepath);
+
 
 private:
     // ---- 迷路生成用の関数（ビットフラグの操作）
