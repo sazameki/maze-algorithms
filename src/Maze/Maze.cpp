@@ -128,7 +128,11 @@ Wall::Wall(const Wall& wall)
 Maze::Maze(const std::string& filepath)
 {
     data = nullptr;
-    Load(filepath);
+    if (!Load(filepath)) {
+        char buffer[256];
+        sprintf(buffer, "Failed to load maze file: %s", filepath.c_str());
+        throw runtime_error(buffer);
+    }
 }
 
 Maze::Maze(int _xSize, int _ySize)
