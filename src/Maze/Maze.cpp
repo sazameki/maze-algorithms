@@ -198,7 +198,6 @@ void Maze::SetCellTag(int x, int y, int tag)
 {
     assert(x >= 0 && x < xSize);
     assert(y >= 0 && y < ySize);
-    assert(tag >= 0 && tag <= 65535);
     data[y * xSize + x] &= kCell_AllBorders;
     data[y * xSize + x] |= (tag << 4);
 }
@@ -207,14 +206,12 @@ void Maze::SetCellTag(const CellPoint& pos, int tag)
 {
     assert(pos.x >= 0 && pos.x < xSize);
     assert(pos.y >= 0 && pos.y < ySize);
-    assert(tag >= 0 && tag <= 65535);
     data[pos.y * xSize + pos.x] &= kCell_AllBorders;
     data[pos.y * xSize + pos.x] |= (tag << 4);
 }
 
 void Maze::SetTagForAllCells(int tag)
 {
-    assert(tag >= 0 && tag <= 65535);
     for (int y = 0; y < ySize; y++) {
         for (int x = 0; x < xSize; x++) {
             SetCellTag(x, y, tag);
