@@ -61,7 +61,6 @@ Maze *CreateMaze_GrowingTree(int xSize, int ySize)
             if (maze->IsValidCell(nextCell) && maze->GetCellTag(nextCell) == 1) {
                 maze->SetCellTag(nextCell, 3);
                 maze->RemoveWall(cell, dirs[i]);
-                maze->Draw();
                 history.push_back(nextCell);
                 hasMoved = true;
 #if !(USES_GROWING_BINARY_TREE)
@@ -69,11 +68,11 @@ Maze *CreateMaze_GrowingTree(int xSize, int ySize)
 #endif
             }
         }
+        maze->Draw();
 
         // 周りに進めないセルは完了したものとしてヒストリから取り除く
         if (!hasMoved) {
             maze->SetCellTag(cell, 0);
-            maze->Draw();
             for (int i = 0; i < history.size(); i++) {
                 if (history[i].x == cell.x && history[i].y == cell.y) {
                     history.erase(history.begin() + i);
@@ -82,8 +81,8 @@ Maze *CreateMaze_GrowingTree(int xSize, int ySize)
             }
         } else {
             maze->SetCellTag(cell, 2);
-            maze->Draw();
         }
+        maze->Draw();
     }
 
     // 終了
