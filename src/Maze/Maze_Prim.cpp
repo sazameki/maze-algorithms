@@ -41,10 +41,10 @@ Maze *CreateMaze_Prim(int xSize, int ySize)
             // 壁であることを示すタグを追加
             walls.push_back(Wall(p, dir));
             maze->SetCellTag(p2, 2);
-            maze->Draw();
         }
         dir = RotateRight(dir);
     }
+    maze->Draw();
 
     // 壁リストに登録された壁を取り除いていく
     while (walls.size() > 0) {
@@ -53,7 +53,6 @@ Maze *CreateMaze_Prim(int xSize, int ySize)
         walls.erase(walls.begin() + index);
         CellPoint p2 = wall.pos.Move(wall.dir);
         maze->SetCellTag(wall.pos, 0);
-        maze->Draw();
 
         // すでに処理済みのマスでないことをチェック
         if (maze->GetCellTag(p2) != 0) {
@@ -64,15 +63,14 @@ Maze *CreateMaze_Prim(int xSize, int ySize)
                 if (maze->IsValidCell(p3) && maze->GetCellTag(p3) == 1) {
                     walls.push_back(Wall(p2, dir));
                     maze->SetCellTag(p3, 2);
-                    maze->Draw();
                 }
                 dir = RotateRight(dir);
             }
             // 壁を取り除いて、処理済みにする
             maze->RemoveWall(wall);
             maze->SetCellTag(p2, 0);
-            maze->Draw();
         }
+        maze->Draw();
     }
 
     // 終了
