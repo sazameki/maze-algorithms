@@ -113,7 +113,6 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
                 // 近隣のマスにA,Bの領域フラグをコピーする
                 CellPoint neighbor = neighbors[0];
                 maze->SetCellTag(neighbor, tag);
-                maze->Draw();
 
                 // サブ領域に近隣のマスを追加する
                 subregions[tag - 2].AddCell(neighbor);
@@ -127,6 +126,7 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
             }
         }
     }
+    maze->Draw();
 
     // 分割した領域の間に壁を作る
     vector<Wall> walls;
@@ -150,8 +150,8 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
     // 壁の作成の実行
     for (Wall wall : walls) {
         maze->MakeWall(wall);
-        maze->Draw();
     }
+    maze->Draw();
 
     // 領域内のマスをチェック済み状態にする
     for (CellPoint cell : region.cells) {
@@ -166,8 +166,8 @@ void DivideRegion(Maze *maze, const BlobbyRegion& region)
         } else {
             for (CellPoint cell : subregions[i].cells) {
                 maze->SetCellTag(cell, 0);
-                maze->Draw();
             }
+            maze->Draw();
         }
     }
 }
