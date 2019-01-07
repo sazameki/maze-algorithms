@@ -25,7 +25,6 @@ Maze *CreateMaze_Sidewinder(int xSize, int ySize)
     for (int x = 0; x < maze->GetXSize() - 1; x++) {
         maze->SetCellTag(x, 0, 0);
         maze->RemoveWall(x, 0, Right);
-        maze->Draw();
     }
     maze->SetCellTag(maze->GetXSize() - 1, 0, 0);
     maze->Draw();
@@ -45,8 +44,8 @@ Maze *CreateMaze_Sidewinder(int xSize, int ySize)
                 maze->RemoveWall(cellX, y, Up);
                 runStart = x + 1;
             }
-            maze->Draw();
         }
+        maze->Draw();
     }
 
     // 終了
