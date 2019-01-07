@@ -44,21 +44,33 @@ static void AddCellToVector(vector<CellPoint> &cells, const CellPoint& newCell)
 }
 
 /**
+    ヒープ上での再帰処理のためのスタックフレーム。
+ */
+struct DijkstraStackFrame
+{
+    vector<CellPoint> cells;
+    int tag;
+};
+
+static vector<DijkstraStackFrame> stack;
+
+/**
     Dijkstraの探索アルゴリズムのために番号を割り振ります。
     @param  maze    迷路
     @param  start   スタート位置
     @param  goal
  */
-static void StepDijkstra(Maze *maze, const CellPoint& start, const CellPoint& goal, vector<CellPoint> &cells, int tag)
+static void StepDijkstra(Maze *maze, const CellPoint& start, const CellPoint& goal)
 {
-    vector<CellPoint> nextCells;
-    for (CellPoint cell : cells) {
-        maze->SetCellTag(cell, tag);
-        StartBatch();
-        maze->Draw(false);
-        maze->DrawStart(start);
-        maze->DrawGoal(goal);
-        EndBatch();
+    DijkstraStackFrame frame = stack[0];
+    stack.erase(stack.begin());
+
+    DijkstraStackFrame nextFrame;
+    nextFrame.tag = frame.tag + 1;
+
+    //vector<CellPoint> nextCells;
+    for (CellPoint cell : frame.cells) {
+        maze->SetCellTag(cell, frame.tag);
 
         vector<Direction> dirs = MakeAllDirectionsList();
         for (Direction dir : dirs) {
@@ -67,13 +79,18 @@ static void StepDijkstra(Maze *maze, const CellPoint& start, const CellPoint& go
             }
             CellPoint cell2 = cell.Move(dir);
             if (maze->IsValidCell(cell2) && maze->GetCellTag(cell2) == 0) {
-                AddCellToVector(nextCells, cell2);
+                AddCellToVector(nextFrame.cells, cell2);
             }
         }
     }
+    StartBatch();
+    maze->Draw(false);
+    maze->DrawStart(start);
+    maze->DrawGoal(goal);
+    EndBatch();
 
-    if (nextCells.size() > 0) {
-        StepDijkstra(maze, start, goal, nextCells, tag + 1);
+    if (nextFrame.cells.size() > 0) {
+        stack.push_back(nextFrame);
     }
 }
 
@@ -84,7 +101,13 @@ void SolveMaze_Dijkstra(Maze *maze, const CellPoint& start, const CellPoint& goa
     // スタート位置から番号を付けていく
     vector<CellPoint> nextCells;
     nextCells.push_back(start);
-    StepDijkstra(maze, start, goal, nextCells, 1);
+    DijkstraStackFrame frame;
+    frame.cells.push_back(start);
+    frame.tag = 1;
+    stack.push_back(frame);
+    while (stack.size() > 0) {
+        StepDijkstra(maze, start, goal);
+    }
 
     // ゴール位置からタグを小さくしながらたどっていく
     vector<CellPoint> path;
@@ -101,8 +124,8 @@ void SolveMaze_Dijkstra(Maze *maze, const CellPoint& start, const CellPoint& goa
         tag--;
 
         // ランダムに最短経路を選択してたどっていきます。ランダムにしない場合、コメントアウトされた次の方向リストを使ってください。
-        //vector<Direction> dirs = MakeAllDirectionsList();
-        vector<Direction> dirs = MakeAllDirectionsList_shuffled();
+        vector<Direction> dirs = MakeAllDirectionsList();
+        //vector<Direction> dirs = MakeAllDirectionsList_shuffled();
         for (Direction dir : dirs) {
             if (maze->CheckWall(cell, dir)) {
                 continue;
@@ -114,7 +137,7 @@ void SolveMaze_Dijkstra(Maze *maze, const CellPoint& start, const CellPoint& goa
             }
         }
     }
-    Sleep(0.7f);
+    Sleep(2.7f);
 
     // タグをクリアする
     maze->SetTagForAllCells(0);
