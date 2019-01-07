@@ -34,8 +34,8 @@ struct EllerSet
         for (auto cell : otherSet->cells) {
             cells.push_back(cell);
             maze->SetCellTag(cell, tag);
-            maze->Draw();
         }
+        maze->Draw();
     }
 };
 
@@ -76,9 +76,9 @@ Maze *CreateMaze_Eller(int xSize, int ySize)
                 ellerSetMap[tag] = set;
                 set->AddCell(CellPoint(x, y));
                 maze->SetCellTag(x, y, tag);
-                maze->Draw();
             }
         }
+        maze->Draw();
 
         // 横方向に縦の壁を作るか、マージするかしていく。
         for (int x = 0; x < maze->GetXSize() - 1; x++) {
@@ -98,8 +98,8 @@ Maze *CreateMaze_Eller(int xSize, int ySize)
                     set2->Merge(set1);
                 }
             }
-            maze->Draw();
         }
+        maze->Draw();
 
         // ラストの行であればここで終了
         if (y == maze->GetYSize() - 1) {
@@ -134,8 +134,8 @@ Maze *CreateMaze_Eller(int xSize, int ySize)
             // 床を作る
             for (int fx : floors) {
                 maze->MakeWall(fx, y, Down);
-                maze->Draw();
             }
+            maze->Draw();
 
             // 次のセル
             x++;
@@ -148,9 +148,9 @@ Maze *CreateMaze_Eller(int xSize, int ySize)
                 EllerSet *set = ellerSetMap[tag];
                 set->AddCell(CellPoint(x, y + 1));
                 maze->SetCellTag(x, y + 1, tag);
-                maze->Draw();
             }
         }
+        maze->Draw();
     }
 
     // 後片付け
