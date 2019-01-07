@@ -88,27 +88,27 @@ void DivideRegion(Maze *maze, const RDRegion& region)
             for (int x = region.x; x < region.x+region.width; x++) {
                 maze->SetCellTag(x, y, 2);
             }
-            maze->Draw();
         }
+        maze->Draw();
         for (int y = wallPos.y+1; y < region.y+region.height; y++) {
             for (int x = region.x; x < region.x+region.width; x++) {
                 maze->SetCellTag(x, y, 3);
             }
-            maze->Draw();
         }
+        maze->Draw();
     } else {
         for (int x = region.x; x <= wallPos.x; x++) {
             for (int y = region.y; y < region.y+region.height; y++) {
                 maze->SetCellTag(x, y, 2);
             }
-            maze->Draw();
         }
+        maze->Draw();
         for (int x = wallPos.x+1; x < region.x+region.width; x++) {
             for (int y = region.y; y < region.y+region.height; y++) {
                 maze->SetCellTag(x, y, 3);
             }
-            maze->Draw();
         }
+        maze->Draw();
     }
 
     // 壁の方向と距離
@@ -130,17 +130,17 @@ void DivideRegion(Maze *maze, const RDRegion& region)
     // 壁の作成の実行
     for (Wall wall : walls) {
         maze->MakeWall(wall);
-        maze->Draw();
     }
-    
+    maze->Draw();
+
     // 領域のマーキング
     for (int y = region.y; y < region.y+region.height; y++) {
         for (int x = region.x; x < region.x+region.width; x++) {
             maze->SetCellTag(x, y, 4);
         }
-        maze->Draw();
     }
-    
+    maze->Draw();
+
     // サブ領域の分割
     RDRegion subregions[2];
     if (makingDir == Right) {
@@ -158,8 +158,8 @@ void DivideRegion(Maze *maze, const RDRegion& region)
                 for (int x = subregions[i].x; x < subregions[i].x+subregions[i].width; x++) {
                     maze->SetCellTag(x, y, 0);
                 }
-                maze->Draw();
             }
+            maze->Draw();
         }
     }
 }
