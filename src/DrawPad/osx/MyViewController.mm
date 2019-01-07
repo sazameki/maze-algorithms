@@ -338,7 +338,7 @@ static MyViewController *sInstance = nil;
     NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
     NSTimeInterval rest = 1 / 80.0f - (currentTime - oldTime);
     if (rest > 0.0) {
-        [NSThread sleepForTimeInterval:rest];
+        //[NSThread sleepForTimeInterval:rest];
     }
     currentTime = [NSDate timeIntervalSinceReferenceDate];
     oldTime = currentTime;
@@ -370,5 +370,24 @@ void Sleep(float seconds)
     if (seconds > 0.0f) {
         [NSThread sleepForTimeInterval:(NSTimeInterval)seconds];
     }
+}
+
+
+// デスクトップ・フォルダのパスを取得します。
+std::string GetDesktopFolderPath()
+{
+    NSString *desktopPath = @"~/Desktop";
+    NSString *pathStr = [desktopPath stringByExpandingTildeInPath];
+    return [pathStr cStringUsingEncoding:NSUTF8StringEncoding];
+}
+
+// パス文字列pathにnewComponentを追加した新しいパス文字列を作成してリターンします。
+std::string AddPathComponent(const std::string& path, const std::string& newComponent)
+{
+#if _WINDOWS
+    return path + "\\" + newComponent;
+#else
+    return path + "/" + newComponent;
+#endif  //#if _WINDOWS
 }
 
