@@ -84,10 +84,10 @@ struct KruskalSet
     {
         for (auto cell : otherSet->cells) {
             maze->SetCellTag(cell, tag);
-            maze->Draw();
             cells.push_back(cell);
         }
         otherSet->cells.clear();
+        maze->Draw();
     }
 };
 
@@ -158,9 +158,9 @@ Maze *CreateMaze_Kruskal(int xSize, int ySize)
 
             // タグを付ける
             maze->SetCellTag(x, y, tag);
-            maze->Draw();
             tag++;
         }
+        maze->Draw();
     }
 
     // 最初のセットにすべてのセルがマージされるまで繰り返す
