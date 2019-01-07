@@ -34,8 +34,8 @@ Maze *CreateMaze_BinaryTree(int xSize, int ySize)
                 }
             }
             maze->SetCellTag(pos, 0);
-            maze->Draw();
         }
+        maze->Draw();
     }
 
     // 終了
