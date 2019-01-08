@@ -70,13 +70,8 @@ Maze *CreateMaze_KabeNobashi(int xSize, int ySize)
                 if (maze->CanMoveFromCrossPoint(cp, dirs[i])) {
                     CrossPoint cp2 = cp.Move(dirs[i]);
                     if (!maze->CheckWallFromCrossPoint(cp2)) {
-                        maze->DrawCrossPoint(cp);
-                        Sleep(0.01f);
-
                         maze->MakeWallFromCrossPoint(cp, dirs[i]);
-                        maze->Draw();
                         cp = cp2;
-                        maze->DrawCrossPoint(cp);
                         extendCount++;
                         isExtending = true;
                         break;
@@ -84,6 +79,7 @@ Maze *CreateMaze_KabeNobashi(int xSize, int ySize)
                 }
             }
         }
+        maze->Draw();
     }
 
     // 交点の描画を消すために再描画
