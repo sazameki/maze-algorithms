@@ -35,12 +35,7 @@ Maze *CreateMaze_BouTaoshi(int xSize, int ySize)
         vector<Direction> dirs = MakeAllDirectionsList_shuffled();
         for (int i = 0; i < 4; i++) {
             if (!maze->CheckWallFromCrossPoint(cp, dirs[i])) {
-                maze->DrawCrossPoint(cp);
-                Sleep(0.02f);
                 maze->MakeWallFromCrossPoint(cp, dirs[i]);
-                maze->Draw();
-                maze->DrawCrossPoint(cp.Move(dirs[i]));
-                Sleep(0.02f);
                 break;
             }
         }
@@ -58,16 +53,12 @@ Maze *CreateMaze_BouTaoshi(int xSize, int ySize)
                     continue;
                 }
                 if (!maze->CheckWallFromCrossPoint(cp, dirs[i])) {
-                    maze->DrawCrossPoint(cp);
-                    Sleep(0.02f);
                     maze->MakeWallFromCrossPoint(cp, dirs[i]);
-                    maze->Draw();
-                    maze->DrawCrossPoint(cp.Move(dirs[i]));
-                    Sleep(0.02f);
                     break;
                 }
             }
         }
+        maze->Draw();
     }
 
     // 交点の表示を消すために再描画
