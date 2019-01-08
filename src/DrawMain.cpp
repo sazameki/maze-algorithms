@@ -69,12 +69,6 @@ void DrawMain()
     int xSize = 30;
     int ySize = 20;
 
-    // スタート位置とゴール位置
-    CellPoint start(0, 0);
-    CellPoint goal = MakeRightBottomGoal(xSize, ySize);
-    //CellPoint goal = MakeCenterGoal(xSize, ySize);
-    //CellPoint goal = MakeRandomGoal(start, xSize, ySize);
-
     // 迷路の生成
     clock_t startTime = clock();
 
@@ -87,12 +81,10 @@ void DrawMain()
     //Maze *maze = CreateMaze_Wilson(xSize, ySize);
     //Maze *maze = CreateMaze_Houston(xSize, ySize);
     //Maze *maze = CreateMaze_KabeNobashi(xSize, ySize);
-
     //Maze *maze = CreateMaze_RecursiveDivision(xSize, ySize);
     //Maze *maze = CreateMaze_BlobbyRecursiveDivision(xSize, ySize);
     //Maze *maze = CreateMaze_Eller(xSize, ySize);
     Maze *maze = CreateMaze_Kruskal(xSize, ySize);
-
     //Maze *maze = CreateMaze_BouTaoshi(xSize, ySize);
     //Maze *maze = CreateMaze_Sidewinder(xSize, ySize);
     //Maze *maze = CreateMaze_BinaryTree(xSize, ySize);
@@ -100,10 +92,31 @@ void DrawMain()
     clock_t endTime = clock();
     DebugLog("Maze-Creation Time: %.2f sec", (float)(endTime - startTime) / CLOCKS_PER_SEC);
 
+    // 迷路データのファイルパス
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_anahori.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_huntandkill.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_recursivebacktracking.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_growingtree.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_prim.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_houston.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_kabenobashi.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_recursivedivision.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_blobby.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_eller.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_kruskal.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_boutaoshi.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_sidewinder.txt");
+    //string filepath = AddPathComponent(GetDesktopFolderPath(), "maze_binarytree.txt");
+
     // 出来上がった迷路データをテキストファイルとして読み込み/保存
-    //string filepath = AddPathComponent(GetDesktopFolderPath(), "mymaze.txt");
     //Maze *maze = new Maze(filepath);
     //maze->Save(filepath);
+
+    // スタート位置とゴール位置
+    CellPoint start(0, 0);
+    CellPoint goal = MakeRightBottomGoal(maze->GetXSize(), maze->GetYSize());
+    //CellPoint goal = MakeCenterGoal(xSize, ySize);
+    //CellPoint goal = MakeRandomGoal(start, xSize, ySize);
 
     // 念のために出来上がった迷路を再度描画
     StartBatch();
@@ -120,8 +133,8 @@ void DrawMain()
 
     // 迷路探索
     maze->SetTagForAllCells(0);
-    SolveMaze_RightHand(maze, start, Down, goal);
-    //SolveMaze_Dijkstra(maze, start, goal);
+    //SolveMaze_RightHand(maze, start, Down, goal);
+    SolveMaze_Dijkstra(maze, start, goal);
     DrawText("SOLVED!!", -4 * 13, -240, kColorBlue);
 
     delete maze;
