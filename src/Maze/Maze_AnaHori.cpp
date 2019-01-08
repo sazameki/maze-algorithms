@@ -32,10 +32,10 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
     }
 
     // 最初の点をランダムに選ぶ
-    CellPoint p;
-    p.x = random() % maze->GetXSize();
-    p.y = random() % maze->GetYSize();
-    maze->SetCellTag(p, 2);
+    CellPoint cell;
+    cell.x = random() % maze->GetXSize();
+    cell.y = random() % maze->GetYSize();
+    maze->SetCellTag(cell, 2);
     maze->Draw();
 
     while (true) {
@@ -46,12 +46,14 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
             // 四方に掘り進める
             bool hasDug = false;
             for (int i = 0; i < 4; i++) {
-                CellPoint nextPos = p.Move(dir);
-                if (maze->GetCellTag(nextPos) == 1 && maze->CanRemoveWall(p, dir)) {
-                    maze->RemoveWall(p, dir);
-                    p = nextPos;
-                    maze->SetCellTag(p, 2);
-                    maze->Draw();
+                CellPoint nextCell = cell.Move(dir);
+                if (maze->IsValidCell(nextCell) &&
+                    maze->GetCellTag(nextCell) == 1 &&
+                    maze->CanRemoveWall(cell, dir))
+                {
+                    maze->RemoveWall(cell, dir);
+                    cell = nextCell;
+                    maze->SetCellTag(cell, 2);
                     hasDug = true;
                     break;
                 }
@@ -59,12 +61,12 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
                 dir = RotateRight(dir);
             }
             if (!hasDug) {
-                maze->SetCellTag(p, 4);
-                maze->Draw();
+                maze->SetCellTag(cell, 4);
                 break;
             }
             digCount++;
         }
+        maze->Draw();
 
         // 作成が完了した通路のマーカーを3に
         for (int y = 0; y < maze->GetYSize(); y++) {
@@ -101,7 +103,7 @@ Maze *CreateMaze_AnaHori(int xSize, int ySize)
             }
         }
         int r = (int)(random() % nextPoints.size());
-        p = nextPoints[r];
+        cell = nextPoints[r];
     }
 
     // 生成用のフラグをクリアする
