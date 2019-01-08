@@ -60,7 +60,6 @@ Maze *CreateMaze_HuntAndKill(int xSize, int ySize)
                         continue;
                     }
                     maze->SetCellTag(huntCell, 2);
-                    maze->Draw();
                     // 近接セルを探索
                     for (int i = 0; i < 4; i++) {
                         // 探索済みの近接セルが見つかったら、そのセルとの間に通路を空けて、狩猟を終了
@@ -69,7 +68,6 @@ Maze *CreateMaze_HuntAndKill(int xSize, int ySize)
                             // 次の探索セルは狩猟で見つかったセルとなる
                             maze->RemoveWall(huntCell, dirs[i]);
                             maze->SetCellTag(huntCell, 0);
-                            maze->Draw();
                             cell = huntCell;
                             huntSucceeded = true;
                             break;
@@ -79,12 +77,12 @@ Maze *CreateMaze_HuntAndKill(int xSize, int ySize)
                         break;
                     }
                     maze->SetCellTag(huntCell, tag);
-                    maze->Draw();
                 }
                 if (huntSucceeded) {
                     break;
                 }
             }
+            maze->Draw();
         }
     }
 
