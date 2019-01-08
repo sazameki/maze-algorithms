@@ -46,27 +46,27 @@ static const int kColorGoal        = 0xe04040;
 /**
     迷路描画のX方向のパディングサイズ
  */
-static const int kPaddingSizeX = 20;
+static const int kPaddingSizeX = 0;
 
 /**
     迷路描画のY方向のパディングサイズ
  */
-static const int kPaddingSizeY = 25;
+static const int kPaddingSizeY = 0;
 
 /**
     迷路の壁の描画サイズ
  */
-static const int kBorderSize   = 2;
+static const int kBorderSize   = 1;
 
 /**
     迷路を描画するたびにスリープする時間
  */
-static const float kWaitMaze   = 0.01f;
+static const float kWaitMaze   = 0.0f;
 
 /**
     迷路探索の人形を描画するたびにスリープする時間
  */
-static const float kWaitMan    = 0.02f;
+static const float kWaitMan    = 0.0f;
 
 /**
     セルの描画サイズ。実行開始時に、セルの個数と描画設定から、自動的に計算されます。
